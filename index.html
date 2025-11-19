@@ -2,184 +2,210 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <title>LivreBet – Liberdade do Vício em Apostas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LivreBet – Libertando-se do Vício em Apostas</title>
+  <!-- Poppins + Inter fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:wght@700;600;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="assets/capa-ebook.jpg">
 </head>
 <body>
-  <!-- HEADER FIXO DARK/BLUR -->
+  <!-- HEADER + mobile nav -->
   <header id="header">
-    <div class="logo">LivreBet</div>
+    <a class="logo" href="#inicio">
+      <i class="material-icons" style="vertical-align:middle;color:#5A64FF">stars</i>
+      <span class="logo-text">LivreBet</span>
+    </a>
     <nav>
-      <ul>
+      <ul id="menu-list">
         <li><a href="#inicio">Início</a></li>
         <li><a href="#quiz">Quiz</a></li>
-        <li><a href="#antiansiedade">Anti-Ansiedade</a></li>
+        <li><a href="#antiansiedade">Jogo</a></li>
         <li><a href="#respire">Respire</a></li>
         <li><a href="#versiculos">Versículos</a></li>
         <li><a href="#depoimentos">Depoimentos</a></li>
         <li><a href="#ajuda">Ajuda</a></li>
         <li><a href="#livro">Livro</a></li>
       </ul>
+      <button id="mobile-menu-toggle" aria-label="Menu">
+        <span class="material-icons">menu</span>
+      </button>
     </nav>
     <div class="dias-container">
-      <span id="dias-label">Dias longe das apostas:</span>
+      <i class="material-icons" title="Dias longe das apostas">timer</i>
       <span id="dias-contador">0</span>
-      <button id="btn-jornada">Iniciar minha jornada</button>
+      <button id="btn-jornada" class="cta-btn sm">Iniciar jornada</button>
     </div>
   </header>
+  <nav id="mobile-nav" class="mobile-nav-closed">
+    <ul>
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#antiansiedade">Jogo</a></li>
+      <li><a href="#respire">Respire</a></li>
+      <li><a href="#versiculos">Versículos</a></li>
+      <li><a href="#depoimentos">Depoimentos</a></li>
+      <li><a href="#ajuda">Ajuda</a></li>
+      <li><a href="#livro">Livro</a></li>
+    </ul>
+  </nav>
 
-  <!-- INICIO / INTRO -->
-  <section id="inicio">
-    <div class="card fadein">
-      <h1>Bem-vindo ao <span style="color:#5a64ff">LivreBet</span></h1>
-      <p>
-        Um espaço seguro, acolhedor e sem gatilhos.<br><br>
-        Criado para ajudar você a vencer o vício em apostas.<br>
-        Ferramentas de apoio emocional, espiritual e antistress.<br>
-        <br>
-        <b>Tudo 100% confidencial. Seu progresso só você acompanha.</b>
-      </p>
-      <a href="#quiz" class="cta-btn">Começar pelo Quiz</a>
-    </div>
-  </section>
+  <main>
+    <!-- HERO/INÍCIO -->
+    <section id="inicio" class="section hero">
+      <div class="hero-content card-glass fadein">
+        <h1>LivreBet<span class="highlight">💡</span></h1>
+        <p>
+          Libere-se do vício em apostas.<br>
+          Apoio emocional, espiritual e ferramentas práticas.<br>
+          Ambiente seguro, anônimo e sem gatilhos.<br>
+          <strong>Comece sua libertação hoje!</strong>
+        </p>
+        <a href="#quiz" class="cta-btn large">Começar Quiz</a>
+      </div>
+    </section>
 
-  <!-- QUIZ -->
-  <section id="quiz">
-    <div class="card fadein" style="max-width:500px">
-      <h2 style="text-align:center">Quiz: Seu Nível de Vício</h2>
-      <form id="quiz-infos">
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <input type="text" id="nome" placeholder="Seu nome" required autofocus>
-          <input type="email" id="email" placeholder="Seu e-mail" required>
+    <!-- QUIZ -->
+    <section id="quiz" class="section">
+      <div class="card-bevel">
+        <h2><i class="material-icons">quiz</i> Quiz: Risco em Apostas</h2>
+        <form id="quiz-infos">
+          <div class="quiz-user-fields">
+            <input type="text" id="nome" placeholder="Seu nome" autocomplete="name" required>
+            <input type="email" id="email" placeholder="Seu e-mail" autocomplete="email" required>
+            <button type="submit" class="cta-btn">Entrar no Quiz</button>
+          </div>
+        </form>
+        <div id="quiz-progresso" class="quiz-progress"><div class="quiz-progress-bar"></div></div>
+        <div id="quiz-form"></div>
+        <div id="quiz-result"></div>
+      </div>
+    </section>
+
+    <!-- POP-UP EBOOK -->
+    <div id="ebook-popup" class="popup-hidden"></div>
+
+    <!-- JOGO ANTI-ANSIEDADE -->
+    <section id="antiansiedade" class="section">
+      <div class="card-glass">
+        <h2><i class="material-icons">psychology</i> Jogo Anti-Ansiedade</h2>
+        <p>Estoure as bolhas para aliviar sua ansiedade. Quanto mais rápido, melhor!</p>
+        <div class="game-area card-bevel" id="game-area"></div>
+        <div class="game-stats">
+          <span><i class="material-icons">flare</i> <span id="bolhas-count">0</span></span>
+          <span><i class="material-icons">timer</i> <span id="game-timer">30</span>s</span>
         </div>
-        <button type="submit" class="cta-btn sec">Salvar & Iniciar Quiz</button>
-      </form>
-      <div id="quiz-progresso" class="quiz-progress"><div class="quiz-progress-bar"></div></div>
-      <div id="quiz-form"></div>
-      <div id="quiz-result"></div>
-    </div>
-  </section>
-
-  <!-- POP-UP EBOOK -->
-  <div id="ebook-popup" class="popup-hidden"></div>
-
-  <!-- ANTI-ANSIEDADE GAME -->
-  <section id="antiansiedade">
-    <div class="card" style="max-width:400px">
-      <h2 style="text-align:center">Jogo Anti-Ansiedade</h2>
-      <p>Estoure as bolhas e acalme sua mente em até 30 segundos!</p>
-      <div class="game-area" id="game-area"></div>
-      <div style="display:flex;justify-content:space-between;">
-        <span>Bolhas: <span id="bolhas-count">0</span></span>
-        <span>Tempo: <span id="game-timer">30</span>s</span>
+        <div id="game-final"></div>
+        <button id="btn-jogar-novamente" class="cta-btn sm" style="display:none">Jogar novamente</button>
       </div>
-      <div id="game-final"></div>
-      <button id="btn-jogar-novamente" class="cta-btn sec" style="width:100%;display:none">Jogar novamente</button>
-    </div>
-  </section>
+    </section>
 
-  <!-- RESPIRE COMIGO -->
-  <section id="respire">
-    <div class="card fadein" style="max-width:340px;">
-      <h2 style="text-align:center">Respire Comigo</h2>
-      <div class="respire-bolha" id="bolha-respire"></div>
-      <div class="respire-txt" id="respire-texto">Pronto?</div>
-      <button id="btn-respire" class="cta-btn">Iniciar</button>
-      <div class="respire-ciclos">Ciclos feitos: <span id="respire-ciclos">0</span></div>
-      <div class="respire-mensagem" id="respire-mensagem"></div>
-    </div>
-  </section>
-
-  <!-- VERSÍCULO -->
-  <section id="versiculos">
-    <div class="versiculo-card fadein">
-      <h2>Afirmações Bíblicas</h2>
-      <div class="versiculo-txt" id="versiculo-texto"></div>
-      <div class="versiculo-afirmacao" id="versiculo-afirmacao"></div>
-      <button id="btn-novo-versiculo" class="cta-btn sec">Outro versículo</button>
-    </div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section id="depoimentos">
-    <div class="card fadein" style="max-width:600px">
-      <h2 style="text-align:center">Depoimentos</h2>
-      <div class="carousel">
-        <button class="carousel-btn" id="depo-anterior">&#8592;</button>
-        <div class="depoimento-atual" id="depoimento-atual"></div>
-        <button class="carousel-btn" id="depo-proximo">&#8594;</button>
+    <!-- RESPIRAÇÃO -->
+    <section id="respire" class="section">
+      <div class="card-glass" style="max-width:360px;">
+        <h2><i class="material-icons">air</i> Respire Comigo</h2>
+        <div class="respire-bolha" id="bolha-respire"></div>
+        <div class="respire-txt" id="respire-texto">Pronto?</div>
+        <button id="btn-respire" class="cta-btn">Iniciar</button>
+        <div class="respire-ciclos">Ciclos feitos: <span id="respire-ciclos">0</span></div>
+        <div class="respire-mensagem" id="respire-mensagem"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- AJUDA -->
-  <section id="ajuda">
-    <div class="ajuda-columns">
-      <div>
-        <h3><span style="font-size:1.3em">&#9888;&#65039;</span> Ajuda Urgente</h3>
-        <ul>
-          <li>CVV – <strong>188</strong></li>
-          <li>Centros de apoio emocional</li>
-          <li>Serviços gratuitos</li>
-        </ul>
+    <!-- VERSÍCULOS -->
+    <section id="versiculos" class="section">
+      <div class="card-bevel">
+        <h2><i class="material-icons">spa</i> Afirmações Bíblicas</h2>
+        <div class="versiculo-txt" id="versiculo-texto"></div>
+        <div class="versiculo-afirmacao" id="versiculo-afirmacao"></div>
+        <button id="btn-novo-versiculo" class="cta-btn sm">Outro versículo</button>
       </div>
-      <div>
-        <h3><span style="font-size:1.3em">&#128176;</span> Reorganize Finanças</h3>
-        <ul>
-          <li><a href="https://www.serasa.com.br/" target="_blank">Serasa</a></li>
-          <li><a href="https://www.reorganizefinancas.com.br/" target="_blank">Dicas úteis</a></li>
-          <li>Dicas rápidas:<br>Separe gastos, trace metas, evite cartões</li>
-        </ul>
-      </div>
-      <div>
-        <h3><span style="font-size:1.3em">&#128591;</span> Apoio Espiritual</h3>
-        <p>Precisa conversar ou receber oração? Estamos juntos.<br><small>Basta pedir no nosso <a href="https://instagram.com/livredasapostas" target="_blank">Instagram</a></small></p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- LIVRO -->
-  <section id="livro">
-    <div class="livro-box card fadein">
-      <img src="assets/capa-ebook.jpg" class="livro-capa" alt="Capa eBook">
-      <div>
-        <h2>Livre das Apostas – Uma História de Redenção</h2>
-        <h3 style="color:#ffd95a">Meu relato real e um guia transformador para vencer o vício em apostas.</h3>
-        <ul class="capitulos">
-          <li><strong>Capítulo 1:</strong> Entendendo o vício</li>
-          <li><strong>Capítulo 2:</strong> Identificando Gatilhos</li>
-          <li><strong>Capítulo 3:</strong> Técnicas de Controle</li>
-          <li><strong>Capítulo 4:</strong> Caminho Espiritual</li>
-          <li><strong>Capítulo 5:</strong> Reestruturação Financeira</li>
-          <li><strong>Capítulo 6:</strong> Prevenindo Recaídas</li>
-          <li><strong>Capítulo 7:</strong> Buscando Ajuda</li>
-          <li><strong>Capítulo 8:</strong> Recomeço e perseverança</li>
-        </ul>
-        <span class="livro-preco-final">Promocional: <b>R$ 19,90</b></span>
-        <div style="margin-top:12px">
-          <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="cta-btn">Comprar eBook</a>
-          <a href="assets/amostra.pdf" target="_blank" class="cta-btn secundario">Baixar 1º Capítulo</a>
+    <!-- CARROSSEL DEPOIMENTOS -->
+    <section id="depoimentos" class="section">
+      <div class="card-glass">
+        <h2><i class="material-icons">chat</i> Depoimentos</h2>
+        <div class="carousel">
+          <button class="carousel-btn" id="depo-anterior" aria-label="Anterior"><span class="material-icons">chevron_left</span></button>
+          <div class="depoimento-atual" id="depoimento-atual"></div>
+          <button class="carousel-btn" id="depo-proximo" aria-label="Próximo"><span class="material-icons">chevron_right</span></button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
+    <!-- AJUDA -->
+    <section id="ajuda" class="section">
+      <div class="ajuda-columns">
+        <div class="card-bevel">
+          <h3><span class="material-icons">support_agent</span> Ajuda Urgente</h3>
+          <ul>
+            <li>CVV – <strong>188</strong></li>
+            <li>Centros de apoio emocional</li>
+            <li>Serviços gratuitos</li>
+          </ul>
+        </div>
+        <div class="card-bevel">
+          <h3><span class="material-icons">savings</span> Reorganização Financeira</h3>
+          <ul>
+            <li><a href="https://www.serasa.com.br/" target="_blank">Serasa</a></li>
+            <li><a href="https://www.reorganizefinancas.com.br/" target="_blank">Dicas úteis</a></li>
+            <li>Dicas: separe gastos, trace metas, evite cartões</li>
+          </ul>
+        </div>
+        <div class="card-bevel">
+          <h3><span class="material-icons">favorite</span> Apoio Espiritual</h3>
+          <p>
+            Precisa conversar ou receber oração? Estamos juntos.<br>
+            <small>Peça pelo nosso <a href="https://instagram.com/livredasapostas" target="_blank">Instagram</a></small>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVRO -->
+    <section id="livro" class="section">
+      <div class="livro-box card-glass">
+        <img src="assets/capa-ebook.jpg" class="livro-capa" alt="Capa ebook LivreBet">
+        <div class="livro-content">
+          <h2><span class="material-icons" style="vertical-align:middle;color:#ffd95a">book</span> Livre das Apostas</h2>
+          <h3 class="livro-sub">Uma história real e guia prático para vencer o vício.</h3>
+          <ul class="capitulos">
+            <li>Capítulo 1: Entendendo o vício</li>
+            <li>Capítulo 2: Identificando Gatilhos</li>
+            <li>Capítulo 3: Técnicas de Controle</li>
+            <li>Capítulo 4: Caminho Espiritual</li>
+            <li>Capítulo 5: Reestruturação Financeira</li>
+            <li>Capítulo 6: Prevenindo Recaídas</li>
+            <li>Capítulo 7: Buscando Ajuda</li>
+            <li>Capítulo 8: Recomeço e Perseverança</li>
+          </ul>
+          <span class="livro-preco-final">Promocional: <b>R$ 19,90</b></span>
+          <div>
+            <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="cta-btn large">Comprar eBook</a>
+            <a href="assets/amostra.pdf" target="_blank" class="cta-btn secundario large">Baixar 1º Capítulo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
   <!-- RODAPÉ -->
   <footer>
-    <div class="footer-links">
-      <a href="#livro">Comprar Ebook</a>
-      <a href="https://instagram.com/livredasapostas" target="_blank">Instagram</a>
-      <a href="#ajuda">Ajuda</a>
+    <div class="footer-grid">
+      <div class="footer-links">
+        <a href="#livro"><i class="material-icons">book</i> Comprar Ebook</a>
+        <a href="https://instagram.com/livredasapostas" target="_blank"><i class="material-icons">instagram</i> Instagram</a>
+        <a href="#ajuda"><i class="material-icons">support_agent</i> Ajuda</a>
+      </div>
+      <p class="footer-priv">
+        &copy; 2025 LivreBet.<br>
+        Nenhum dado é enviado para servidores.<br>
+        <span>Feito para acolher, apoiar e transformar vidas. 🌟</span>
+      </p>
     </div>
-    <p class="footer-priv">
-      &copy; 2025 LivreBet. Todos os direitos reservados.<br>
-      Nenhum dado é enviado a servidores.<br>
-      <span>Desenvolvido para acolher, informar e apoiar.</span>
-    </p>
   </footer>
-
   <script src="script.js"></script>
 </body>
 </html>

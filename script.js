@@ -283,6 +283,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 
+
 // ====== Animação shake =====
 const styleAnim = document.createElement('style');
 styleAnim.innerHTML = `
