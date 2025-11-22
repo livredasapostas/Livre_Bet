@@ -289,3 +289,13 @@ const styleAnim = document.createElement('style');
 styleAnim.innerHTML = `
 @keyframes shake { 0%{transform:translateX(0);}10%,30%,50%,70%,90%{transform:translateX(-7px);}20%,40%,60%,80%{transform:translateX(7px);}100%{transform:translateX(0);} }`;
 document.head.appendChild(styleAnim);
+
+
+// Adicione ao final do script.js para o novo Menu Mobile
+const mobileBtn = document.getElementById('mobile-menu-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+if(mobileBtn && mobileNav){
+  mobileBtn.onclick = function(){
+    mobileNav.classList.remove('mobile-nav-closed');
+  };
+}
