@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,400&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="assets/capa-ebook.jpg">
 </head>
@@ -22,10 +23,7 @@
         <span class="logo-text">LivreBet</span>
       </a>
 
-      <nav>
-        <button id="mobile-menu-toggle" aria-label="Menu">
-          <span class="material-icons">menu</span>
-        </button>
+      <nav class="desktop-nav">
         <ul id="menu-list">
           <li><a href="#inicio">Início</a></li>
           <li><a href="#quiz">Autoanálise</a></li>
@@ -35,13 +33,19 @@
         </ul>
       </nav>
 
-      <div class="dias-badge">
-        <div class="dias-info">
-          <span class="dias-label">Dias Limpo</span>
-          <span id="dias-contador">0</span>
+      <div class="header-actions">
+        <div class="dias-badge">
+          <div class="dias-info">
+            <span class="dias-label">Dias Limpo</span>
+            <span id="dias-contador">0</span>
+          </div>
+          <button id="btn-jornada" class="btn-icon" title="Definir data">
+            <span class="material-icons">edit_calendar</span>
+          </button>
         </div>
-        <button id="btn-jornada" class="btn-icon" title="Definir data">
-          <span class="material-icons">edit_calendar</span>
+        
+        <button id="mobile-menu-toggle" aria-label="Abrir Menu">
+          <span class="material-icons">menu</span>
         </button>
       </div>
     </div>
@@ -50,17 +54,16 @@
   <nav id="mobile-nav" class="mobile-nav-closed">
     <div class="mobile-nav-header">
       <span>Menu</span>
-      <button id="close-mobile-nav" onclick="document.getElementById('mobile-nav').classList.add('mobile-nav-closed')">&times;</button>
+      <button id="close-mobile-nav" aria-label="Fechar Menu">&times;</button>
     </div>
     <ul>
       <li><a href="#inicio">Início</a></li>
-      <li><a href="#quiz">Quiz</a></li>
-      <li><a href="#antiansiedade">Jogo</a></li>
+      <li><a href="#quiz">Autoanálise</a></li>
+      <li><a href="#antiansiedade">Jogo Foco</a></li>
       <li><a href="#respire">Respire</a></li>
       <li><a href="#versiculos">Versículos</a></li>
-      <li><a href="#depoimentos">Depoimentos</a></li>
       <li><a href="#ajuda">Ajuda</a></li>
-      <li><a href="#livro">Livro</a></li>
+      <li><a href="#livro" style="color:var(--primary); font-weight:bold;">O Livro</a></li>
     </ul>
   </nav>
 
@@ -95,17 +98,17 @@
       <div class="container narrow">
         <div class="section-header">
           <h2>Entenda seu momento</h2>
-          <p>Responda com sinceridade. O resultado é apenas para seus olhos.</p>
+          <p>Responda com sinceridade. O resultado gerará um plano personalizado.</p>
         </div>
         
         <div class="card quiz-card">
           <form id="quiz-infos">
             <div class="input-group">
-              <label>Para começar, como podemos te chamar?</label>
+              <label for="nome">Para começar, como podemos te chamar?</label>
               <input type="text" id="nome" placeholder="Seu nome ou apelido" autocomplete="name" required>
             </div>
             <div class="input-group">
-              <label>E seu melhor e-mail?</label>
+              <label for="email">E seu melhor e-mail?</label>
               <input type="email" id="email" placeholder="exemplo@email.com" autocomplete="email" required>
             </div>
             <button type="submit" class="cta-btn primary full-width">Iniciar Quiz</button>
@@ -124,25 +127,33 @@
       <div class="container split-layout">
         <div class="text-side">
           <h2>Sente ansiedade agora?</h2>
-          <p>A compulsão é uma onda. Ela vem forte, mas passa. Use este jogo para focar sua atenção no presente e deixar a onda passar.</p>
+          <p>A compulsão é uma onda passageira. Use este jogo para focar sua atenção no presente e "enganar" a ansiedade.</p>
           <div class="instructions">
             <i class="material-icons">touch_app</i>
-            <span>Estoure as bolhas rapidamente para pontuar.</span>
+            <span>Estoure as bolhas antes que desapareçam. Respire fundo.</span>
           </div>
         </div>
+        
         <div class="game-side">
           <div class="game-wrapper">
             <div class="game-header">
-              <div class="stat-box"><span id="bolhas-count">0</span> <small>Bolhas</small></div>
-              <div class="stat-box timer"><span id="game-timer">30</span>s</div>
+              <div class="stat-box"><span id="bolhas-count">0</span> <small>Pontos</small></div>
+              <div class="game-controls">
+                <div class="stat-box timer"><span id="game-timer">30</span>s</div>
+                <button onclick="toggleFullScreen()" class="btn-fullscreen" title="Tela Cheia">
+                    <span class="material-icons">fullscreen</span>
+                </button>
+              </div>
             </div>
+            
             <div class="game-area" id="game-area">
               <div class="start-overlay" onclick="startGame()">
                 <span>Toque para Iniciar</span>
               </div>
             </div>
+            
             <div id="game-final"></div>
-            <button id="btn-jogar-novamente" class="cta-btn sm" style="display:none; margin-top:10px;">Jogar Novamente</button>
+            <button id="btn-jogar-novamente" class="cta-btn sm" style="display:none; margin-top:15px;">Jogar Novamente</button>
           </div>
         </div>
       </div>
@@ -154,14 +165,14 @@
         <div id="respire" class="card center-content">
           <div class="card-icon"><i class="material-icons">air</i></div>
           <h3>Respire Comigo</h3>
-          <p class="subtitle">Acalme seu sistema nervoso.</p>
+          <p class="subtitle">Acalme seu sistema nervoso agora.</p>
           
           <div class="respire-container">
             <div class="respire-bolha" id="bolha-respire"></div>
           </div>
           
-          <div class="respire-txt" id="respire-texto">Vamos começar?</div>
-          <button id="btn-respire" class="cta-btn outline sm">Iniciar Ciclo</button>
+          <div class="respire-txt" id="respire-texto">Pronto?</div>
+          <button id="btn-respire" class="cta-btn outline sm">Iniciar Exercício</button>
           
           <div class="respire-footer">
             <span class="meta">Ciclos hoje: <strong id="respire-ciclos">0</strong></span>
@@ -207,17 +218,17 @@
           <div class="ajuda-item">
             <i class="material-icons">phone_in_talk</i>
             <h3>CVV 188</h3>
-            <p>Apoio emocional 24h, sigiloso e gratuito.</p>
+            <p>Apoio emocional 24h, sigiloso e gratuito em todo Brasil.</p>
           </div>
           <div class="ajuda-item">
             <i class="material-icons">account_balance_wallet</i>
-            <h3>Reorganização</h3>
-            <p>Acesse o <a href="https://www.serasa.com.br/" target="_blank">Serasa Limpa Nome</a> e renegocie.</p>
+            <h3>Finanças</h3>
+            <p>Acesse o <a href="https://www.serasa.com.br/" target="_blank">Serasa Limpa Nome</a> para renegociar dívidas.</p>
           </div>
           <div class="ajuda-item">
             <i class="material-icons">favorite</i>
             <h3>Apoio Espiritual</h3>
-            <p>Mande uma mensagem no nosso <a href="https://instagram.com/livredasapostas">Instagram</a>.</p>
+            <p>Mande uma mensagem no nosso <a href="https://instagram.com/livredasapostas" target="_blank">Instagram</a>.</p>
           </div>
         </div>
       </div>
@@ -227,7 +238,7 @@
       <div class="container">
         <div class="book-banner">
           <div class="book-img-wrapper">
-            <img src="assets/capa-ebook.jpg" class="book-cover" alt="Capa do Livro">
+            <img src="assets/capa-ebook.jpg" class="book-cover" alt="Capa do Livro Livre das Apostas">
           </div>
           <div class="book-info">
             <span class="badge">Best-seller</span>
