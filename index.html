@@ -1,291 +1,98 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>LivreBet – Liberdade e Recomeço</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,400&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Livre das Apostas — StopBet</title>
+
+  <!-- Material icons (opcional) -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="assets/capa-ebook.jpg">
+
+  <!-- Fonte (opcional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style (1).css">
 </head>
 <body>
-
-  <header id="header">
-    <div class="container header-wrapper">
-      <a class="logo" href="#inicio">
-        <span class="material-icons logo-icon">wb_sunny</span>
-        <span class="logo-text">LivreBet</span>
-      </a>
-
-      <nav class="desktop-nav">
-        <ul id="menu-list">
-          <li><a href="#inicio">Início</a></li>
-          <li><a href="#quiz">Autoanálise</a></li>
-          <li><a href="#antiansiedade">Foco</a></li>
-          <li><a href="#respire">Respirar</a></li>
-          <li><a href="#livro" class="nav-highlight">O Livro</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <div class="dias-badge">
-          <div class="dias-info">
-            <span class="dias-label">Dias Limpo</span>
-            <span id="dias-contador">0</span>
-          </div>
-          <button id="btn-jornada" class="btn-icon" title="Definir data">
-            <span class="material-icons">edit_calendar</span>
-          </button>
-        </div>
-        
-        <button id="mobile-menu-toggle" aria-label="Abrir Menu">
-          <span class="material-icons">menu</span>
-        </button>
+  <header class="site-header">
+    <div class="site-brand">
+      <img src="assets/capa-ebook.jpg" alt="Capa do eBook" class="brand-img" />
+      <div class="brand-title">
+        <h1>Livre das Apostas</h1>
+        <p class="subtitle">Caminho para transformação</p>
       </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- Theme toggle -->
+      <button id="theme-toggle" class="btn-icon" title="Alterar tema" aria-label="Alternar tema">
+        <span class="material-icons" id="theme-icon">dark_mode</span>
+      </button>
+
+      <!-- (outros botões se houver) -->
     </div>
   </header>
 
-  <nav id="mobile-nav" class="mobile-nav-closed">
-    <div class="mobile-nav-header">
-      <span>Menu</span>
-      <button id="close-mobile-nav" aria-label="Fechar Menu">&times;</button>
-    </div>
-    <ul>
-      <li><a href="#inicio">Início</a></li>
-      <li><a href="#quiz">Autoanálise</a></li>
-      <li><a href="#antiansiedade">Jogo Foco</a></li>
-      <li><a href="#respire">Respire</a></li>
-      <li><a href="#versiculos">Versículos</a></li>
-      <li><a href="#ajuda">Ajuda</a></li>
-      <li><a href="#livro" style="color:var(--primary); font-weight:bold;">O Livro</a></li>
-    </ul>
-  </nav>
-
-  <main>
-    <section id="inicio" class="hero-section">
-      <div class="container hero-grid">
-        <div class="hero-text fadein">
-          <h1>Sua nova vida começa <span class="highlight">agora.</span></h1>
-          <p class="hero-sub">
-            Saia do ciclo do vício em apostas. Encontre apoio emocional, ferramentas práticas e um caminho espiritual para sua liberdade.
-          </p>
-          <div class="hero-btns">
-            <a href="#quiz" class="cta-btn primary">Fazer Autoanálise</a>
-            <a href="#livro" class="cta-btn outline">Conhecer o Método</a>
-          </div>
-          <div class="hero-badges">
-            <span><i class="material-icons">security</i> 100% Anônimo</span>
-            <span><i class="material-icons">volunteer_activism</i> Sem julgamentos</span>
-          </div>
+  <main class="container">
+    <!-- HERO VISUAL: substituí o quadrado por apenas a imagem redondo.png -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h2>Respiração & Calma</h2>
+          <p>Pequenas práticas para ajudar nos momentos de vontade de apostar.</p>
         </div>
+
         <div class="hero-visual">
-           <div class="circle-bg"></div>
-           <div class="glass-card-visual">
-             <i class="material-icons icon-float">spa</i>
-             <span>Paz Interior</span>
-           </div>
+          <!-- Agora imagem redondo.png como "círculo em movimento" -->
+          <img src="assets/redondo.png" alt="Círculo em movimento" class="circle-bg" />
         </div>
       </div>
     </section>
 
-    <section id="quiz" class="section-pad bg-light">
-      <div class="container narrow">
-        <div class="section-header">
-          <h2>Entenda seu momento</h2>
-          <p>Responda com sinceridade. O resultado gerará um plano personalizado.</p>
+    <!-- Seção Respire + Palavra de força (empilhadas verticalmente) -->
+    <section class="controls">
+      <div class="grid-2">
+        <div class="respire-card">
+          <h3>Respire comigo</h3>
+          <p class="respire-instruction">Inspire 4s — Segure 4s — Expire 6s. Repita 5 vezes.</p>
+          <button id="start-breath" class="btn">Começar exercício</button>
+          <div id="breath-visual" class="breath-visual" aria-hidden="true"></div>
         </div>
-        
-        <div class="card quiz-card">
-          <form id="quiz-infos">
-            <div class="input-group">
-              <label for="nome">Para começar, como podemos te chamar?</label>
-              <input type="text" id="nome" placeholder="Seu nome ou apelido" autocomplete="name" required>
-            </div>
-            <div class="input-group">
-              <label for="email">E seu melhor e-mail?</label>
-              <input type="email" id="email" placeholder="exemplo@email.com" autocomplete="email" required>
-            </div>
-            <button type="submit" class="cta-btn primary full-width">Iniciar Quiz</button>
-          </form>
 
-          <div id="quiz-progresso" class="quiz-progress">
-            <div class="quiz-progress-bar"></div>
-          </div>
-          <div id="quiz-form"></div>
-          <div id="quiz-result"></div>
+        <div class="palavra-card">
+          <h3>Palavra de força</h3>
+          <blockquote id="verso-txt" class="verso-txt">E conhecereis a verdade, e a verdade vos libertará.</blockquote>
+          <div id="afirmacao" class="afirmacao">Um passo de cada vez.</div>
+          <button id="next-verso" class="btn btn-ghost">Próxima palavra</button>
         </div>
       </div>
     </section>
 
-    <section id="antiansiedade" class="section-pad">
-      <div class="container split-layout">
-        <div class="text-side">
-          <h2>Sente ansiedade agora?</h2>
-          <p>A compulsão é uma onda passageira. Use este jogo para focar sua atenção no presente e "enganar" a ansiedade.</p>
-          <div class="instructions">
-            <i class="material-icons">touch_app</i>
-            <span>Estoure as bolhas antes que desapareçam. Respire fundo.</span>
-          </div>
-        </div>
-        
-        <div class="game-side">
-          <div class="game-wrapper">
-            <div class="game-header">
-              <div class="stat-box"><span id="bolhas-count">0</span> <small>Pontos</small></div>
-              <div class="game-controls">
-                <div class="stat-box timer"><span id="game-timer">30</span>s</div>
-                <button onclick="toggleFullScreen()" class="btn-fullscreen" title="Tela Cheia">
-                    <span class="material-icons">fullscreen</span>
-                </button>
-              </div>
-            </div>
-            
-            <div class="game-area" id="game-area">
-              <div class="start-overlay" onclick="startGame()">
-                <span>Toque para Iniciar</span>
-              </div>
-            </div>
-            
-            <div id="game-final"></div>
-            <button id="btn-jogar-novamente" class="cta-btn sm" style="display:none; margin-top:15px;">Jogar Novamente</button>
-          </div>
-        </div>
+    <!-- Jogo das bolhas -->
+    <section class="game-section">
+      <h3>Jogo antiansiedade</h3>
+      <p class="game-desc">Estoure bolhas para marcar pontos. O objetivo é ocupar a mente por alguns minutos.</p>
+
+      <div class="game-stats">
+        <div class="stat"><strong>Pontos</strong><span id="bolhas-count">0</span></div>
+        <div class="stat"><strong>Tempo</strong><span id="game-timer">0s</span></div>
+        <div class="stat"><strong>Recorde</strong><span id="best-score">0</span></div>
+      </div>
+
+      <div id="game-area" class="game-area" role="application" aria-label="Área do jogo de estourar bolhas"></div>
+
+      <div class="game-controls">
+        <button id="start-game" class="btn">Iniciar</button>
+        <button id="stop-game" class="btn btn-ghost" disabled>Parar</button>
+        <label class="sound-label"><input type="checkbox" id="sound-toggle" /> Som</label>
       </div>
     </section>
-
-    <section class="section-pad bg-light" id="mind-soul">
-      <div class="container grid-2">
-        
-        <div id="respire" class="card center-content">
-          <div class="card-icon"><i class="material-icons">air</i></div>
-          <h3>Respire Comigo</h3>
-          <p class="subtitle">Acalme seu sistema nervoso agora.</p>
-          
-          <div class="respire-container">
-            <div class="respire-bolha" id="bolha-respire"></div>
-          </div>
-          
-          <div class="respire-txt" id="respire-texto">Pronto?</div>
-          <button id="btn-respire" class="cta-btn outline sm">Iniciar Exercício</button>
-          
-          <div class="respire-footer">
-            <span class="meta">Ciclos hoje: <strong id="respire-ciclos">0</strong></span>
-            <div id="respire-mensagem" class="fade-msg"></div>
-          </div>
-        </div>
-
-        <div id="versiculos" class="card center-content dark-card">
-          <div class="card-icon light"><i class="material-icons">auto_stories</i></div>
-          <h3 style="color:#fff">Palavra de Força</h3>
-          <div class="verse-box">
-            <div class="versiculo-txt" id="versiculo-texto"></div>
-            <div class="separator"></div>
-            <div class="versiculo-afirmacao" id="versiculo-afirmacao"></div>
-          </div>
-          <button id="btn-novo-versiculo" class="cta-btn white-btn sm">Nova Mensagem</button>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="depoimentos" class="section-pad">
-      <div class="container narrow text-center">
-        <h2>Histórias Reais</h2>
-        <div class="carousel-modern">
-          <button class="carousel-btn" id="depo-anterior"><i class="material-icons">arrow_back</i></button>
-          <div class="depoimento-content">
-            <i class="material-icons quote-icon">format_quote</i>
-            <p id="depoimento-atual" class="depoimento-text"></p>
-          </div>
-          <button class="carousel-btn" id="depo-proximo"><i class="material-icons">arrow_forward</i></button>
-        </div>
-      </div>
-    </section>
-
-    <section id="ajuda" class="section-pad bg-soft-red">
-      <div class="container">
-        <div class="section-header">
-          <h2>Você não está sozinho</h2>
-          <p>Existem recursos gratuitos disponíveis para te ajudar agora.</p>
-        </div>
-        <div class="ajuda-grid">
-          <div class="ajuda-item">
-            <i class="material-icons">phone_in_talk</i>
-            <h3>CVV 188</h3>
-            <p>Apoio emocional 24h, sigiloso e gratuito em todo Brasil.</p>
-          </div>
-          <div class="ajuda-item">
-            <i class="material-icons">account_balance_wallet</i>
-            <h3>Finanças</h3>
-            <p>Acesse o <a href="https://www.serasa.com.br/" target="_blank">Serasa Limpa Nome</a> para renegociar dívidas.</p>
-          </div>
-          <div class="ajuda-item">
-            <i class="material-icons">favorite</i>
-            <h3>Apoio Espiritual</h3>
-            <p>Mande uma mensagem no nosso <a href="https://instagram.com/livredasapostas" target="_blank">Instagram</a>.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="livro" class="section-pad">
-      <div class="container">
-        <div class="book-banner">
-          <div class="book-img-wrapper">
-            <img src="assets/capa-ebook.jpg" class="book-cover" alt="Capa do Livro Livre das Apostas">
-          </div>
-          <div class="book-info">
-            <span class="badge">Best-seller</span>
-            <h2>Livre das Apostas: O Guia Definitivo</h2>
-            <p>Não é apenas força de vontade. É estratégia, espiritualidade e ciência. Aprenda a identificar gatilhos e reconstruir sua vida financeira.</p>
-            
-            <ul class="book-features">
-              <li><i class="material-icons">check_circle</i> Como o vício funciona no cérebro</li>
-              <li><i class="material-icons">check_circle</i> Plano de 30 dias sem apostar</li>
-              <li><i class="material-icons">check_circle</i> Reconstrução financeira passo a passo</li>
-            </ul>
-
-            <div class="price-tag">
-              <span class="old">R$ 39,90</span>
-              <span class="new">R$ 19,90</span>
-            </div>
-
-            <div class="cta-group">
-              <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="cta-btn primary large">Comprar Agora</a>
-              <a href="assets/amostra.pdf" target="_blank" class="link-simple">Ler primeiro capítulo grátis</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <footer>
-    <div class="container footer-content">
-      <div class="footer-brand">
-        <strong>LivreBet</strong>
-        <p>Feito para curar, não para julgar.</p>
-      </div>
-      <div class="footer-links">
-        <a href="#inicio">Topo</a>
-        <a href="#livro">Ebook</a>
-        <a href="https://instagram.com/livredasapostas">Instagram</a>
-      </div>
-      <div class="footer-copy">
-        &copy; 2025 LivreBet. Seus dados ficam apenas no seu dispositivo.
-      </div>
-    </div>
+  <footer class="site-footer">
+    <small>© Livre das Apostas — Projeto de suporte</small>
   </footer>
 
-  <div id="ebook-popup" class="popup-hidden"></div>
-
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
