@@ -1,388 +1,296 @@
-// ========== Menu Mobile ==========
-const mobileBtn = document.getElementById('mobile-menu-toggle');
-const mobileNav = document.getElementById('mobile-nav');
-const closeMobileBtn = document.getElementById('close-mobile-nav');
+/* script.js
+   Funções:
+   - Toggle tema claro/escuro (persistente via localStorage)
+   - Respire comigo: animação simples de respiração
+   - Palavra de força: navegação entre versos/afirmações
+   - Jogo de bolhas: spawn responsivo, contador crescente, touch-friendly, recorde (localStorage)
+*/
 
-if(mobileBtn && mobileNav){
-  mobileBtn.onclick = () => mobileNav.classList.remove('mobile-nav-closed');
-  if(closeMobileBtn) closeMobileBtn.onclick = () => mobileNav.classList.add('mobile-nav-closed');
+/* ===== Helpers ===== */
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+/* ===== THEME ===== */
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  themeIcon.textContent = (t === 'dark') ? 'light_mode' : 'dark_mode';
+}
+const savedTheme = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+applyTheme(savedTheme);
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  localStorage.setItem('theme', next);
+});
+
+/* ===== Respire comigo ===== */
+const startBreathBtn = document.getElementById('start-breath');
+const breathVisual = document.getElementById('breath-visual');
+
+function createBreathDot(){
+  breathVisual.innerHTML = '';
+  const dot = document.createElement('div');
+  dot.className = 'breath-dot';
+  breathVisual.appendChild(dot);
+  return dot;
 }
 
-// ========== Dias longe das apostas ==========
-const diasContador = document.getElementById('dias-contador');
-const btnJornada = document.getElementById('btn-jornada');
-function atualizarDias() {
-  const dataParada = localStorage.getItem('dataParada');
-  if (dataParada) {
-    const hoje = new Date();
-    const parada = new Date(dataParada);
-    const diff = Math.floor((hoje - parada)/(1000*60*60*24));
-    diasContador.textContent = diff >= 0 ? diff : 0;
-  } else diasContador.textContent = '0';
-}
-atualizarDias();
-if(btnJornada) {
-  btnJornada.onclick = function() {
-    let parada = prompt("Quando foi seu último dia de aposta? (Formato: YYYY-MM-DD, ex: 2024-07-19)");
-    if (parada && /^\d{4}-\d{2}-\d{2}$/.test(parada)) {
-      localStorage.setItem('dataParada', parada);
-      atualizarDias();
-      alert('Data salva. Um dia de cada vez!');
-    } else if(parada){alert('Data inválida! Use o formato ano-mês-dia (2024-05-20)');}
-  };
+let breathing = false;
+startBreathBtn.addEventListener('click', () => {
+  if (breathing) return;
+  breathing = true;
+  startBreathSequence(5).then(() => { breathing = false; });
+});
+
+async function startBreathSequence(reps = 5){
+  const dot = createBreathDot();
+  // cycle: inhale 4s - hold 4s - exhale 6s
+  const inhale = 4000, hold = 4000, exhale = 6000;
+  for(let i=0;i<reps;i++){
+    // INHALE: scale up
+    dot.style.transition = `transform ${inhale}ms ease-in-out`;
+    dot.style.transform = 'scale(1.8)';
+    await wait(inhale);
+    // HOLD
+    dot.style.transition = `transform ${hold}ms ease-in-out`;
+    await wait(hold);
+    // EXHALE: scale down
+    dot.style.transition = `transform ${exhale}ms cubic-bezier(.2,.9,.2,.9)`;
+    dot.style.transform = 'scale(0.8)';
+    await wait(exhale);
+    // normalize between reps
+    dot.style.transform = 'scale(1)';
+    await wait(400);
+  }
+  // pequeno fade out
+  dot.style.opacity = '0';
+  await wait(300);
+  breathVisual.innerHTML = '';
 }
 
-// ========== Quiz & Popup Empático ==========
-const quizInfos = document.getElementById('quiz-infos');
-const quizForm = document.getElementById('quiz-form');
-const quizResult = document.getElementById('quiz-result');
-const quizBar = document.querySelector('.quiz-progress-bar');
-const perguntasQuiz = [
-  {texto:"Com que frequência você aposta?", opcoes:["Raramente","Semanalmente","Diariamente"]},
-  {texto:"Aposta mesmo sem ter dinheiro sobrando?", opcoes:["Nunca","Às vezes","Quase sempre"]},
-  {texto:"Já teve problemas financeiros por causa do jogo?", opcoes:["Não","Leves","Graves"]},
-  {texto:"Isso afeta seus relacionamentos?", opcoes:["Não","Um pouco","Muito"]},
-  {texto:"Sente ansiedade ou culpa após jogar?", opcoes:["Não","Às vezes","Sempre"]}
+function wait(ms){ return new Promise(res => setTimeout(res, ms)); }
+
+/* ===== Palavra de força / Versículos =====
+   Lista com textos e afirmações menos clichês.
+*/
+const versiculos = [
+  {verso:"João 8:32", txt:"E conhecereis a verdade, e a verdade vos libertará.", afirm:"Um passo de cada vez."},
+  {verso:"Filipenses 4:13", txt:"Tudo posso naquele que me fortalece.", afirm:"Você sobreviveu até aqui — respire."},
+  {verso:"Isaías 41:10", txt:"Não temas, porque eu sou contigo.", afirm:"Respira. Hoje você não precisa ter todas as respostas."},
+  {verso:"Salmo 46:1", txt:"Deus é nosso refúgio e fortaleza.", afirm:"Segure firme — você já começou."},
+  {verso:"Mateus 11:28", txt:"Vinde a mim, todos os que estais cansados e sobrecarregados.", afirm:"Pausa. Um passo só, agora."}
 ];
 
-// Dados do usuário
-let userData = { nome: "", email: "" };
+let currentVerso = 0;
+const versoEl = document.getElementById('verso-txt');
+const afirmEl = document.getElementById('afirmacao');
+const nextVersoBtn = document.getElementById('next-verso');
 
-if(quizInfos) {
-  quizInfos.onsubmit = function(e){
-    e.preventDefault();
-    const nomeInput = document.getElementById("nome");
-    const emailInput = document.getElementById("email");
-    if(nomeInput) userData.nome = nomeInput.value.trim();
-    if(emailInput) userData.email = emailInput.value.trim();
-    
-    quizInfos.style.display="none";
-    mostrarQuiz(0,[]);
-  };
+function renderVerso(i){
+  const v = versiculos[i % versiculos.length];
+  versoEl.textContent = `${v.verso} — ${v.txt}`;
+  afirmEl.textContent = v.afirm;
 }
+renderVerso(currentVerso);
+nextVersoBtn.addEventListener('click', () => {
+  currentVerso = (currentVerso + 1) % versiculos.length;
+  renderVerso(currentVerso);
+});
 
-function mostrarQuiz(n, respostas){
-  quizForm.innerHTML = "";
-  quizBar.style.width = ((n/perguntasQuiz.length)*100)+"%";
-  
-  if(n >= perguntasQuiz.length) {
-    quizBar.style.width="100%";
-    mostrarResultadoQuiz(respostas);
-    return;
-  }
+/* ===== JOGO DAS BOLHAS ===== */
+const gameArea = document.getElementById('game-area');
+const startBtn = document.getElementById('start-game');
+const stopBtn = document.getElementById('stop-game');
+const bolhasCountEl = document.getElementById('bolhas-count');
+const timerEl = document.getElementById('game-timer');
+const bestScoreEl = document.getElementById('best-score');
+const soundToggle = document.getElementById('sound-toggle');
 
-  let q = perguntasQuiz[n];
-  let qDiv = document.createElement("div");
-  qDiv.className="quiz-question-card fadein";
-  qDiv.innerHTML = `<h3>${n+1}/${perguntasQuiz.length}: ${q.texto}</h3><div class="quiz-options"></div>`;
-  
-  q.opcoes.forEach((opt,i)=>{
-    let label=document.createElement('label');
-    label.innerHTML=`<input type="radio" name="quiz_${n}" value="${i}"> ${opt}`;
-    label.onclick = function() {
-      // Pequeno delay para dar feedback visual do clique
-      setTimeout(() => {
-        respostas[n]=i;
-        mostrarQuiz(n+1,respostas);
-      }, 250);
-    };
-    qDiv.querySelector('.quiz-options').appendChild(label);
-  });
-  
-  quizForm.appendChild(qDiv);
+let gameActive = false;
+let spawnTimeout = null;
+let gameTimerInterval = null;
+let elapsed = 0;
+let points = 0;
+let bestScore = parseInt(localStorage.getItem('bestScore') || '0', 10);
+bestScoreEl.textContent = bestScore;
+
+startBtn.addEventListener('click', startGame);
+stopBtn.addEventListener('click', stopGame);
+
+function resetGameState(){
+  // limpar bolhas
+  gameArea.querySelectorAll('.bolha').forEach(b => b.remove());
+  elapsed = 0;
+  points = 0;
+  bolhasCountEl.textContent = '0';
+  timerEl.textContent = '0s';
 }
-
-function mostrarResultadoQuiz(respostas){
-  const pontuacoes = [0,1,2]; // Pesos das respostas
-  let total = respostas.reduce((s,v)=>s+pontuacoes[v],0);
-  let nivel = "", corClass = "", msg = "";
-  
-  // Lógica de Risco
-  if(total <= 3){
-    nivel="Baixo risco"; corClass="quiz-result-low";
-    msg = "Você parece ter controle, mas mantenha-se vigilante.";
-  } else if(total <= 7){
-    nivel="Risco Moderado"; corClass="quiz-result-medium";
-    msg = "Cuidado. Você apresenta sinais de alerta que podem evoluir.";
-  } else {
-    nivel="Alto Risco"; corClass="quiz-result-high";
-    msg = "Busque ajuda. O vício está afetando sua qualidade de vida.";
-  }
-
-  // Mostra resultado na tela (Discreto)
-  quizResult.innerHTML=`
-    <div class="quiz-result-box fadein">
-      <h3>Resultado: <span class="${corClass}">${nivel}</span></h3>
-      <p>${msg}</p>
-      <button onclick="mostrarPopupEbook('${nivel}', '${userData.nome}')" class="cta-btn primary full-width">Ver meu plano de ação</button>
-    </div>`;
-
-  // Abre o Popup automaticamente se for risco moderado/alto
-  if(total > 3) {
-    setTimeout(() => mostrarPopupEbook(nivel, userData.nome), 1500);
-  }
-}
-
-// ===== POP-UP EBOOK (Com mensagem personalizada) =====
-function mostrarPopupEbook(nivel, nome) {
-  const popupBg = document.getElementById("ebook-popup");
-  let titulo = "Livre das Apostas";
-  let textoIntro = "Um guia prático para vencer o vício.";
-  
-  // Personalização da mensagem baseada no risco
-  if(nivel === "Alto Risco" || nivel === "Risco Moderado") {
-    titulo = `Calma, ${nome || 'amigo'}. Existe saída.`;
-    textoIntro = `Identificamos um padrão de vulnerabilidade no seu teste. <br><br>
-    Eu sei que dá medo e a ansiedade aperta, <b>mas você não precisa resolver tudo hoje.</b><br>
-    Eu preparei um material para te segurar pela mão nesse início.`;
-  }
-
-  popupBg.innerHTML = `
-    <div class="ebook-popup-bg fadein">
-    <div class="ebook-popup">
-      <button class="ebook-popup-close" title="Fechar">&times;</button>
-      <div class="ebook-popup-content">
-        <h3 style="color:var(--primary); margin-bottom:10px;">${titulo}</h3>
-        <div class="ebook-popup-desc" style="font-size:1rem; line-height:1.5;">${textoIntro}</div>
-        
-        <div style="margin: 20px 0; background:#f8fafc; padding:15px; border-radius:10px;">
-            <div style="display:flex; justify-content:center; gap:15px; align-items:center;">
-                <img src="assets/capa-ebook.jpg" style="width:60px; border-radius:4px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-                <div style="text-align:left;">
-                    <div style="font-weight:bold; color:#334155;">O Guia Definitivo</div>
-                    <div style="color:#059669; font-weight:bold;">R$ 19,90 <span style="font-size:0.8em; text-decoration:line-through; color:#94a3b8;">R$ 39,90</span></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ebook-popup-btns">
-          <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="cta-btn primary">Quero mudar minha vida</a>
-          <a href="assets/amostra.pdf" target="_blank" class="cta-btn outline" style="border:none; font-size:0.9rem;">Ler capítulo gratuito sem compromisso</a>
-        </div>
-      </div>
-    </div></div>`;
-  
-  popupBg.classList.remove("popup-hidden");
-  popupBg.querySelector(".ebook-popup-close").onclick = ()=>popupBg.classList.add("popup-hidden");
-}
-
-
-// ========== JOGO ANTI-ANSIEDADE (Ajustado) ==========
-const gameArea = document.getElementById("game-area");
-const bolhasCount = document.getElementById("bolhas-count");
-const gameTimerEl = document.getElementById("game-timer");
-const gameFinal = document.getElementById("game-final");
-const btnJogarNovamente = document.getElementById("btn-jogar-novamente");
-let gameTimer, gameTempo, gameAtivo=false, bolhasEstouradas=0;
-let bolhaInterval;
 
 function startGame(){
-  // Reset
-  gameArea.innerHTML = ""; 
-  bolhasEstouradas = 0; 
-  gameTempo = 30;
-  bolhasCount.textContent = bolhasEstouradas;
-  gameTimerEl.textContent = gameTempo; 
-  gameAtivo = true;
-  gameFinal.innerHTML="";
-  btnJogarNovamente.style.display="none";
+  if (gameActive) return;
+  gameActive = true;
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  resetGameState();
 
-  // Remover overlay de start se existir
-  const overlay = gameArea.querySelector('.start-overlay');
-  if(overlay) overlay.remove();
+  // timer crescente
+  gameTimerInterval = setInterval(() => {
+    elapsed++;
+    timerEl.textContent = `${elapsed}s`;
+  }, 1000);
 
-  // Criação de bolhas (Mais lento e calmo)
-  // Intervalo maior: entre 800ms e 1500ms para dar tempo
-  bolhaInterval = setInterval(()=>{
-    if(!gameAtivo) return;
-    criarBolha();
-  }, 800); 
-
-  // Timer do jogo
-  gameTimer = setInterval(()=>{
-    gameTempo--;
-    gameTimerEl.textContent = gameTempo;
-    if(gameTempo<=0){
-      encerrarGame();
-    }
-  },1000);
+  // iniciar spawn loop
+  spawnLoop();
 }
 
-function criarBolha() {
-    const bolha = document.createElement("div");
-    bolha.className = "bolha";
-    
-    // Tamanho variável para ficar dinâmico
-    const size = Math.floor(Math.random() * 20) + 50; // entre 50px e 70px
-    bolha.style.width = size + "px";
-    bolha.style.height = size + "px";
-    
-    // Posição aleatória respeitando limites (evita sair da div)
-    const areaW = gameArea.offsetWidth - size;
-    const areaH = gameArea.offsetHeight - size;
-    bolha.style.left = Math.random() * areaW + "px";
-    bolha.style.top = Math.random() * areaH + "px";
-
-    bolha.onclick = function(e){
-        e.stopPropagation(); // Evita clicar no fundo
-        bolhasEstouradas++; 
-        bolhasCount.textContent = bolhasEstouradas;
-        
-        // Efeito de estouro
-        bolha.style.transform = "scale(1.4)";
-        bolha.style.opacity = "0";
-        setTimeout(() => bolha.remove(), 200);
-    };
-
-    gameArea.appendChild(bolha);
-
-    // Bolha desaparece sozinha se não clicar (tempo maior: 3s)
-    setTimeout(()=>{
-        if(bolha.parentNode) {
-            bolha.style.opacity = "0";
-            setTimeout(() => bolha.remove(), 500);
-        }
-    }, 2500 + Math.random() * 1000);
-}
-
-function encerrarGame(){
-  gameAtivo=false;
-  clearInterval(bolhaInterval);
-  clearInterval(gameTimer);
-  gameArea.innerHTML=""; // Limpa tudo
-  
-  let msg = bolhasEstouradas > 15 ? 
-    "Ótimo foco! Você conseguiu se manter presente." : 
-    "O importante foi tentar. Respire fundo.";
-    
-  gameFinal.innerHTML = `<div style="margin-top:15px; font-weight:bold; color:var(--primary)">${msg}</div>`;
-  btnJogarNovamente.style.display="inline-block";
-  
-  // Recoloca o overlay de start
-  const overlay = document.createElement('div');
-  overlay.className = 'start-overlay';
-  overlay.innerHTML = '<span>Toque para jogar novamente</span>';
-  overlay.onclick = startGame;
-  gameArea.appendChild(overlay);
-}
-
-// Botão Fullscreen (Opcional, se você adicionar no HTML)
-function toggleFullScreen() {
-  if (!document.fullscreenElement) {
-      gameArea.requestFullscreen().catch(err => {
-        alert(`Erro ao entrar em tela cheia: ${err.message}`);
-      });
-  } else {
-    document.exitFullscreen();
+function stopGame(){
+  gameActive = false;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  clearInterval(gameTimerInterval);
+  gameTimerInterval = null;
+  if (spawnTimeout) { clearTimeout(spawnTimeout); spawnTimeout = null; }
+  // avaliar recorde
+  if (points > bestScore){
+    bestScore = points;
+    localStorage.setItem('bestScore', bestScore);
+    bestScoreEl.textContent = bestScore;
   }
 }
 
-btnJogarNovamente.onclick = startGame;
+function spawnLoop(){
+  if (!gameActive) return;
+  criarBolha();
+  // spawn mais orgânico: 700ms – 1600ms, adaptado ao tamanho da tela
+  const base = (window.innerWidth < 600) ? 900 : 700;
+  const delay = base + Math.random() * 900;
+  spawnTimeout = setTimeout(spawnLoop, delay);
+}
 
+function criarBolha(){
+  if (!gameActive) return;
 
-// ========== RESPIRAR COMIGO (Animação Real) ==========
-const bolhaRespire = document.getElementById("bolha-respire");
-const respireTexto = document.getElementById("respire-texto");
-const btnRespire = document.getElementById("btn-respire");
-const respireCiclosEl = document.getElementById("respire-ciclos");
-const respireMensagem = document.getElementById("respire-mensagem");
+  // limitar bolhas simultâneas para performance
+  const MAX_BOLHAS = (window.innerWidth < 600) ? 6 : 12;
+  if (gameArea.querySelectorAll('.bolha').length >= MAX_BOLHAS) return;
 
-let ciclosRealizados = Number(localStorage.getItem("ciclosRespire")||0);
-if(respireCiclosEl) respireCiclosEl.textContent = ciclosRealizados;
+  const bolha = document.createElement('div');
+  bolha.className = 'bolha';
 
-function iniciarRespiracao() {
-    btnRespire.disabled = true;
-    btnRespire.style.opacity = "0.5";
-    respireMensagem.textContent = "Concentre-se na bolha...";
-    
-    let totalCiclos = 3; // Faremos 3 ciclos completos
-    let cicloAtual = 0;
+  // tamanho responsivo
+  const areaW = gameArea.clientWidth;
+  const areaH = gameArea.clientHeight;
+  const minSize = Math.round(Math.min(areaW, areaH) * 0.07);
+  const maxSize = Math.round(Math.min(areaW, areaH) * 0.14);
+  const size = Math.max(40, Math.floor(minSize + Math.random() * (maxSize - minSize)));
+  bolha.style.width = `${size}px`;
+  bolha.style.height = `${size}px`;
 
-    function ciclo() {
-        if(cicloAtual >= totalCiclos) {
-            // Fim
-            respireTexto.textContent = "Muito bem!";
-            bolhaRespire.className = "respire-bolha"; // Reset classe
-            btnRespire.disabled = false;
-            btnRespire.style.opacity = "1";
-            btnRespire.textContent = "Fazer novamente";
-            respireMensagem.textContent = "Sinta seu corpo mais leve.";
-            
-            ciclosRealizados++;
-            localStorage.setItem("ciclosRespire", ciclosRealizados);
-            respireCiclosEl.textContent = ciclosRealizados;
-            return;
-        }
+  // posição aleatória dentro da área
+  const left = Math.random() * (Math.max(0, areaW - size));
+  const top = Math.random() * (Math.max(0, areaH - size));
+  bolha.style.left = `${left}px`;
+  bolha.style.top = `${top}px`;
 
-        // 1. Inspire (4s)
-        respireTexto.textContent = "Inspire...";
-        bolhaRespire.className = "respire-bolha inspire";
-        
-        setTimeout(() => {
-            // 2. Segure (4s)
-            respireTexto.textContent = "Segure...";
-            bolhaRespire.className = "respire-bolha segure";
-            
-            setTimeout(() => {
-                // 3. Expire (6s)
-                respireTexto.textContent = "Expire...";
-                bolhaRespire.className = "respire-bolha expire";
-                
-                setTimeout(() => {
-                    cicloAtual++;
-                    ciclo(); // Próximo ciclo
-                }, 6000); // Tempo expirar
-            }, 4000); // Tempo segurar
-        }, 4000); // Tempo inspirar
+  // pequena variação de opacidade
+  bolha.style.opacity = '0.98';
+
+  // animação de entrada
+  bolha.style.transform = 'scale(0.6)';
+  requestAnimationFrame(() => {
+    bolha.style.transition = 'transform 300ms cubic-bezier(.2,.9,.2,.9), opacity 350ms';
+    bolha.style.transform = 'scale(1)';
+  });
+
+  // Evento: usar pointerdown para compatibilidade touch + mouse
+  bolha.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    estourarBolha(bolha);
+  }, {passive:false});
+
+  gameArea.appendChild(bolha);
+
+  // auto-despawn se não for estourada
+  const life = 2500 + Math.random() * 1600;
+  const despawn = setTimeout(() => {
+    if (bolha.parentNode){
+      bolha.style.opacity = '0';
+      bolha.style.transform = 'scale(0.6)';
+      setTimeout(() => bolha.remove(), 420);
     }
+  }, life);
 
-    ciclo();
+  // garantir que quando o jogo para, a bolha seja removida
+  bolha._despawn = despawn;
 }
 
-if(btnRespire) btnRespire.onclick = iniciarRespiracao;
+function estourarBolha(bolha){
+  // proteção
+  if (!bolha || bolha._popped) return;
+  bolha._popped = true;
 
+  // contabiliza
+  points++;
+  bolhasCountEl.textContent = points;
 
-// ========== OUTROS (Versículos e Depoimentos) ==========
-// Versículos
-const versiculos = [
-  {verso:"João 8:32",txt:"E conhecereis a verdade, e a verdade vos libertará.",afirm:"A verdade liberta."},
-  {verso:"Filipenses 4:13",txt:"Tudo posso naquele que me fortalece.",afirm:"Você tem força."},
-  {verso:"Isaías 41:10",txt:"Não temas, porque eu sou contigo.",afirm:"Você não está só."},
-  {verso:"Salmo 46:1",txt:"Deus é nosso refúgio e fortaleza.",afirm:"Busque seu refúgio."}
-];
-const vTexto = document.getElementById("versiculo-texto");
-const vAfirm = document.getElementById("versiculo-afirmacao");
-const btnNovoV = document.getElementById("btn-novo-versiculo");
+  // micro-feedback visual
+  bolha.style.transform = 'scale(1.5)';
+  bolha.style.opacity = '0';
+  bolha.style.transition = 'transform 160ms ease, opacity 300ms ease';
+  // remover depois da animação
+  setTimeout(() => {
+    if (bolha.parentNode) bolha.remove();
+  }, 260);
 
-function mostrarVersiculo(){
-  let idx=Math.floor(Math.random()*versiculos.length);
-  let v=versiculos[idx];
-  if(vTexto) vTexto.innerHTML=`"${v.txt}" <br><small style="color:var(--accent)">${v.verso}</small>`;
-  if(vAfirm) vAfirm.textContent = v.afirm;
-}
-mostrarVersiculo();
-if(btnNovoV) btnNovoV.onclick = mostrarVersiculo;
-
-// Depoimentos
-const depoimentos = [
-  "Recuperei minha paz e voltei a sorrir. Gratidão! – Carolina, 38",
-  "O quiz abriu minha mente, decidi buscar ajuda. – Leandro, 24",
-  "Faço o jogo antiansiedade todo dia. Ajuda muito. – Gabriel, 32",
-  "Achei que não tinha saída, mas encontrei apoio aqui. – José, 41"
-];
-let depoIdx=0;
-const depoAtual = document.getElementById("depoimento-atual");
-function mostrarDepoimento(){
-  if(depoAtual) {
-    depoAtual.style.opacity = 0;
-    setTimeout(()=>{
-        depoAtual.textContent = depoimentos[depoIdx];
-        depoAtual.style.opacity = 1;
-    },300);
+  // som opcional (simples click)
+  if (soundToggle.checked) {
+    playPopSound();
   }
 }
-mostrarDepoimento();
-const btnDepoProx = document.getElementById("depo-proximo");
-const btnDepoAnt = document.getElementById("depo-anterior");
-if(btnDepoProx) btnDepoProx.onclick = ()=>{depoIdx=(depoIdx+1)%depoimentos.length;mostrarDepoimento();}
-if(btnDepoAnt) btnDepoAnt.onclick = ()=>{depoIdx=(depoIdx-1+depoimentos.length)%depoimentos.length;mostrarDepoimento();}
+
+/* Som pop simples via WebAudio (gera tom curto) */
+let audioCtx = null;
+function playPopSound(){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.value = 700 + Math.random() * 300;
+    g.gain.value = 0.05;
+    o.connect(g);
+    g.connect(audioCtx.destination);
+    o.start();
+    setTimeout(()=> {
+      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+      o.stop(audioCtx.currentTime + 0.09);
+    }, 0);
+  }catch(e){
+    // se falhar, silenciar (ex.: bloqueio de autoplay)
+  }
+}
+
+/* Ao redimensionar, remover bolhas que possam ficar fora e ajustar limites */
+window.addEventListener('resize', () => {
+  // remover bolhas que tenham posições inválidas (opcional)
+  const areaW = gameArea.clientWidth;
+  const areaH = gameArea.clientHeight;
+  gameArea.querySelectorAll('.bolha').forEach(b => {
+    const w = b.offsetWidth, h = b.offsetHeight;
+    let left = parseFloat(b.style.left || 0);
+    let top = parseFloat(b.style.top || 0);
+    if (left + w > areaW) left = Math.max(0, areaW - w - 8);
+    if (top + h > areaH) top = Math.max(0, areaH - h - 8);
+    b.style.left = `${left}px`;
+    b.style.top = `${top}px`;
+  });
+});
+
+/* Antes da saída, salvar recorde se necessário */
+window.addEventListener('beforeunload', () => {
+  if (points > bestScore) localStorage.setItem('bestScore', points);
+});
