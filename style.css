@@ -172,3 +172,25 @@ footer { background: var(--bg-accent); padding: 50px 0; text-align: center; marg
     .buttons-row { justify-content: center; }
     .hero h1 { font-size: 2rem; }
 }
+
+/* --- ESTILO NOVO PARA O RESULTADO DO QUIZ --- */
+.analysis-box {
+    background-color: var(--bg-accent);
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 5px solid var(--primary);
+    margin: 20px 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+.analysis-title {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+.analysis-high { border-color: var(--cta); background-color: rgba(230, 57, 70, 0.1); color: var(--cta); }
+.analysis-mod { border-color: #F4A261; background-color: rgba(244, 162, 97, 0.1); color: #e76f51; }
+.analysis-low { border-color: var(--primary); background-color: rgba(45, 106, 79, 0.1); color: var(--primary); }
+
+#result-footer { margin-top: 20px; font-size: 0.9rem; opacity: 0.8; }
