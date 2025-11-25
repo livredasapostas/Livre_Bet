@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LivreBet - Jornada de Liberdade</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -20,7 +19,8 @@
                     <li><a href="#quiz">Quiz</a></li>
                     <li><a href="#jogo">Anti-Ansiedade</a></li>
                     <li><a href="#respire">Respire</a></li>
-                    <li><a href="#biblia">Verdade</a></li> <li><a href="#livro-secao">Livro</a></li>
+                    <li><a href="#biblia">Verdade</a></li>
+                    <li><a href="#livro-secao">Livro</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
@@ -44,21 +44,28 @@
     <section id="quiz" class="section-pad">
         <div class="container">
             <h2>Quiz de Identificação</h2>
+            
             <div id="quiz-intro">
-                <p>Preencha para gerar seu relatório de progresso.</p>
+                <p>Preencha para gerar seu diagnóstico.</p>
                 <input type="text" id="user-name" placeholder="Seu Nome" required>
                 <input type="email" id="user-email" placeholder="Seu E-mail" required>
-                <button class="btn-primary" onclick="iniciarQuiz()">Iniciar Quiz</button>
+                <button class="btn-primary" onclick="iniciarQuiz()">Iniciar Análise</button>
             </div>
+
             <div id="quiz-questions" class="hidden">
                 <h3 id="question-text">Pergunta</h3>
                 <div id="options-container"></div>
+                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Pergunta <span id="q-number">1</span> de 10</p>
             </div>
+
             <div id="quiz-result" class="hidden">
-                <h3>Seu Resultado</h3>
-                <div id="result-content"></div>
-                <p id="biblical-msg" class="italic-text"></p>
-                <button class="btn-secondary" onclick="baixarPDF()">Baixar Relatório (PDF)</button>
+                <h3>Diagnóstico Final</h3>
+                <div id="result-content" class="analysis-box"></div>
+                
+                <div id="result-footer">
+                    <p>Seus resultados foram salvos no seu dispositivo.</p>
+                    <button class="btn-primary" onclick="location.reload()">Refazer Teste</button>
+                </div>
             </div>
         </div>
     </section>
@@ -67,11 +74,9 @@
         <div class="container">
             <h2>Estoura a Ansiedade</h2>
             <p>Quando a vontade vier, venha aqui. Estoure os pensamentos ruins.</p>
-            
             <div class="game-ui">
                 <span>Ansiedades eliminadas: <b id="score">0</b></span>
             </div>
-            
             <div id="game-board">
                 <div id="start-screen-game">
                     <button class="btn-primary" onclick="startGame()">Começar Terapia Visual</button>
@@ -84,11 +89,9 @@
         <div class="container text-center">
             <h2>Controle sua Respiração</h2>
             <p id="breath-text">Clique para iniciar</p>
-            
             <div class="breath-container">
                 <img src="assets/redondo.png" id="breath-img" alt="Círculo de respiração">
             </div>
-            
             <button class="btn-primary" id="btn-breath" onclick="iniciarRespiracao()">Iniciar Ciclo (5x)</button>
         </div>
     </section>
@@ -111,8 +114,7 @@
             <h2>Histórias Reais</h2>
             <div class="carousel">
                 <button class="nav-btn" onclick="mudarDepoimento(-1)">&#10094;</button>
-                <div id="testimonial-content">
-                    </div>
+                <div id="testimonial-content"></div>
                 <button class="nav-btn" onclick="mudarDepoimento(1)">&#10095;</button>
             </div>
         </div>
@@ -126,12 +128,10 @@
             <div class="book-details">
                 <h2>Livre das Apostas – Uma História de Redenção</h2>
                 <p class="book-desc">Um guia direto, sem rodeios. Entenda o mecanismo químico e espiritual do vício e aprenda a desarmar os gatilhos antes que eles disparem.</p>
-                
                 <div class="pricing">
                     <span class="old-price">R$ 39,90</span>
                     <span class="new-price">R$ 19,90</span>
                 </div>
-
                 <div class="buttons-row">
                     <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta pulse">Comprar Agora</a>
                     <a href="assets/amostra.pdf" target="_blank" class="btn-secondary">Ler Amostra</a>
@@ -149,12 +149,12 @@
             </div>
             <div class="help-box">
                 <h3>🛡️ Bloqueio</h3>
-                <p>Instale bloqueadores de sites de apostas.</p>
+                <p>Instale bloqueadores.</p>
                 <p>Entregue suas finanças a alguém.</p>
             </div>
             <div class="help-box">
                 <h3>🙏 Oração</h3>
-                <p>A culpa é um peso inútil. O arrependimento é a chave da mudança.</p>
+                <p>A culpa é um peso inútil. O arrependimento é a chave.</p>
             </div>
         </div>
     </section>
@@ -162,9 +162,6 @@
     <footer>
         <div class="container">
             <p>&copy; 2025 LivreBet.</p>
-            <div class="footer-links">
-                <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd">Adquirir o Livro</a>
-            </div>
         </div>
     </footer>
 
@@ -174,13 +171,15 @@
             <div class="modal-body">
                 <img src="assets/capa-ebook.jpg" alt="Capa Ebook" class="modal-img">
                 <div class="modal-text">
-                    <h3>Oferta Especial para sua Recuperação</h3>
-                    <p class="desc">Este livro contém o método exato que utilizei para sair do fundo do poço.</p>
+                    <h3 id="modal-title">Resultado da Análise</h3>
+                    <p id="modal-desc" class="desc">Carregando análise...</p>
+                    
                     <div class="pricing-modal">
                         <span class="new">R$ 19,90</span>
                     </div>
-                    <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta">Garantir Cópia</a>
-                    <a href="assets/amostra.pdf" target="_blank" class="link-sample">Ver amostra grátis</a>
+                    
+                    <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta">Garantir Guia Completo</a>
+                    <a href="assets/amostra.pdf" target="_blank" class="link-sample">🎁 Presente: Baixar 1º Capítulo Grátis</a>
                 </div>
             </div>
         </div>
