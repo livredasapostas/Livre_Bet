@@ -1,98 +1,191 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Livre das Apostas — StopBet</title>
-
-  <!-- Material icons (opcional) -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Fonte (opcional) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style (1).css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LivreBet - Jornada de Liberdade</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="site-header">
-    <div class="site-brand">
-      <img src="assets/capa-ebook.jpg" alt="Capa do eBook" class="brand-img" />
-      <div class="brand-title">
-        <h1>Livre das Apostas</h1>
-        <p class="subtitle">Caminho para transformação</p>
-      </div>
+
+    <header id="main-header">
+        <div class="container header-content">
+            <div class="logo">LivreBet</div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#quiz">Quiz</a></li>
+                    <li><a href="#jogo">Anti-Ansiedade</a></li>
+                    <li><a href="#respire">Respire</a></li>
+                    <li><a href="#biblia">Verdade</a></li> <li><a href="#livro-secao">Livro</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" title="Mudar Tema">🌙</button>
+                <div class="counter-area">
+                    <span id="days-count">0d limpo</span>
+                    <button id="btn-reset-counter" onclick="configurarData()">Definir Data</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h1>Sua liberdade vale mais que qualquer aposta.</h1>
+            <p>Um ambiente seguro, sem gatilhos, para você retomar o controle da sua vida.</p>
+            <a href="#quiz" class="btn-cta">Começar pelo Quiz</a>
+        </div>
+    </section>
+
+    <section id="quiz" class="section-pad">
+        <div class="container">
+            <h2>Quiz de Identificação</h2>
+            <div id="quiz-intro">
+                <p>Preencha para gerar seu relatório de progresso.</p>
+                <input type="text" id="user-name" placeholder="Seu Nome" required>
+                <input type="email" id="user-email" placeholder="Seu E-mail" required>
+                <button class="btn-primary" onclick="iniciarQuiz()">Iniciar Quiz</button>
+            </div>
+            <div id="quiz-questions" class="hidden">
+                <h3 id="question-text">Pergunta</h3>
+                <div id="options-container"></div>
+            </div>
+            <div id="quiz-result" class="hidden">
+                <h3>Seu Resultado</h3>
+                <div id="result-content"></div>
+                <p id="biblical-msg" class="italic-text"></p>
+                <button class="btn-secondary" onclick="baixarPDF()">Baixar Relatório (PDF)</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="jogo" class="section-pad">
+        <div class="container">
+            <h2>Estoura a Ansiedade</h2>
+            <p>Quando a vontade vier, venha aqui. Estoure os pensamentos ruins.</p>
+            
+            <div class="game-ui">
+                <span>Ansiedades eliminadas: <b id="score">0</b></span>
+            </div>
+            
+            <div id="game-board">
+                <div id="start-screen-game">
+                    <button class="btn-primary" onclick="startGame()">Começar Terapia Visual</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="respire" class="section-pad">
+        <div class="container text-center">
+            <h2>Controle sua Respiração</h2>
+            <p id="breath-text">Clique para iniciar</p>
+            
+            <div class="breath-container">
+                <img src="assets/redondo.png" id="breath-img" alt="Círculo de respiração">
+            </div>
+            
+            <button class="btn-primary" id="btn-breath" onclick="iniciarRespiracao()">Iniciar Ciclo (5x)</button>
+        </div>
+    </section>
+
+    <section id="biblia" class="section-pad bg-accent">
+        <div class="container text-center">
+            <h2>Verdade que Liberta</h2>
+            <div class="verse-card">
+                <p id="verse-text">"Não se enganem: as más companhias corrompem os bons costumes."</p>
+                <p id="verse-ref">1 Coríntios 15:33</p>
+                <hr>
+                <p id="affirmation-text" class="affirmation">Se afastar do que te faz cair não é fraqueza, é estratégia.</p>
+            </div>
+            <button class="btn-outline" onclick="novoVersiculo()">Ler outra verdade</button>
+        </div>
+    </section>
+
+    <section id="depoimentos" class="section-pad">
+        <div class="container">
+            <h2>Histórias Reais</h2>
+            <div class="carousel">
+                <button class="nav-btn" onclick="mudarDepoimento(-1)">&#10094;</button>
+                <div id="testimonial-content">
+                    </div>
+                <button class="nav-btn" onclick="mudarDepoimento(1)">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="livro-secao" class="section-pad book-highlight">
+        <div class="container book-layout">
+            <div class="book-cover">
+                <img src="assets/capa-ebook.jpg" alt="Capa do Livro">
+            </div>
+            <div class="book-details">
+                <h2>Livre das Apostas – Uma História de Redenção</h2>
+                <p class="book-desc">Um guia direto, sem rodeios. Entenda o mecanismo químico e espiritual do vício e aprenda a desarmar os gatilhos antes que eles disparem.</p>
+                
+                <div class="pricing">
+                    <span class="old-price">R$ 39,90</span>
+                    <span class="new-price">R$ 19,90</span>
+                </div>
+
+                <div class="buttons-row">
+                    <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta pulse">Comprar Agora</a>
+                    <a href="assets/amostra.pdf" target="_blank" class="btn-secondary">Ler Amostra</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ajuda" class="section-pad bg-dark-section">
+        <div class="container help-grid">
+            <div class="help-box">
+                <h3>🆘 Urgência</h3>
+                <p>CVV: <strong>188</strong></p>
+                <p>Procure um CAPS AD.</p>
+            </div>
+            <div class="help-box">
+                <h3>🛡️ Bloqueio</h3>
+                <p>Instale bloqueadores de sites de apostas.</p>
+                <p>Entregue suas finanças a alguém.</p>
+            </div>
+            <div class="help-box">
+                <h3>🙏 Oração</h3>
+                <p>A culpa é um peso inútil. O arrependimento é a chave da mudança.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 LivreBet.</p>
+            <div class="footer-links">
+                <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd">Adquirir o Livro</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal-book" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharModal()">&times;</span>
+            <div class="modal-body">
+                <img src="assets/capa-ebook.jpg" alt="Capa Ebook" class="modal-img">
+                <div class="modal-text">
+                    <h3>Oferta Especial para sua Recuperação</h3>
+                    <p class="desc">Este livro contém o método exato que utilizei para sair do fundo do poço.</p>
+                    <div class="pricing-modal">
+                        <span class="new">R$ 19,90</span>
+                    </div>
+                    <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta">Garantir Cópia</a>
+                    <a href="assets/amostra.pdf" target="_blank" class="link-sample">Ver amostra grátis</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="header-actions">
-      <!-- Theme toggle -->
-      <button id="theme-toggle" class="btn-icon" title="Alterar tema" aria-label="Alternar tema">
-        <span class="material-icons" id="theme-icon">dark_mode</span>
-      </button>
-
-      <!-- (outros botões se houver) -->
-    </div>
-  </header>
-
-  <main class="container">
-    <!-- HERO VISUAL: substituí o quadrado por apenas a imagem redondo.png -->
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-text">
-          <h2>Respiração & Calma</h2>
-          <p>Pequenas práticas para ajudar nos momentos de vontade de apostar.</p>
-        </div>
-
-        <div class="hero-visual">
-          <!-- Agora imagem redondo.png como "círculo em movimento" -->
-          <img src="assets/redondo.png" alt="Círculo em movimento" class="circle-bg" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção Respire + Palavra de força (empilhadas verticalmente) -->
-    <section class="controls">
-      <div class="grid-2">
-        <div class="respire-card">
-          <h3>Respire comigo</h3>
-          <p class="respire-instruction">Inspire 4s — Segure 4s — Expire 6s. Repita 5 vezes.</p>
-          <button id="start-breath" class="btn">Começar exercício</button>
-          <div id="breath-visual" class="breath-visual" aria-hidden="true"></div>
-        </div>
-
-        <div class="palavra-card">
-          <h3>Palavra de força</h3>
-          <blockquote id="verso-txt" class="verso-txt">E conhecereis a verdade, e a verdade vos libertará.</blockquote>
-          <div id="afirmacao" class="afirmacao">Um passo de cada vez.</div>
-          <button id="next-verso" class="btn btn-ghost">Próxima palavra</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Jogo das bolhas -->
-    <section class="game-section">
-      <h3>Jogo antiansiedade</h3>
-      <p class="game-desc">Estoure bolhas para marcar pontos. O objetivo é ocupar a mente por alguns minutos.</p>
-
-      <div class="game-stats">
-        <div class="stat"><strong>Pontos</strong><span id="bolhas-count">0</span></div>
-        <div class="stat"><strong>Tempo</strong><span id="game-timer">0s</span></div>
-        <div class="stat"><strong>Recorde</strong><span id="best-score">0</span></div>
-      </div>
-
-      <div id="game-area" class="game-area" role="application" aria-label="Área do jogo de estourar bolhas"></div>
-
-      <div class="game-controls">
-        <button id="start-game" class="btn">Iniciar</button>
-        <button id="stop-game" class="btn btn-ghost" disabled>Parar</button>
-        <label class="sound-label"><input type="checkbox" id="sound-toggle" /> Som</label>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <small>© Livre das Apostas — Projeto de suporte</small>
-  </footer>
-
-  <script src="script.js" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>
