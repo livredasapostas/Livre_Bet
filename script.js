@@ -6,10 +6,10 @@ const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 if (userTheme === 'dark' || (!userTheme && systemTheme)) {
     root.setAttribute('data-theme', 'dark');
-    toggleBtn.innerText = '☀️ Claro';
+    toggleBtn.innerText = '☀️';
 } else {
     root.setAttribute('data-theme', 'light');
-    toggleBtn.innerText = '🌙 Escuro';
+    toggleBtn.innerText = '🌙';
 }
 
 toggleBtn.addEventListener('click', () => {
@@ -17,7 +17,7 @@ toggleBtn.addEventListener('click', () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     root.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    toggleBtn.innerText = newTheme === 'light' ? '🌙 Escuro' : '☀️ Claro';
+    toggleBtn.innerText = newTheme === 'light' ? '🌙' : '☀️';
 });
 
 /* --- CONTADOR DE DIAS --- */
