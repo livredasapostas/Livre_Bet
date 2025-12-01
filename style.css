@@ -1,6 +1,5 @@
 /* --- VARIÁVEIS DE TEMA (DARK/LIGHT) --- */
 :root {
-    /* Cores Light (Padrão) */
     --bg-body: #F7FFF7;
     --bg-section: #ffffff;
     --bg-accent: #e0fbfc;
@@ -17,14 +16,13 @@
 }
 
 [data-theme="dark"] {
-    /* Cores Dark */
     --bg-body: #121212;
     --bg-section: #1e1e1e;
     --bg-accent: #2c2c2c;
     --bg-dark-section: #000000;
     --text-main: #e0e0e0;
     --text-inverse: #ddd;
-    --primary: #52b788; /* Verde mais claro para contraste */
+    --primary: #52b788;
     --secondary: #74c69d;
     --cta: #ff6b6b;
     --card-bg: #2d2d2d;
@@ -63,10 +61,29 @@ body {
 nav ul { display: flex; list-style: none; gap: 20px; }
 nav a { text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
 nav a:hover { color: var(--primary); }
-.header-actions { display: flex; align-items: center; gap: 15px; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
 #theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; }
 .counter-area { font-size: 0.8rem; display: flex; align-items: center; gap: 10px; background: var(--bg-accent); padding: 5px 10px; border-radius: 20px;}
 #btn-reset-counter { font-size: 0.7rem; padding: 4px 8px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; }
+
+/* Botão de Instalar App (PWA) */
+#btn-install {
+    background-color: var(--cta);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: none; /* Inicia oculto */
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
 
 /* --- HERO --- */
 .hero { min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 80px; }
@@ -77,24 +94,39 @@ nav a:hover { color: var(--primary); }
 #quiz input { background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-main); padding: 12px; margin: 10px 0; width: 100%; max-width: 350px; border-radius: 8px; display: block; margin-left: auto; margin-right: auto;}
 .quiz-option { display: block; width: 100%; padding: 15px; margin: 10px 0; background: var(--card-bg); border: 1px solid var(--input-border); color: var(--text-main); border-radius: 8px; text-align: left; cursor: pointer; transition: 0.2s; }
 .quiz-option:hover { border-color: var(--primary); background: var(--bg-accent); }
-#result-content { padding: 20px; background: var(--card-bg); border-radius: 8px; margin: 20px 0; box-shadow: 0 4px 10px var(--shadow); }
 
-/* --- JOGO ANTI-ANSIEDADE (Atualizado) --- */
+/* Caixa de Resultado */
+.analysis-box {
+    background-color: var(--bg-accent);
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 5px solid var(--primary);
+    margin: 20px 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+.analysis-title { font-weight: 700; display: block; margin-bottom: 10px; font-size: 1.3rem; }
+.analysis-high { border-color: var(--cta); background-color: rgba(230, 57, 70, 0.1); color: var(--cta); }
+.analysis-mod { border-color: #F4A261; background-color: rgba(244, 162, 97, 0.1); color: #e76f51; }
+.analysis-low { border-color: var(--primary); background-color: rgba(45, 106, 79, 0.1); color: var(--primary); }
+#result-footer { margin-top: 20px; font-size: 0.9rem; opacity: 0.8; }
+
+/* --- JOGO ANTI-ANSIEDADE --- */
 .game-ui { display: flex; justify-content: center; margin-bottom: 15px; font-size: 1.2rem; }
 #game-board { 
     width: 100%; 
-    height: 60vh; /* Altura responsiva */
+    height: 60vh; 
     max-height: 500px;
     background: linear-gradient(to top, var(--bg-accent), var(--bg-body)); 
     border: 2px solid var(--input-border); 
     position: relative; 
     overflow: hidden; 
     border-radius: 15px; 
-    touch-action: manipulation; /* Melhora toque no mobile */
+    touch-action: manipulation;
 }
 .bubble { 
     position: absolute; 
-    background: rgba(45, 106, 79, 0.2); /* Verde transparente */
+    background: rgba(45, 106, 79, 0.2); 
     border: 2px solid var(--primary);
     border-radius: 50%; 
     cursor: pointer; 
@@ -115,14 +147,13 @@ nav a:hover { color: var(--primary); }
 /* --- RESPIRE --- */
 .breath-container { height: 350px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; }
 #breath-img { width: 150px; height: 150px; object-fit: contain; transition: transform 0.1s linear; }
-/* Classes de animação aplicadas via JS, mas definimos base aqui */
 .breath-grow { animation: grow 4s ease-in-out forwards; }
 .breath-hold { transform: scale(1.6); }
 .breath-shrink { animation: shrink 6s ease-in-out forwards; }
 @keyframes grow { from { transform: scale(1); } to { transform: scale(1.6); } }
 @keyframes shrink { from { transform: scale(1.6); } to { transform: scale(1); } }
 
-/* --- VERSÍCULOS / VERDADE --- */
+/* --- VERSÍCULOS --- */
 .verse-card { background: var(--card-bg); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px var(--shadow); max-width: 700px; margin: 0 auto; border-left: 5px solid var(--primary); }
 #verse-text { font-size: 1.3rem; font-style: italic; margin-bottom: 15px; line-height: 1.5;}
 #verse-ref { font-weight: bold; color: var(--secondary); margin-bottom: 25px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;}
@@ -163,7 +194,6 @@ footer { background: var(--bg-accent); padding: 50px 0; text-align: center; marg
 .pricing-modal { margin: 15px 0; font-size: 1.4rem; font-weight: bold; color: var(--cta); }
 .link-sample { display: block; margin-top: 15px; font-size: 0.85rem; color: var(--text-main); opacity: 0.7; }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .header-content { flex-direction: column; height: auto; padding: 15px; gap: 10px; }
     nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
@@ -172,25 +202,3 @@ footer { background: var(--bg-accent); padding: 50px 0; text-align: center; marg
     .buttons-row { justify-content: center; }
     .hero h1 { font-size: 2rem; }
 }
-
-/* --- ESTILO NOVO PARA O RESULTADO DO QUIZ --- */
-.analysis-box {
-    background-color: var(--bg-accent);
-    padding: 25px;
-    border-radius: 10px;
-    border-left: 5px solid var(--primary);
-    margin: 20px 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-.analysis-title {
-    font-weight: 700;
-    display: block;
-    margin-bottom: 10px;
-    font-size: 1.3rem;
-}
-.analysis-high { border-color: var(--cta); background-color: rgba(230, 57, 70, 0.1); color: var(--cta); }
-.analysis-mod { border-color: #F4A261; background-color: rgba(244, 162, 97, 0.1); color: #e76f51; }
-.analysis-low { border-color: var(--primary); background-color: rgba(45, 106, 79, 0.1); color: var(--primary); }
-
-#result-footer { margin-top: 20px; font-size: 0.9rem; opacity: 0.8; }
