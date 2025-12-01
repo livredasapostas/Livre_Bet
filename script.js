@@ -6,10 +6,10 @@ const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 if (userTheme === 'dark' || (!userTheme && systemTheme)) {
     root.setAttribute('data-theme', 'dark');
-    toggleBtn.innerText = '☀️';
+    toggleBtn.innerText = '☀️ Claro';
 } else {
     root.setAttribute('data-theme', 'light');
-    toggleBtn.innerText = '🌙';
+    toggleBtn.innerText = '🌙 Escuro';
 }
 
 toggleBtn.addEventListener('click', () => {
@@ -17,7 +17,7 @@ toggleBtn.addEventListener('click', () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     root.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    toggleBtn.innerText = newTheme === 'light' ? '🌙' : '☀️';
+    toggleBtn.innerText = newTheme === 'light' ? '🌙 Escuro' : '☀️ Claro';
 });
 
 /* --- CONTADOR DE DIAS --- */
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Verifica se já fez o quiz antes
     const savedResult = localStorage.getItem('quizResult');
     if(savedResult) {
-        // Opcional: Você pode mostrar uma mensagem de "Bem vindo de volta" baseada no risco
+        // Lógica opcional se já fez o quiz
     }
 });
 
@@ -126,7 +126,6 @@ function finalizarQuiz() {
         classeCor = "analysis-low";
         textoAnalise = `<span class="analysis-title">Situação: Controle</span>Parabéns, ${userData.name}. Suas respostas indicam que você tem controle sobre seus impulsos. No entanto, o vício é silencioso. Mantenha-se vigilante.`;
         
-        // Modal Texto - Baixo Risco
         modalTitle.innerText = "Você está seguro, mas conhecimento é poder.";
         modalDesc.innerText = "Sua pontuação indica que você não corre riscos imediatos. Parabéns! Se deseja entender profundamente o mecanismo do vício para ajudar um amigo ou se blindar para o futuro, meu material é um excelente estudo. Fique à vontade para baixar a amostra grátis abaixo.";
     
@@ -136,7 +135,6 @@ function finalizarQuiz() {
         classeCor = "analysis-mod";
         textoAnalise = `<span class="analysis-title">Situação: Alerta Ligado</span>Cuidado, ${userData.name}. Você apresenta comportamentos que precedem o vício compulsivo. Você já usa o jogo como escape emocional. É hora de parar antes que piore.`;
         
-        // Modal Texto - Moderado/Alto
         modalTitle.innerText = "Sinal de Alerta Identificado";
         modalDesc.innerText = "Parece que identificamos um padrão que sugere o início de uma compulsão. Mas calma: isso pode ser tratado e quanto antes você fizer isso, melhor. Abaixo segue o nosso material completo: 8 capítulos com embasamento neurocientífico, psicológico e cristão. Se não puder investir agora, te dou o 1º capítulo de presente.";
     
@@ -146,16 +144,13 @@ function finalizarQuiz() {
         classeCor = "analysis-high";
         textoAnalise = `<span class="analysis-title">Situação: Urgência</span>${userData.name}, os sinais de compulsão são claros. O jogo está afetando suas finanças e emoções. Não lute sozinho. Buscar ajuda não é vergonha, é coragem.`;
         
-        // Modal Texto - Alto
         modalTitle.innerText = "Não ignore este resultado.";
         modalDesc.innerText = "Identificamos um padrão severo que sugere compulsão. Respire fundo: isso tem tratamento. Meu guia une ciência e fé para te tirar desse ciclo. Aproveite o desconto para começar a mudança hoje, ou baixe o capítulo gratuito se não puder comprar agora. O importante é começar.";
     }
 
-    // Exibir análise na página
     resultDiv.innerHTML = textoAnalise;
     resultDiv.className = `analysis-box ${classeCor}`;
 
-    // Salvar no LocalStorage
     const resultadoSalvo = {
         data: new Date().toISOString(),
         score: totalScore,
@@ -164,7 +159,6 @@ function finalizarQuiz() {
     };
     localStorage.setItem('quizResult', JSON.stringify(resultadoSalvo));
 
-    // Abrir Modal após 1.5 segundos
     setTimeout(abrirModal, 1500);
 }
 
@@ -309,3 +303,38 @@ function atualizarDepoimento() {
         div.style.opacity = 1;
     }, 200);
 }
+
+/* --- PWA: INSTALAÇÃO DO APP --- */
+let deferredPrompt;
+const installBtn = document.getElementById('btn-install');
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then((reg) => console.log('Service Worker registrado!', reg))
+            .catch((err) => console.log('Falha ao registrar SW:', err));
+    });
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.classList.remove('hidden');
+    installBtn.style.display = 'block'; 
+});
+
+installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`Usuário escolheu: ${outcome}`);
+    deferredPrompt = null;
+    if(outcome === 'accepted'){
+        installBtn.style.display = 'none';
+    }
+});
+
+window.addEventListener('appinstalled', () => {
+    installBtn.style.display = 'none';
+    console.log('LivreBet foi instalado com sucesso!');
+});
