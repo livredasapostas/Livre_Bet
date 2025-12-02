@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LivreBet - Jornada de Liberdade</title>
-    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2D6A4F">
     <link rel="apple-touch-icon" href="assets/icon-192.png">
-
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -30,11 +28,10 @@
             </nav>
             <div class="header-actions">
                 <button id="btn-install" class="hidden" title="Instalar App">📲 Instalar</button>
-                
                 <button id="theme-toggle" title="Mudar Tema">🌙</button>
                 <div class="counter-area">
                     <span id="days-count">0d limpo</span>
-                    <button id="btn-reset-counter" onclick="configurarData()">Definir Data</button>
+                    <button id="btn-reset-counter" onclick="abrirModalData()">Definir Data</button>
                 </div>
             </div>
         </div>
@@ -51,24 +48,20 @@
     <section id="quiz" class="section-pad">
         <div class="container">
             <h2>Quiz de Identificação</h2>
-            
             <div id="quiz-intro">
                 <p>Preencha para gerar seu diagnóstico.</p>
                 <input type="text" id="user-name" placeholder="Seu Nome" required>
                 <input type="email" id="user-email" placeholder="Seu E-mail" required>
                 <button class="btn-primary" onclick="iniciarQuiz()">Iniciar Análise</button>
             </div>
-
             <div id="quiz-questions" class="hidden">
                 <h3 id="question-text">Pergunta</h3>
                 <div id="options-container"></div>
                 <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Pergunta <span id="q-number">1</span> de 10</p>
             </div>
-
             <div id="quiz-result" class="hidden">
                 <h3>Diagnóstico Final</h3>
                 <div id="result-content" class="analysis-box"></div>
-                
                 <div id="result-footer">
                     <p>Seus resultados foram salvos no seu dispositivo.</p>
                     <button class="btn-primary" onclick="location.reload()">Refazer Teste</button>
@@ -82,7 +75,8 @@
             <h2>Estoura a Ansiedade</h2>
             <p>Quando a vontade vier, venha aqui. Estoure os pensamentos ruins.</p>
             <div class="game-ui">
-                <span>Ansiedades eliminadas: <b id="score">0</b></span>
+                <span>Placar: <b id="score">0</b></span>
+                <button class="btn-fullscreen" onclick="toggleFullScreen()" title="Tela Cheia">⛶ Tela Cheia</button>
             </div>
             <div id="game-board">
                 <div id="start-screen-game">
@@ -174,21 +168,29 @@
 
     <div id="modal-book" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="fecharModal()">&times;</span>
+            <span class="close-btn" onclick="fecharModal('modal-book')">&times;</span>
             <div class="modal-body">
                 <img src="assets/capa-ebook.jpg" alt="Capa Ebook" class="modal-img">
                 <div class="modal-text">
                     <h3 id="modal-title">Resultado da Análise</h3>
                     <p id="modal-desc" class="desc">Carregando análise...</p>
-                    
                     <div class="pricing-modal">
                         <span class="new">R$ 19,90</span>
                     </div>
-                    
                     <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta">Garantir Guia Completo</a>
                     <a href="assets/amostra.pdf" target="_blank" class="link-sample">🎁 Presente: Baixar 1º Capítulo Grátis</a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="modal-date" class="modal">
+        <div class="modal-content modal-small">
+            <span class="close-btn" onclick="fecharModal('modal-date')">&times;</span>
+            <h3>Definir início da jornada</h3>
+            <p>Selecione o dia que você parou:</p>
+            <input type="date" id="date-input-field">
+            <button class="btn-primary" onclick="salvarDataModal()">Salvar Data</button>
         </div>
     </div>
 
