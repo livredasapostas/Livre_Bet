@@ -43,9 +43,6 @@ body {
 
 /* --- UTILITÁRIOS --- */
 .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-
-/* CORREÇÃO DO SCROLL (PONTO 2) */
-/* Isso faz a âncora parar 90px antes do elemento, compensando o header */
 section { scroll-margin-top: 90px; } 
 
 .section-pad { padding: 60px 0; display: block; width: 100%;}
@@ -107,7 +104,7 @@ nav a:hover { color: var(--primary); }
 #result-footer { margin-top: 20px; font-size: 0.9rem; opacity: 0.8; }
 
 /* --- JOGO ANTI-ANSIEDADE --- */
-.game-ui { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 1.1rem; }
+.game-ui { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 1.1rem; }
 #game-board { 
     width: 100%; 
     height: 60vh; 
@@ -119,12 +116,25 @@ nav a:hover { color: var(--primary); }
     border-radius: 15px; 
     touch-action: manipulation;
 }
-/* Estilo quando estiver em Fullscreen */
 #game-board:fullscreen {
     border-radius: 0;
     border: none;
     width: 100vw;
     height: 100vh;
+}
+.game-hud {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 5; /* Acima das bolhas, abaixo do start screen */
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.1rem;
+    pointer-events: none; /* Permite clicar nas bolhas "através" do texto se necessário */
+    text-shadow: 0 0 5px rgba(255,255,255,0.8);
 }
 .bubble { 
     position: absolute; 
@@ -137,6 +147,7 @@ nav a:hover { color: var(--primary); }
     justify-content: center; 
     user-select: none;
     transition: transform 0.1s;
+    z-index: 1;
 }
 .bubble:active { transform: scale(0.9); }
 #start-screen-game { 
