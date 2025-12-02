@@ -53,7 +53,6 @@ function atualizarContador() {
     
     const inicio = new Date(dataSalva);
     const hoje = new Date();
-    // Zera horas para evitar frações de dia
     inicio.setHours(0,0,0,0);
     hoje.setHours(0,0,0,0);
     
@@ -66,7 +65,6 @@ function atualizarContador() {
 
 /* --- FUNÇÕES MODAL GENÉRICAS --- */
 function fecharModal(idModal) {
-    // Se não passar ID, tenta fechar o do livro por padrão ou fecha o que foi passado
     const id = idModal || 'modal-book';
     const el = document.getElementById(id);
     if(el) el.style.display = "none";
@@ -166,28 +164,49 @@ function finalizarQuiz() {
     setTimeout(() => { document.getElementById('modal-book').style.display = "block"; }, 1500);
 }
 
-/* --- JOGO ANTI-ANSIEDADE (CORRIGIDO) --- */
+/* --- JOGO ANTI-ANSIEDADE (COM TIMER) --- */
 let gameScore = 0;
 let gameActive = false;
 let spawnInterval;
+let timerInterval;
+let gameSeconds = 0;
 
 function startGame() {
     const board = document.getElementById('game-board');
     const startScreen = document.getElementById('start-screen-game');
     
-    // Apenas esconde o botão, não deleta o conteúdo
     startScreen.style.display = 'none';
-    
-    // Limpa bolhas antigas se houver (mas mantém a estrutura do startScreen)
     const oldBubbles = document.querySelectorAll('.bubble');
     oldBubbles.forEach(b => b.remove());
 
+    // Reinicia Variáveis
     gameScore = 0;
+    gameSeconds = 0;
     document.getElementById('score').innerText = gameScore;
+    document.getElementById('timer').innerText = "00:00";
     gameActive = true;
     
-    // Inicia o loop de criação
+    // Limpa intervalos antigos para não acumular
+    if(timerInterval) clearInterval(timerInterval);
+    if(spawnInterval) clearInterval(spawnInterval);
+
+    // Inicia Loops
     spawnInterval = setInterval(createBubble, 800);
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+    if(!gameActive) return;
+    gameSeconds++;
+    
+    const minutes = Math.floor(gameSeconds / 60);
+    const seconds = gameSeconds % 60;
+    
+    // Formata para 00:00
+    const strMin = minutes < 10 ? `0${minutes}` : minutes;
+    const strSec = seconds < 10 ? `0${seconds}` : seconds;
+    
+    document.getElementById('timer').innerText = `${strMin}:${strSec}`;
 }
 
 function createBubble() {
@@ -197,7 +216,7 @@ function createBubble() {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
     
-    const size = Math.floor(Math.random() * 30) + 40; // 40px a 70px
+    const size = Math.floor(Math.random() * 30) + 40; 
     bubble.style.width = `${size}px`;
     bubble.style.height = `${size}px`;
     
@@ -205,9 +224,8 @@ function createBubble() {
     const randomX = Math.random() * maxX;
     
     bubble.style.left = `${randomX}px`;
-    bubble.style.bottom = '-80px'; // Começa fora da tela embaixo
+    bubble.style.bottom = '-80px'; 
     
-    // Define a velocidade (entre 2s e 5s)
     const speed = Math.random() * 3 + 2; 
     bubble.style.transition = `bottom ${speed}s linear, transform 0.2s, opacity 0.2s`; 
     
@@ -216,12 +234,10 @@ function createBubble() {
     
     board.appendChild(bubble);
 
-    // O PULO DO GATO: Espera o elemento renderizar e muda o bottom para o topo
     setTimeout(() => {
         bubble.style.bottom = `${board.clientHeight + 100}px`;
     }, 50);
 
-    // Remove do DOM após o tempo da animação
     setTimeout(() => { 
         if (bubble.parentNode) bubble.remove(); 
     }, speed * 1000);
@@ -234,11 +250,9 @@ function popBubble(e) {
     gameScore++;
     document.getElementById('score').innerText = gameScore;
     
-    // Efeito visual de estouro
     this.style.transform = "scale(1.5)";
     this.style.opacity = "0";
     
-    // Remove após efeito visual
     setTimeout(() => { 
         if (this.parentNode) this.remove(); 
     }, 200);
@@ -249,9 +263,9 @@ function toggleFullScreen() {
     if (!document.fullscreenElement) {
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
+        } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
+        } else if (elem.msRequestFullscreen) {
             elem.msRequestFullscreen();
         }
     } else {
