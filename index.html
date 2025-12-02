@@ -74,11 +74,18 @@
         <div class="container">
             <h2>Estoura a Ansiedade</h2>
             <p>Quando a vontade vier, venha aqui. Estoure os pensamentos ruins.</p>
+            
             <div class="game-ui">
-                <span>Placar: <b id="score">0</b></span>
+                <p>Clique nas bolhas para aliviar a tensão.</p>
                 <button class="btn-fullscreen" onclick="toggleFullScreen()" title="Tela Cheia">⛶ Tela Cheia</button>
             </div>
+            
             <div id="game-board">
+                <div class="game-hud">
+                    <span>Estouradas: <b id="score">0</b></span>
+                    <span>Tempo: <b id="timer">00:00</b></span>
+                </div>
+
                 <div id="start-screen-game">
                     <button class="btn-primary" onclick="startGame()">Começar Terapia Visual</button>
                 </div>
