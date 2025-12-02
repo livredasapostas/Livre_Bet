@@ -1,3 +1,6 @@
+/* --- CONFIGURAÇÃO DA PLANILHA (GOOGLE SHEETS) --- */
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxp7-CcQb0tEzo3Ie1A9Pbgry-liQdjAI97_mCDTBHbAa419Ee_tHqq9lO93AlvFcHW/exec';
+
 /* --- GERENCIAMENTO DE TEMA (DARK MODE) --- */
 const toggleBtn = document.getElementById('theme-toggle');
 const root = document.documentElement;
@@ -25,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     atualizarContador();
     atualizarDepoimento();
     
-    // Define o valor padrão do input date como HOJE
     const hoje = new Date().toISOString().split('T')[0];
     const dateInput = document.getElementById('date-input-field');
     if(dateInput) dateInput.value = hoje;
@@ -98,6 +100,7 @@ function iniciarQuiz() {
     const email = document.getElementById('user-email').value;
     if (!name || !email) { alert("Por favor, preencha seus dados."); return; }
     userData.name = name;
+    userData.email = email; // Salvando email no objeto global
     
     document.getElementById('quiz-intro').classList.add('hidden');
     document.getElementById('quiz-questions').classList.remove('hidden');
@@ -131,6 +134,7 @@ function finalizarQuiz() {
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
 
+    // Lógica de Resultado
     if (totalScore < 30) {
         risco = "Baixo Risco";
         classeCor = "analysis-low";
@@ -151,9 +155,11 @@ function finalizarQuiz() {
         modalDesc.innerText = "Identificamos um padrão severo. Respire fundo: isso tem tratamento. Meu guia une ciência e fé para te tirar desse ciclo.";
     }
 
+    // Exibir na tela
     resultDiv.innerHTML = textoAnalise;
     resultDiv.className = `analysis-box ${classeCor}`;
 
+    // 1. Salvar no Navegador (LocalStorage)
     const resultadoSalvo = {
         data: new Date().toISOString(),
         score: totalScore,
@@ -161,10 +167,36 @@ function finalizarQuiz() {
         nome: userData.name
     };
     localStorage.setItem('quizResult', JSON.stringify(resultadoSalvo));
+
+    // 2. ENVIAR PARA GOOGLE SHEETS (NOVO!)
+    enviarParaPlanilha(risco);
+
+    // Abrir Modal de Vendas após delay
     setTimeout(() => { document.getElementById('modal-book').style.display = "block"; }, 1500);
 }
 
-/* --- JOGO ANTI-ANSIEDADE (COM TIMER) --- */
+// Função que conversa com seu Script do Google
+function enviarParaPlanilha(nivelRisco) {
+    const dadosParaEnvio = {
+        name: userData.name,
+        email: userData.email,
+        score: totalScore,
+        level: nivelRisco
+    };
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Necessário para enviar dados para Google Apps Script
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dadosParaEnvio)
+    })
+    .then(() => console.log("Lead salvo na planilha com sucesso!"))
+    .catch(err => console.error("Erro ao salvar lead:", err));
+}
+
+/* --- JOGO ANTI-ANSIEDADE --- */
 let gameScore = 0;
 let gameActive = false;
 let spawnInterval;
@@ -179,18 +211,15 @@ function startGame() {
     const oldBubbles = document.querySelectorAll('.bubble');
     oldBubbles.forEach(b => b.remove());
 
-    // Reinicia Variáveis
     gameScore = 0;
     gameSeconds = 0;
     document.getElementById('score').innerText = gameScore;
     document.getElementById('timer').innerText = "00:00";
     gameActive = true;
     
-    // Limpa intervalos antigos para não acumular
     if(timerInterval) clearInterval(timerInterval);
     if(spawnInterval) clearInterval(spawnInterval);
 
-    // Inicia Loops
     spawnInterval = setInterval(createBubble, 800);
     timerInterval = setInterval(updateTimer, 1000);
 }
@@ -198,20 +227,15 @@ function startGame() {
 function updateTimer() {
     if(!gameActive) return;
     gameSeconds++;
-    
     const minutes = Math.floor(gameSeconds / 60);
     const seconds = gameSeconds % 60;
-    
-    // Formata para 00:00
     const strMin = minutes < 10 ? `0${minutes}` : minutes;
     const strSec = seconds < 10 ? `0${seconds}` : seconds;
-    
     document.getElementById('timer').innerText = `${strMin}:${strSec}`;
 }
 
 function createBubble() {
     if (!gameActive) return;
-    
     const board = document.getElementById('game-board');
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
@@ -231,47 +255,30 @@ function createBubble() {
     
     bubble.onmousedown = popBubble; 
     bubble.ontouchstart = popBubble; 
-    
     board.appendChild(bubble);
 
-    setTimeout(() => {
-        bubble.style.bottom = `${board.clientHeight + 100}px`;
-    }, 50);
-
-    setTimeout(() => { 
-        if (bubble.parentNode) bubble.remove(); 
-    }, speed * 1000);
+    setTimeout(() => { bubble.style.bottom = `${board.clientHeight + 100}px`; }, 50);
+    setTimeout(() => { if (bubble.parentNode) bubble.remove(); }, speed * 1000);
 }
 
 function popBubble(e) {
     if(e.cancelable) e.preventDefault(); 
     if(!this.parentNode) return;
-    
     gameScore++;
     document.getElementById('score').innerText = gameScore;
-    
     this.style.transform = "scale(1.5)";
     this.style.opacity = "0";
-    
-    setTimeout(() => { 
-        if (this.parentNode) this.remove(); 
-    }, 200);
+    setTimeout(() => { if (this.parentNode) this.remove(); }, 200);
 }
 
 function toggleFullScreen() {
     const elem = document.getElementById("game-board");
     if (!document.fullscreenElement) {
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
-        }
+        if (elem.requestFullscreen) elem.requestFullscreen();
+        else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+        else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
     } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
+        if (document.exitFullscreen) document.exitFullscreen();
     }
 }
 
@@ -304,22 +311,17 @@ function executarCiclo() {
         setTimeout(() => {
             textDisplay.innerText = "Solte pela boca devagar...";
             img.className = 'breath-shrink';
-            setTimeout(() => {
-                cycles++;
-                executarCiclo();
-            }, 6000); 
+            setTimeout(() => { cycles++; executarCiclo(); }, 6000); 
         }, 4000); 
     }, 4000); 
 }
 
 /* --- VERSÍCULOS --- */
 const verses = [
-    { t: "Todas as coisas me são lícitas, mas nem todas me convêm. Todas as coisas me são lícitas, mas eu não me deixarei dominar por nenhuma.", r: "1 Coríntios 6:12", a: "Eu escolho ser livre, não escravo de um impulso." },
-    { t: "Porque não nos deu Deus espírito de temor, mas de fortaleza, e de amor, e de moderação.", r: "2 Timóteo 1:7", a: "O medo de parar é uma mentira. Eu tenho força para mudar." },
-    { t: "Vigiai e orai, para que não entreis em tentação; na verdade, o espírito está pronto, mas a carne é fraca.", r: "Mateus 26:41", a: "Reconhecer minha fraqueza é o primeiro passo para não cair." },
-    { t: "O ladrão não vem senão a roubar, a matar, e a destruir; eu vim para que tenham vida, e a tenham com abundância.", r: "João 10:10", a: "O vício rouba meu tempo e dinheiro. A vida real me devolve a dignidade." }
+    { t: "Todas as coisas me são lícitas, mas nem todas me convêm...", r: "1 Coríntios 6:12", a: "Eu escolho ser livre." },
+    { t: "Porque não nos deu Deus espírito de temor...", r: "2 Timóteo 1:7", a: "Tenho força para mudar." },
+    { t: "Vigiai e orai...", r: "Mateus 26:41", a: "Reconhecer minha fraqueza é o primeiro passo." }
 ];
-
 function novoVersiculo() {
     const v = verses[Math.floor(Math.random() * verses.length)];
     document.getElementById('verse-text').innerText = `"${v.t}"`;
@@ -329,9 +331,9 @@ function novoVersiculo() {
 
 /* --- DEPOIMENTOS --- */
 const testimonials = [
-    { t: "Eu achava que 'só mais uma vez' resolveria meus problemas. Só aumentava o buraco. Parar foi a única saída.", a: "- Roberto D." },
-    { t: "Recuperei a confiança da minha esposa. Não tem prêmio em dinheiro que pague isso.", a: "- Marcos S." },
-    { t: "O livro me ensinou que o problema não era o dinheiro, era o vazio que eu tentava preencher.", a: "- Juliana P." }
+    { t: "Parar foi a única saída.", a: "- Roberto D." },
+    { t: "Recuperei a confiança da minha esposa.", a: "- Marcos S." },
+    { t: "O livro mudou minha visão.", a: "- Juliana P." }
 ];
 let testIndex = 0;
 function mudarDepoimento(dir) {
@@ -346,41 +348,24 @@ function mudarDepoimento(dir) {
     }, 200);
 }
 
-/* --- PWA: INSTALAÇÃO DO APP --- */
+/* --- PWA --- */
 let deferredPrompt;
 const installBtn = document.getElementById('btn-install');
-
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then((reg) => console.log('Service Worker registrado!', reg))
-            .catch((err) => console.log('Falha ao registrar SW:', err));
-    });
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(err => console.log('Erro SW:', err)));
 }
-
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    if(installBtn) {
-        installBtn.classList.remove('hidden');
-        installBtn.style.display = 'block'; 
-    }
+    if(installBtn) { installBtn.classList.remove('hidden'); installBtn.style.display = 'block'; }
 });
-
 if(installBtn) {
     installBtn.addEventListener('click', async () => {
         if (!deferredPrompt) return;
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        console.log(`Usuário escolheu: ${outcome}`);
         deferredPrompt = null;
-        if(outcome === 'accepted'){
-            installBtn.style.display = 'none';
-        }
+        if(outcome === 'accepted') installBtn.style.display = 'none';
     });
 }
-
-window.addEventListener('appinstalled', () => {
-    if(installBtn) installBtn.style.display = 'none';
-    console.log('LivreBet foi instalado com sucesso!');
-});
+window.addEventListener('appinstalled', () => { if(installBtn) installBtn.style.display = 'none'; });
