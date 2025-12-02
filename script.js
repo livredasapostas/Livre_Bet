@@ -27,15 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Define o valor padrão do input date como HOJE
     const hoje = new Date().toISOString().split('T')[0];
-    document.getElementById('date-input-field').value = hoje;
+    const dateInput = document.getElementById('date-input-field');
+    if(dateInput) dateInput.value = hoje;
 });
 
-// Abre o modal de data em vez do prompt
 function abrirModalData() {
     document.getElementById('modal-date').style.display = 'block';
 }
 
-// Salva a data escolhida no modal
 function salvarDataModal() {
     const inputDate = document.getElementById('date-input-field').value;
     if (inputDate) {
@@ -52,19 +51,14 @@ function atualizarContador() {
     const display = document.getElementById('days-count');
     if (!dataSalva) { display.innerText = "0d limpo"; return; }
     
-    // Correção de Fuso Horário para contagem precisa
     const inicio = new Date(dataSalva);
     const hoje = new Date();
-    // Zera as horas para comparar apenas os dias
+    // Zera horas para evitar frações de dia
     inicio.setHours(0,0,0,0);
     hoje.setHours(0,0,0,0);
     
     const diffTime = hoje - inicio;
-    // Se a data for futura, mostra 0
-    if (diffTime < 0) {
-        display.innerText = "0d limpo";
-        return;
-    }
+    if (diffTime < 0) { display.innerText = "0d limpo"; return; }
     
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
     display.innerText = `${diffDays}d limpo`;
@@ -72,16 +66,18 @@ function atualizarContador() {
 
 /* --- FUNÇÕES MODAL GENÉRICAS --- */
 function fecharModal(idModal) {
-    document.getElementById(idModal).style.display = "none";
+    // Se não passar ID, tenta fechar o do livro por padrão ou fecha o que foi passado
+    const id = idModal || 'modal-book';
+    const el = document.getElementById(id);
+    if(el) el.style.display = "none";
 }
-// Fecha se clicar fora de qualquer modal
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
         event.target.style.display = "none";
     }
 }
 
-/* --- QUIZ DE 10 PERGUNTAS --- */
+/* --- QUIZ --- */
 const questions = [
     { q: "Você já apostou mais do que podia perder?", options: ["Nunca", "Às vezes", "Frequentemente"], scores: [0, 5, 10] },
     { q: "Você já tentou recuperar o prejuízo jogando novamente?", options: ["Nunca", "Raramente", "Sempre"], scores: [0, 5, 10] },
@@ -102,7 +98,6 @@ let userData = { name: '', email: '' };
 function iniciarQuiz() {
     const name = document.getElementById('user-name').value;
     const email = document.getElementById('user-email').value;
-
     if (!name || !email) { alert("Por favor, preencha seus dados."); return; }
     userData.name = name;
     
@@ -112,26 +107,17 @@ function iniciarQuiz() {
 }
 
 function mostrarPergunta() {
-    if (currentQuestion >= questions.length) {
-        finalizarQuiz();
-        return;
-    }
-
+    if (currentQuestion >= questions.length) { finalizarQuiz(); return; }
     const q = questions[currentQuestion];
     document.getElementById('q-number').innerText = currentQuestion + 1;
     document.getElementById('question-text').innerText = q.q;
     const container = document.getElementById('options-container');
     container.innerHTML = '';
-
     q.options.forEach((opt, index) => {
         const btn = document.createElement('button');
         btn.className = 'quiz-option';
         btn.innerText = opt;
-        btn.onclick = () => {
-            totalScore += q.scores[index];
-            currentQuestion++;
-            mostrarPergunta();
-        };
+        btn.onclick = () => { totalScore += q.scores[index]; currentQuestion++; mostrarPergunta(); };
         container.appendChild(btn);
     });
 }
@@ -177,58 +163,87 @@ function finalizarQuiz() {
         nome: userData.name
     };
     localStorage.setItem('quizResult', JSON.stringify(resultadoSalvo));
-
     setTimeout(() => { document.getElementById('modal-book').style.display = "block"; }, 1500);
 }
 
-/* --- JOGO ANTI-ANSIEDADE (ZEN) --- */
+/* --- JOGO ANTI-ANSIEDADE (CORRIGIDO) --- */
 let gameScore = 0;
 let gameActive = false;
 let spawnInterval;
 
 function startGame() {
     const board = document.getElementById('game-board');
-    document.getElementById('start-screen-game').style.display = 'none';
-    board.innerHTML = ''; 
+    const startScreen = document.getElementById('start-screen-game');
+    
+    // Apenas esconde o botão, não deleta o conteúdo
+    startScreen.style.display = 'none';
+    
+    // Limpa bolhas antigas se houver (mas mantém a estrutura do startScreen)
+    const oldBubbles = document.querySelectorAll('.bubble');
+    oldBubbles.forEach(b => b.remove());
+
     gameScore = 0;
     document.getElementById('score').innerText = gameScore;
     gameActive = true;
+    
+    // Inicia o loop de criação
     spawnInterval = setInterval(createBubble, 800);
 }
 
 function createBubble() {
     if (!gameActive) return;
+    
     const board = document.getElementById('game-board');
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    const size = Math.floor(Math.random() * 30) + 40;
+    
+    const size = Math.floor(Math.random() * 30) + 40; // 40px a 70px
     bubble.style.width = `${size}px`;
     bubble.style.height = `${size}px`;
+    
     const maxX = board.clientWidth - size;
     const randomX = Math.random() * maxX;
+    
     bubble.style.left = `${randomX}px`;
-    bubble.style.bottom = '-80px'; 
+    bubble.style.bottom = '-80px'; // Começa fora da tela embaixo
+    
+    // Define a velocidade (entre 2s e 5s)
     const speed = Math.random() * 3 + 2; 
-    bubble.style.transition = `bottom ${speed}s linear`;
+    bubble.style.transition = `bottom ${speed}s linear, transform 0.2s, opacity 0.2s`; 
     
     bubble.onmousedown = popBubble; 
     bubble.ontouchstart = popBubble; 
+    
     board.appendChild(bubble);
 
-    setTimeout(() => { if (bubble.parentNode) bubble.remove(); }, speed * 1000);
+    // O PULO DO GATO: Espera o elemento renderizar e muda o bottom para o topo
+    setTimeout(() => {
+        bubble.style.bottom = `${board.clientHeight + 100}px`;
+    }, 50);
+
+    // Remove do DOM após o tempo da animação
+    setTimeout(() => { 
+        if (bubble.parentNode) bubble.remove(); 
+    }, speed * 1000);
 }
 
 function popBubble(e) {
-    e.preventDefault(); 
+    if(e.cancelable) e.preventDefault(); 
     if(!this.parentNode) return;
+    
     gameScore++;
     document.getElementById('score').innerText = gameScore;
+    
+    // Efeito visual de estouro
     this.style.transform = "scale(1.5)";
     this.style.opacity = "0";
-    setTimeout(() => { if (this.parentNode) this.remove(); }, 200);
+    
+    // Remove após efeito visual
+    setTimeout(() => { 
+        if (this.parentNode) this.remove(); 
+    }, 200);
 }
 
-// NOVA FUNÇÃO: TELA CHEIA
 function toggleFullScreen() {
     const elem = document.getElementById("game-board");
     if (!document.fullscreenElement) {
@@ -285,9 +300,10 @@ function executarCiclo() {
 
 /* --- VERSÍCULOS --- */
 const verses = [
-    { t: "Todas as coisas me são lícitas, mas nem todas me convêm...", r: "1 Coríntios 6:12", a: "Eu escolho ser livre." },
-    { t: "Porque não nos deu Deus espírito de temor...", r: "2 Timóteo 1:7", a: "Tenho força para mudar." },
-    { t: "Vigiai e orai...", r: "Mateus 26:41", a: "Reconhecer minha fraqueza é o primeiro passo." }
+    { t: "Todas as coisas me são lícitas, mas nem todas me convêm. Todas as coisas me são lícitas, mas eu não me deixarei dominar por nenhuma.", r: "1 Coríntios 6:12", a: "Eu escolho ser livre, não escravo de um impulso." },
+    { t: "Porque não nos deu Deus espírito de temor, mas de fortaleza, e de amor, e de moderação.", r: "2 Timóteo 1:7", a: "O medo de parar é uma mentira. Eu tenho força para mudar." },
+    { t: "Vigiai e orai, para que não entreis em tentação; na verdade, o espírito está pronto, mas a carne é fraca.", r: "Mateus 26:41", a: "Reconhecer minha fraqueza é o primeiro passo para não cair." },
+    { t: "O ladrão não vem senão a roubar, a matar, e a destruir; eu vim para que tenham vida, e a tenham com abundância.", r: "João 10:10", a: "O vício rouba meu tempo e dinheiro. A vida real me devolve a dignidade." }
 ];
 
 function novoVersiculo() {
@@ -299,9 +315,9 @@ function novoVersiculo() {
 
 /* --- DEPOIMENTOS --- */
 const testimonials = [
-    { t: "Parar foi a única saída.", a: "- Roberto D." },
-    { t: "Recuperei a confiança da minha esposa.", a: "- Marcos S." },
-    { t: "O livro me ensinou que o problema não era o dinheiro.", a: "- Juliana P." }
+    { t: "Eu achava que 'só mais uma vez' resolveria meus problemas. Só aumentava o buraco. Parar foi a única saída.", a: "- Roberto D." },
+    { t: "Recuperei a confiança da minha esposa. Não tem prêmio em dinheiro que pague isso.", a: "- Marcos S." },
+    { t: "O livro me ensinou que o problema não era o dinheiro, era o vazio que eu tentava preencher.", a: "- Juliana P." }
 ];
 let testIndex = 0;
 function mudarDepoimento(dir) {
@@ -316,25 +332,41 @@ function mudarDepoimento(dir) {
     }, 200);
 }
 
-/* --- PWA --- */
+/* --- PWA: INSTALAÇÃO DO APP --- */
 let deferredPrompt;
 const installBtn = document.getElementById('btn-install');
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch((err) => console.log('Erro SW:', err));
+        navigator.serviceWorker.register('./sw.js')
+            .then((reg) => console.log('Service Worker registrado!', reg))
+            .catch((err) => console.log('Falha ao registrar SW:', err));
     });
 }
+
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.classList.remove('hidden');
-    installBtn.style.display = 'block'; 
+    if(installBtn) {
+        installBtn.classList.remove('hidden');
+        installBtn.style.display = 'block'; 
+    }
 });
-installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    if(outcome === 'accepted') installBtn.style.display = 'none';
+
+if(installBtn) {
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`Usuário escolheu: ${outcome}`);
+        deferredPrompt = null;
+        if(outcome === 'accepted'){
+            installBtn.style.display = 'none';
+        }
+    });
+}
+
+window.addEventListener('appinstalled', () => {
+    if(installBtn) installBtn.style.display = 'none';
+    console.log('LivreBet foi instalado com sucesso!');
 });
-window.addEventListener('appinstalled', () => { installBtn.style.display = 'none'; });
