@@ -20,23 +20,30 @@ toggleBtn.addEventListener('click', () => {
     toggleBtn.innerText = newTheme === 'light' ? '🌙' : '☀️';
 });
 
-/* --- CONTADOR DE DIAS --- */
+/* --- CONTADOR DE DIAS E MODAL DE DATA --- */
 document.addEventListener('DOMContentLoaded', () => {
     atualizarContador();
     atualizarDepoimento();
     
-    // Verifica se já fez o quiz antes
-    const savedResult = localStorage.getItem('quizResult');
-    if(savedResult) {
-        // Lógica opcional se já fez o quiz
-    }
+    // Define o valor padrão do input date como HOJE
+    const hoje = new Date().toISOString().split('T')[0];
+    document.getElementById('date-input-field').value = hoje;
 });
 
-function configurarData() {
-    const data = prompt("Qual foi o último dia que você apostou? (AAAA-MM-DD)", "2024-01-01");
-    if (data) {
-        localStorage.setItem('dataParada', data);
+// Abre o modal de data em vez do prompt
+function abrirModalData() {
+    document.getElementById('modal-date').style.display = 'block';
+}
+
+// Salva a data escolhida no modal
+function salvarDataModal() {
+    const inputDate = document.getElementById('date-input-field').value;
+    if (inputDate) {
+        localStorage.setItem('dataParada', inputDate);
         atualizarContador();
+        fecharModal('modal-date');
+    } else {
+        alert("Por favor, selecione uma data válida.");
     }
 }
 
@@ -45,14 +52,36 @@ function atualizarContador() {
     const display = document.getElementById('days-count');
     if (!dataSalva) { display.innerText = "0d limpo"; return; }
     
+    // Correção de Fuso Horário para contagem precisa
     const inicio = new Date(dataSalva);
     const hoje = new Date();
-    const diffTime = Math.abs(hoje - inicio);
+    // Zera as horas para comparar apenas os dias
+    inicio.setHours(0,0,0,0);
+    hoje.setHours(0,0,0,0);
+    
+    const diffTime = hoje - inicio;
+    // Se a data for futura, mostra 0
+    if (diffTime < 0) {
+        display.innerText = "0d limpo";
+        return;
+    }
+    
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
     display.innerText = `${diffDays}d limpo`;
 }
 
-/* --- QUIZ DE 10 PERGUNTAS E LÓGICA DE POPUP --- */
+/* --- FUNÇÕES MODAL GENÉRICAS --- */
+function fecharModal(idModal) {
+    document.getElementById(idModal).style.display = "none";
+}
+// Fecha se clicar fora de qualquer modal
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+    }
+}
+
+/* --- QUIZ DE 10 PERGUNTAS --- */
 const questions = [
     { q: "Você já apostou mais do que podia perder?", options: ["Nunca", "Às vezes", "Frequentemente"], scores: [0, 5, 10] },
     { q: "Você já tentou recuperar o prejuízo jogando novamente?", options: ["Nunca", "Raramente", "Sempre"], scores: [0, 5, 10] },
@@ -115,37 +144,27 @@ function finalizarQuiz() {
     let risco = "";
     let textoAnalise = "";
     let classeCor = "";
-    
-    // Textos do Modal
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
 
     if (totalScore < 30) {
-        // BAIXO RISCO
         risco = "Baixo Risco";
         classeCor = "analysis-low";
-        textoAnalise = `<span class="analysis-title">Situação: Controle</span>Parabéns, ${userData.name}. Suas respostas indicam que você tem controle sobre seus impulsos. No entanto, o vício é silencioso. Mantenha-se vigilante.`;
-        
+        textoAnalise = `<span class="analysis-title">Situação: Controle</span>Parabéns, ${userData.name}. Suas respostas indicam controle. Mantenha-se vigilante.`;
         modalTitle.innerText = "Você está seguro, mas conhecimento é poder.";
-        modalDesc.innerText = "Sua pontuação indica que você não corre riscos imediatos. Parabéns! Se deseja entender profundamente o mecanismo do vício para ajudar um amigo ou se blindar para o futuro, meu material é um excelente estudo. Fique à vontade para baixar a amostra grátis abaixo.";
-    
+        modalDesc.innerText = "Sua pontuação indica baixo risco. Parabéns! Para se blindar para o futuro, meu material é um excelente estudo.";
     } else if (totalScore < 60) {
-        // MODERADO
         risco = "Risco Moderado";
         classeCor = "analysis-mod";
-        textoAnalise = `<span class="analysis-title">Situação: Alerta Ligado</span>Cuidado, ${userData.name}. Você apresenta comportamentos que precedem o vício compulsivo. Você já usa o jogo como escape emocional. É hora de parar antes que piore.`;
-        
+        textoAnalise = `<span class="analysis-title">Situação: Alerta Ligado</span>Cuidado, ${userData.name}. Você apresenta comportamentos de risco. É hora de parar.`;
         modalTitle.innerText = "Sinal de Alerta Identificado";
-        modalDesc.innerText = "Parece que identificamos um padrão que sugere o início de uma compulsão. Mas calma: isso pode ser tratado e quanto antes você fizer isso, melhor. Abaixo segue o nosso material completo: 8 capítulos com embasamento neurocientífico, psicológico e cristão. Se não puder investir agora, te dou o 1º capítulo de presente.";
-    
+        modalDesc.innerText = "Parece que identificamos um padrão de risco moderado. Isso pode ser tratado. Conheça nosso guia completo.";
     } else {
-        // ALTO RISCO
         risco = "Alto Risco";
         classeCor = "analysis-high";
-        textoAnalise = `<span class="analysis-title">Situação: Urgência</span>${userData.name}, os sinais de compulsão são claros. O jogo está afetando suas finanças e emoções. Não lute sozinho. Buscar ajuda não é vergonha, é coragem.`;
-        
+        textoAnalise = `<span class="analysis-title">Situação: Urgência</span>${userData.name}, os sinais de compulsão são claros. Busque ajuda.`;
         modalTitle.innerText = "Não ignore este resultado.";
-        modalDesc.innerText = "Identificamos um padrão severo que sugere compulsão. Respire fundo: isso tem tratamento. Meu guia une ciência e fé para te tirar desse ciclo. Aproveite o desconto para começar a mudança hoje, ou baixe o capítulo gratuito se não puder comprar agora. O importante é começar.";
+        modalDesc.innerText = "Identificamos um padrão severo. Respire fundo: isso tem tratamento. Meu guia une ciência e fé para te tirar desse ciclo.";
     }
 
     resultDiv.innerHTML = textoAnalise;
@@ -159,21 +178,7 @@ function finalizarQuiz() {
     };
     localStorage.setItem('quizResult', JSON.stringify(resultadoSalvo));
 
-    setTimeout(abrirModal, 1500);
-}
-
-/* --- FUNÇÕES MODAL --- */
-function abrirModal() {
-    document.getElementById('modal-book').style.display = "block";
-}
-function fecharModal() {
-    document.getElementById('modal-book').style.display = "none";
-}
-window.onclick = function(event) {
-    const modal = document.getElementById('modal-book');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+    setTimeout(() => { document.getElementById('modal-book').style.display = "block"; }, 1500);
 }
 
 /* --- JOGO ANTI-ANSIEDADE (ZEN) --- */
@@ -196,25 +201,20 @@ function createBubble() {
     const board = document.getElementById('game-board');
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    
     const size = Math.floor(Math.random() * 30) + 40;
     bubble.style.width = `${size}px`;
     bubble.style.height = `${size}px`;
-    
     const maxX = board.clientWidth - size;
     const randomX = Math.random() * maxX;
     bubble.style.left = `${randomX}px`;
     bubble.style.bottom = '-80px'; 
-    
     const speed = Math.random() * 3 + 2; 
     bubble.style.transition = `bottom ${speed}s linear`;
     
     bubble.onmousedown = popBubble; 
     bubble.ontouchstart = popBubble; 
-
     board.appendChild(bubble);
 
-    setTimeout(() => { bubble.style.bottom = `${board.clientHeight + 50}px`; }, 50);
     setTimeout(() => { if (bubble.parentNode) bubble.remove(); }, speed * 1000);
 }
 
@@ -226,6 +226,24 @@ function popBubble(e) {
     this.style.transform = "scale(1.5)";
     this.style.opacity = "0";
     setTimeout(() => { if (this.parentNode) this.remove(); }, 200);
+}
+
+// NOVA FUNÇÃO: TELA CHEIA
+function toggleFullScreen() {
+    const elem = document.getElementById("game-board");
+    if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
 }
 
 /* --- RESPIRE COMIGO --- */
@@ -267,10 +285,9 @@ function executarCiclo() {
 
 /* --- VERSÍCULOS --- */
 const verses = [
-    { t: "Todas as coisas me são lícitas, mas nem todas me convêm. Todas as coisas me são lícitas, mas eu não me deixarei dominar por nenhuma.", r: "1 Coríntios 6:12", a: "Eu escolho ser livre, não escravo de um impulso." },
-    { t: "Porque não nos deu Deus espírito de temor, mas de fortaleza, e de amor, e de moderação.", r: "2 Timóteo 1:7", a: "O medo de parar é uma mentira. Eu tenho força para mudar." },
-    { t: "Vigiai e orai, para que não entreis em tentação; na verdade, o espírito está pronto, mas a carne é fraca.", r: "Mateus 26:41", a: "Reconhecer minha fraqueza é o primeiro passo para não cair." },
-    { t: "O ladrão não vem senão a roubar, a matar, e a destruir; eu vim para que tenham vida, e a tenham com abundância.", r: "João 10:10", a: "O vício rouba meu tempo e dinheiro. A vida real me devolve a dignidade." }
+    { t: "Todas as coisas me são lícitas, mas nem todas me convêm...", r: "1 Coríntios 6:12", a: "Eu escolho ser livre." },
+    { t: "Porque não nos deu Deus espírito de temor...", r: "2 Timóteo 1:7", a: "Tenho força para mudar." },
+    { t: "Vigiai e orai...", r: "Mateus 26:41", a: "Reconhecer minha fraqueza é o primeiro passo." }
 ];
 
 function novoVersiculo() {
@@ -282,20 +299,15 @@ function novoVersiculo() {
 
 /* --- DEPOIMENTOS --- */
 const testimonials = [
-    { t: "Eu achava que 'só mais uma vez' resolveria meus problemas. Só aumentava o buraco. Parar foi a única saída.", a: "- Roberto D." },
-    { t: "Recuperei a confiança da minha esposa. Não tem prêmio em dinheiro que pague isso.", a: "- Marcos S." },
-    { t: "O livro me ensinou que o problema não era o dinheiro, era o vazio que eu tentava preencher.", a: "- Juliana P." }
+    { t: "Parar foi a única saída.", a: "- Roberto D." },
+    { t: "Recuperei a confiança da minha esposa.", a: "- Marcos S." },
+    { t: "O livro me ensinou que o problema não era o dinheiro.", a: "- Juliana P." }
 ];
 let testIndex = 0;
-
 function mudarDepoimento(dir) {
     testIndex += dir;
     if (testIndex < 0) testIndex = testimonials.length - 1;
     if (testIndex >= testimonials.length) testIndex = 0;
-    atualizarDepoimento();
-}
-
-function atualizarDepoimento() {
     const div = document.getElementById('testimonial-content');
     div.style.opacity = 0;
     setTimeout(() => {
@@ -304,37 +316,25 @@ function atualizarDepoimento() {
     }, 200);
 }
 
-/* --- PWA: INSTALAÇÃO DO APP --- */
+/* --- PWA --- */
 let deferredPrompt;
 const installBtn = document.getElementById('btn-install');
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then((reg) => console.log('Service Worker registrado!', reg))
-            .catch((err) => console.log('Falha ao registrar SW:', err));
+        navigator.serviceWorker.register('./sw.js').catch((err) => console.log('Erro SW:', err));
     });
 }
-
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     installBtn.classList.remove('hidden');
     installBtn.style.display = 'block'; 
 });
-
 installBtn.addEventListener('click', async () => {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    console.log(`Usuário escolheu: ${outcome}`);
     deferredPrompt = null;
-    if(outcome === 'accepted'){
-        installBtn.style.display = 'none';
-    }
+    if(outcome === 'accepted') installBtn.style.display = 'none';
 });
-
-window.addEventListener('appinstalled', () => {
-    installBtn.style.display = 'none';
-    console.log('LivreBet foi instalado com sucesso!');
-});
+window.addEventListener('appinstalled', () => { installBtn.style.display = 'none'; });
