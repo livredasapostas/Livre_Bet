@@ -369,3 +369,25 @@ if(installBtn) {
     });
 }
 window.addEventListener('appinstalled', () => { if(installBtn) installBtn.style.display = 'none'; });
+
+/* --- CONSENTIMENTO DE COOKIES (LGPD) --- */
+const cookieBanner = document.getElementById('cookie-banner');
+const acceptCookiesBtn = document.getElementById('btn-accept-cookies');
+
+// Verifica se o usuário já aceitou antes
+if (!localStorage.getItem('livrebet_consent')) {
+    // Se não aceitou, mostra o banner (remove a classe hidden)
+    // Pequeno delay para animação ficar suave
+    setTimeout(() => {
+        cookieBanner.classList.remove('hidden');
+        cookieBanner.style.display = 'block';
+    }, 1000);
+}
+
+acceptCookiesBtn.addEventListener('click', () => {
+    // Salva a decisão no navegador
+    localStorage.setItem('livrebet_consent', 'true');
+    
+    // Esconde o banner
+    cookieBanner.style.display = 'none';
+});
