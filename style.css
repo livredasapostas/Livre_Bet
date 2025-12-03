@@ -225,3 +225,46 @@ footer { background: var(--bg-accent); padding: 50px 0; text-align: center; marg
     .buttons-row { justify-content: center; }
     .hero h1 { font-size: 2rem; }
 }
+
+/* --- BANNER DE COOKIES --- */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--card-bg); /* Adapta ao tema escuro/claro */
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    padding: 20px 0;
+    z-index: 1500; /* Fica acima do conteúdo, mas abaixo dos Modais (2000) */
+    border-top: 4px solid var(--primary);
+    animation: slideUp 0.5s ease-out;
+}
+
+.cookie-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.cookie-content p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--text-main);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+/* Ajuste Mobile para o banner */
+@media (max-width: 768px) {
+    .cookie-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .cookie-banner {
+        padding: 15px;
+    }
+}
