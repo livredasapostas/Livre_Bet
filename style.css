@@ -140,3 +140,59 @@ input, button { font-family: inherit; }
     .hero h1 { font-size: 3rem; }
     .action-grid { flex-direction: row; justify-content: center; }
 }
+
+/* Botão Flutuante Instalar App */
+.install-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: smoothPulse 2s infinite; /* O piscar suave */
+}
+
+.install-float:hover {
+    transform: scale(1.1);
+}
+
+.install-float .icon {
+    font-size: 1.2rem;
+}
+
+/* Animação de Brilho/Piscar Suave */
+@keyframes smoothPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.7);
+        filter: brightness(1);
+    }
+    50% {
+        box-shadow: 0 0 0 15px rgba(45, 106, 79, 0);
+        filter: brightness(1.2);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(45, 106, 79, 0);
+        filter: brightness(1);
+    }
+}
+
+/* Esconder no Desktop se preferir, ou manter para todos */
+@media (max-width: 480px) {
+    .install-float .text {
+        display: none; /* No celular muito pequeno, vira só um círculo com ícone */
+    }
+    .install-float {
+        padding: 15px;
+        border-radius: 50%;
+    }
+}
