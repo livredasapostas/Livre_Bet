@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
     <meta name="google-site-verification" content="PlQDIDBDaJ2KxNAYsCJ1sF9Lt36774D_NjZB3fwiyGs" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta http-equiv="Content-Language" content="pt-br">
-    <title>LivreBet | Ajuda para Vício em Apostas e Jogo Responsável</title>
     
-    <meta name="description" content="Saia do vício em apostas online. Ferramenta gratuita com Quiz de diagnóstico, jogo anti-ansiedade e guia prático para recuperação financeira e emocional.">
-    <meta name="keywords" content="vício em apostas, como parar de apostar, bets, tigrinho, jogo do bicho, divida de jogo, recuperação, livrebet, ajuda psicológica, quiz vício">
+    <title>LivreBet | Ferramenta Gratuita de Recuperação</title>
+    
+    <meta name="description" content="Saia do vício em apostas. Ferramenta 100% gratuita criada por quem venceu o vício. Quiz, bloqueio e guia de recuperação.">
+    <meta name="keywords" content="vício em apostas, autoexclusão, como parar de apostar, bets, recuperação, livrebet, ajuda gratuita">
     <meta name="author" content="LivreBet">
     <meta name="robots" content="index, follow">
     
@@ -19,14 +17,11 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://livredasapostas.github.io/Livre_Bet/">
-    <meta property="og:title" content="✋ Pare de perder dinheiro. Recupere sua vida.">
-    <meta property="og:description" content="Faça o teste de nível de vício gratuito e acesse ferramentas para controlar a ansiedade agora mesmo.">
+    <meta property="og:title" content="✋ Pare de perder dinheiro. Ajuda Gratuita.">
+    <meta property="og:description" content="Eu venci o vício e liberei meu método gratuitamente para você. Baixe o guia e use as ferramentas.">
     <meta property="og:image" content="https://livredasapostas.github.io/Livre_Bet/assets/capa-ebook.jpg">
 
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="LivreBet | Ajuda Vício em Apostas">
-    <meta property="twitter:description" content="Ferramentas gratuitas para quem quer largar as apostas. Comece pelo Quiz.">
-    <meta property="twitter:image" content="https://livredasapostas.github.io/Livre_Bet/assets/capa-ebook.jpg">
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2D6A4F">
@@ -35,6 +30,20 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .donate-area { background: #f0fdf4; border: 2px dashed #2D6A4F; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
+        .hidden-content { display: none; margin-top: 15px; animation: fadeIn 0.5s; }
+        .pix-box { background: white; padding: 10px; border-radius: 5px; border: 1px solid #ccc; display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+        .pix-code { flex: 1; padding: 8px; background: #eee; border: none; border-radius: 4px; font-family: monospace; color: #333; min-width: 200px; }
+        .steps-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+        .step-card { background: var(--card-bg, #fff); padding: 20px; border-radius: 10px; border-left: 5px solid #2D6A4F; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .step-number { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #2D6A4F; font-weight: bold; }
+        .btn-gov { background-color: #003399; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 10px; font-weight: bold; }
+        .btn-gov:hover { background-color: #002266; transform: translateY(-2px); }
+        .personal-story { background: rgba(45, 106, 79, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; font-style: italic; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
@@ -45,14 +54,14 @@
                 <ul>
                     <li><a href="#inicio">Início</a></li>
                     <li><a href="#quiz">Quiz</a></li>
-                    <li><a href="#jogo">Anti-Ansiedade</a></li>
-                    <li><a href="#respire">Respire</a></li>
+                    <li><a href="#passos">Passos</a></li>
+                    <li><a href="#jogo">SOS</a></li>
                     <li><a href="#biblia">Verdade</a></li>
-                    <li><a href="#livro-secao">Livro</a></li>
+                    <li><a href="#apoie">Apoie</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
-                <button id="btn-install" class="hidden" title="Instalar App">📲 Instalar</button>
+                <button id="btn-install" class="hidden" title="Instalar App">📲 Instalar App</button>
                 
                 <button id="theme-toggle" title="Mudar Tema">🌙</button>
                 <div class="counter-area">
@@ -65,21 +74,29 @@
 
     <section id="inicio" class="hero">
         <div class="container">
-            <h1>Sua liberdade vale mais que qualquer aposta.</h1>
-            <p>Um ambiente seguro, sem gatilhos, para você retomar o controle da sua vida.</p>
-            <a href="#quiz" class="btn-cta">Começar pelo Quiz</a>
+            <h1>Sua liberdade não tem preço.</h1>
+            
+            <div class="personal-story">
+                <p>"Eu já estive exatamente onde você está agora. A angústia, as dívidas, a vergonha. Eu criei o LivreBet porque queria que essa ajuda existisse quando eu precisei. <strong>Hoje, disponibilizo tudo gratuitamente.</strong> Instale o App, conte seus dias e use o material."</p>
+                <p style="text-align: right; font-size: 0.9em; font-weight: bold;">— O Autor</p>
+            </div>
+
+            <p>Um ambiente seguro, sem gatilhos e 100% gratuito.</p>
+            <div class="hero-btns">
+                <a href="#quiz" class="btn-cta">Fazer Diagnóstico</a>
+                <a href="#passos" class="btn-secondary">Ver Passos Práticos</a>
+            </div>
         </div>
     </section>
 
     <section id="quiz" class="section-pad">
         <div class="container">
             <h2>Quiz de Identificação</h2>
+            <p>Entenda seu nível de compulsão para saber como agir.</p>
             
             <div id="quiz-intro">
-                <p>Preencha para gerar seu diagnóstico.</p>
-                <input type="text" id="user-name" placeholder="Seu Nome" required>
-                <input type="email" id="user-email" placeholder="Seu E-mail" required>
-                <button class="btn-primary" onclick="iniciarQuiz()">Iniciar Análise</button>
+                <input type="text" id="user-name" placeholder="Como quer ser chamado?" required>
+                <button class="btn-primary" onclick="iniciarQuiz()">Iniciar Análise Gratuita</button>
             </div>
 
             <div id="quiz-questions" class="hidden">
@@ -87,14 +104,39 @@
                 <div id="options-container"></div>
                 <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Pergunta <span id="q-number">1</span> de 10</p>
             </div>
+            
+            </div>
+    </section>
 
-            <div id="quiz-result" class="hidden">
-                <h3>Diagnóstico Final</h3>
-                <div id="result-content" class="analysis-box"></div>
-                
-                <div id="result-footer">
-                    <p>Seus resultados foram salvos no seu dispositivo.</p>
-                    <button class="btn-primary" onclick="location.reload()">Refazer Teste</button>
+    <section id="passos" class="section-pad bg-accent">
+        <div class="container">
+            <h2>O Caminho da Liberdade</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Não pule etapas. A recuperação é uma construção diária.</p>
+            
+            <div class="steps-container">
+                <div class="step-card">
+                    <span class="step-number">Passo 01</span>
+                    <h3>Aceitação Radical</h3>
+                    <p>Pare de cavar. Aceite que o dinheiro foi perdido e que você não tem controle sobre o jogo. Tentar "recuperar" é a armadilha que te mantém preso. O primeiro passo é a rendição.</p>
+                </div>
+
+                <div class="step-card" style="border-left-color: #003399;">
+                    <span class="step-number" style="color: #003399;">Passo 02 (Urgente)</span>
+                    <h3>Autoexclusão Governamental</h3>
+                    <p>O Governo Federal lançou o sistema oficial de autoexclusão. Ao se cadastrar, você fica impedido legalmente de criar contas ou apostar em qualquer casa legalizada.</p>
+                    <a href="https://www.gov.br/fazenda/pt-br/composicao/orgaos/secretaria-de-premios-e-apostas/autoexclusao" target="_blank" class="btn-gov">🛡️ Fazer Autoexclusão (Gov.br)</a>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-number">Passo 03</span>
+                    <h3>Bloqueio Financeiro</h3>
+                    <p>A força de vontade falha. Tire o acesso ao dinheiro. Entregue cartões e senhas para uma pessoa de extrema confiança (cônjuge, pais) por pelo menos 90 dias.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-number">Passo 04</span>
+                    <h3>Conexão Humana</h3>
+                    <p>O vício cresce no isolamento. Procure ajuda especializada (Psicólogo/CAPS AD) e conecte-se com pessoas. Conte sua verdade para alguém hoje.</p>
                 </div>
             </div>
         </div>
@@ -102,11 +144,10 @@
 
     <section id="jogo" class="section-pad">
         <div class="container">
-            <h2>Estoura a Ansiedade</h2>
-            <p>Quando a vontade vier, venha aqui. Estoure os pensamentos ruins.</p>
+            <h2>SOS: Estoura a Ansiedade</h2>
+            <p>Quando a fissura vier, não entre no app de banco. Entre aqui.</p>
             
             <div class="game-ui">
-                <p>Clique nas bolhas para aliviar a tensão.</p>
                 <button class="btn-fullscreen" onclick="toggleFullScreen()" title="Tela Cheia">⛶ Tela Cheia</button>
             </div>
             
@@ -115,7 +156,6 @@
                     <span>Estouradas: <b id="score">0</b></span>
                     <span>Tempo: <b id="timer">00:00</b></span>
                 </div>
-
                 <div id="start-screen-game">
                     <button class="btn-primary" onclick="startGame()">Começar Terapia Visual</button>
                 </div>
@@ -125,8 +165,8 @@
 
     <section id="respire" class="section-pad">
         <div class="container text-center">
-            <h2>Controle sua Respiração</h2>
-            <p id="breath-text">Clique para iniciar</p>
+            <h2>Respire Comigo</h2>
+            <p id="breath-text">Acalme seu sistema nervoso.</p>
             <div class="breath-container">
                 <img src="assets/redondo.png" id="breath-img" alt="Círculo de respiração">
             </div>
@@ -134,72 +174,57 @@
         </div>
     </section>
 
-    <section id="biblia" class="section-pad bg-accent">
+    <section id="biblia" class="section-pad bg-dark-section">
         <div class="container text-center">
             <h2>Verdade que Liberta</h2>
             <div class="verse-card">
-                <p id="verse-text">"Não se enganem: as más companhias corrompem os bons costumes."</p>
-                <p id="verse-ref">1 Coríntios 15:33</p>
+                <p id="verse-text">"Pois que adianta ao homem ganhar o mundo inteiro e perder a sua alma?"</p>
+                <p id="verse-ref">Marcos 8:36</p>
                 <hr>
-                <p id="affirmation-text" class="affirmation">Se afastar do que te faz cair não é fraqueza, é estratégia.</p>
+                <p id="affirmation-text" class="affirmation">O dinheiro vai e vem. Sua paz e sua família são insubstituíveis.</p>
             </div>
             <button class="btn-outline" onclick="novoVersiculo()">Ler outra verdade</button>
         </div>
     </section>
 
-    <section id="depoimentos" class="section-pad">
-        <div class="container">
-            <h2>Histórias Reais</h2>
-            <div class="carousel">
-                <button class="nav-btn" onclick="mudarDepoimento(-1)">&#10094;</button>
-                <div id="testimonial-content"></div>
-                <button class="nav-btn" onclick="mudarDepoimento(1)">&#10095;</button>
-            </div>
-        </div>
-    </section>
-
-    <section id="livro-secao" class="section-pad book-highlight">
-        <div class="container book-layout">
-            <div class="book-cover">
-                <img src="assets/capa-ebook.jpg" alt="Capa do Livro">
-            </div>
-            <div class="book-details">
-                <h2>Livre das Apostas – Uma História de Redenção</h2>
-                <p class="book-desc">Um guia direto, sem rodeios. Entenda o mecanismo químico e espiritual do vício e aprenda a desarmar os gatilhos antes que eles disparem.</p>
-                <div class="pricing">
-                    <span class="old-price">R$ 39,90</span>
-                    <span class="new-price">R$ 19,90</span>
-                </div>
-                <div class="buttons-row">
-                    <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta pulse">Comprar Agora</a>
-                    <a href="assets/amostra.pdf" target="_blank" class="btn-secondary">Ler Amostra</a>
+    <section id="apoie" class="section-pad">
+        <div class="container text-center">
+            <h2>Mantenha este projeto vivo</h2>
+            <p>Decidi não cobrar pelo livro "Livre das Apostas" para que a ajuda chegue a todos. O projeto é mantido por doações voluntárias que pagam o servidor e anúncios para alcançar outros viciados.</p>
+            
+            <div class="donate-area">
+                <p>Se este site te ajudou, considere apoiar com qualquer valor.</p>
+                <button class="btn-primary" onclick="toggleDonateSection('donate-main')">💙 Quero Apoiar</button>
+                
+                <div id="donate-main" class="hidden-content">
+                    <img src="assets/qr.png" alt="QR Code Pix" style="max-width: 200px; border-radius: 10px;">
+                    <div class="pix-box">
+                        <input type="text" class="pix-code" value="00020126360014br.gov.bcb.pix0114+55519200072255204000053039865802BR5925Mario Elias Da Silveira S6009Sao Paulo62290525REC6968221E109EB52260362263046F3D" readonly id="pix-input-main">
+                        <button class="btn-secondary" onclick="copiarPix('pix-input-main')">Copiar Código</button>
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 10px;">Banco: Recebedor (Mario Elias)</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="ajuda" class="section-pad bg-dark-section">
+    <section id="ajuda-urgente" class="section-pad">
         <div class="container help-grid">
             <div class="help-box">
                 <h3>🆘 Urgência</h3>
                 <p>CVV: <strong>188</strong></p>
-                <p>Procure um CAPS AD.</p>
+                <p>Procure o CAPS AD da sua cidade.</p>
             </div>
             <div class="help-box">
-                <h3>🛡️ Bloqueio</h3>
-                <p>Instale bloqueadores.</p>
-                <p>Entregue suas finanças a alguém.</p>
-            </div>
-            <div class="help-box">
-                <h3>🙏 Oração</h3>
-                <p>A culpa é um peso inútil. O arrependimento é a chave.</p>
+                <h3>🛡️ Softwares</h3>
+                <p>Instale bloqueadores como Gamban ou BetBlocker em seu celular.</p>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 LivreBet.</p>
+            <p>&copy; 2025 LivreBet. Feito com propósito, não por lucro.</p>
         </div>
     </footer>
 
@@ -211,11 +236,27 @@
                 <div class="modal-text">
                     <h3 id="modal-title">Resultado da Análise</h3>
                     <p id="modal-desc" class="desc">Carregando análise...</p>
-                    <div class="pricing-modal">
-                        <span class="new">R$ 19,90</span>
+                    
+                    <div class="gift-box" style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <p style="color: #2D6A4F; font-weight: bold;">🎁 Presente para sua recuperação</p>
+                        <p>Eu escrevi um guia completo de recuperação. Ele é seu, sem custo.</p>
                     </div>
-                    <a href="https://pay.hotmart.com/K99480183N?off=1pvjm7kd" target="_blank" class="btn-cta">Garantir Guia Completo</a>
-                    <a href="assets/amostra.pdf" target="_blank" class="link-sample">🎁 Presente: Baixar 1º Capítulo Grátis</a>
+
+                    <a href="assets/amostra.pdf" download="LivreDasApostas_Guia.pdf" class="btn-cta">📥 Baixar Livro Completo (PDF)</a>
+                    
+                    <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+                        <p style="font-size: 0.9rem;">Gostou da iniciativa? Ajude a manter o site no ar.</p>
+                        <button class="btn-outline" style="font-size: 0.8rem;" onclick="toggleDonateSection('donate-modal')">Fazer uma doação opcional</button>
+                        
+                        <div id="donate-modal" class="hidden-content">
+                            <img src="assets/qr.png" alt="QR Code Pix" style="width: 120px;">
+                            <div class="pix-box">
+                                <input type="text" class="pix-code" value="00020126360014br.gov.bcb.pix0114+55519200072255204000053039865802BR5925Mario Elias Da Silveira S6009Sao Paulo62290525REC6968221E109EB52260362263046F3D" readonly id="pix-input-modal">
+                                <button class="btn-secondary" style="font-size: 0.8rem;" onclick="copiarPix('pix-input-modal')">Copiar</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -231,17 +272,65 @@
         </div>
     </div>
 
-        <div id="cookie-banner" class="cookie-banner hidden">
+    <div id="cookie-banner" class="cookie-banner hidden">
         <div class="container cookie-content">
             <p>
-                🍪 <strong>Privacidade:</strong> Utilizamos armazenamento local para salvar seu progresso (dias limpos, tema e resultado do quiz). 
-                Ao continuar navegando, você concorda com isso.
+                🍪 <strong>Privacidade:</strong> Utilizamos armazenamento local apenas para salvar seu progresso (dias limpos). Nada é enviado para servidores externos.
             </p>
-            <button id="btn-accept-cookies" class="btn-primary">Entendi e Aceito</button>
+            <button id="btn-accept-cookies" class="btn-primary">Entendi</button>
         </div>
     </div>
 
-
     <script src="script.js"></script>
+    <script>
+        // Funções auxiliares para a nova UI de Doação (podem ficar aqui ou mover para script.js)
+        function toggleDonateSection(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === "block") {
+                el.style.display = "none";
+            } else {
+                el.style.display = "block";
+                // Rolar suavemente até o elemento se for o da home
+                if(id === 'donate-main') el.scrollIntoView({behavior: "smooth", block: "center"});
+            }
+        }
+
+        function copiedFeedback(btn) {
+            const originalText = btn.innerText;
+            btn.innerText = "Copiado! ✅";
+            btn.style.background = "#2D6A4F";
+            btn.style.color = "#fff";
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = ""; 
+                btn.style.color = "";
+            }, 2000);
+        }
+
+        function copiarPix(inputId) {
+            const copyText = document.getElementById(inputId);
+            
+            // Seleciona o texto (mobile friendly)
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+
+            // Copia
+            try {
+                navigator.clipboard.writeText(copyText.value).then(() => {
+                    // Encontra o botão vizinho para dar feedback
+                    const btn = copyText.nextElementSibling;
+                    copiedFeedback(btn);
+                }).catch(err => {
+                    console.error('Erro ao copiar: ', err);
+                    // Fallback antigo
+                    document.execCommand("copy");
+                    const btn = copyText.nextElementSibling;
+                    copiedFeedback(btn);
+                });
+            } catch (err) {
+                alert("Copie o código manualmente: " + copyText.value);
+            }
+        }
+    </script>
 </body>
 </html>
