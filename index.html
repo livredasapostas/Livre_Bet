@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Language" content="pt-br">
-    
     <title>LivreBet | Jornada de Recuperação</title>
-    <meta name="description" content="Ferramenta gratuita de recuperação. Dias limpos, bloqueio de apostas e guia prático.">
-    <meta name="theme-color" content="#2D6A4F">
-    
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +16,9 @@
         <div class="container header-content">
             <div class="logo">LivreBet</div>
             <div class="header-right">
-                <div class="counter-badge" onclick="abrirModalData()">
+                <button id="btn-install-head" class="install-pill hidden">📲 Instalar</button>
+                
+                <div class="counter-badge" onclick="abrirModalData()" title="Configurar data">
                     <span id="days-count">0d</span>
                     <small>limpo</small>
                 </div>
@@ -31,36 +29,28 @@
 
     <section id="inicio" class="hero section-pad">
         <div class="container text-center">
-            <span class="pill-tag">100% Gratuito e Anônimo</span>
+            <span class="pill-tag">100% Gratuito</span>
             <h1>Sua liberdade vale mais que a próxima aposta.</h1>
-            <p class="hero-desc">Eu venci o vício e disponibilizei meu método e ferramentas gratuitamente. Instale o app e comece sua contagem.</p>
-            
-            <div class="action-grid">
-                <a href="#quiz" class="btn-primary big-btn">Começar Diagnóstico</a>
-                <button id="btn-install" class="btn-outline hidden">📲 Instalar App</button>
-            </div>
+            <p class="hero-desc">Eu venci o vício e transformei meu método em ferramentas gratuitas para te ajudar a retomar o controle.</p>
+            <a href="#quiz" class="btn-primary big-btn">Começar Diagnóstico</a>
         </div>
     </section>
 
     <section id="quiz" class="section-pad">
         <div class="container max-w-600">
             <div class="card-clean">
-                <div class="card-header">
-                    <h2>🔍 Autoanálise</h2>
-                    <p>Entenda seu nível de risco para receber o guia certo.</p>
-                </div>
-                
                 <div id="quiz-intro">
+                    <h2>🔍 Autoanálise</h2>
+                    <p>Entenda seu nível de risco e receba o guia de recuperação.</p>
                     <div class="input-group">
                         <label>Seu Nome</label>
                         <input type="text" id="user-name" placeholder="Como quer ser chamado?" required>
                     </div>
                     <div class="input-group">
-                        <label>Seu Melhor E-mail</label>
-                        <input type="email" id="user-email" placeholder="Para enviar seu resultado" required>
+                        <label>E-mail</label>
+                        <input type="email" id="user-email" placeholder="Para salvar seu progresso" required>
                     </div>
                     <button class="btn-primary full-width" onclick="iniciarQuiz()">Iniciar Análise</button>
-                    <p class="privacy-note">🔒 Seus dados são confidenciais.</p>
                 </div>
 
                 <div id="quiz-questions" class="hidden">
@@ -75,38 +65,27 @@
     <section id="passos" class="section-pad bg-accent">
         <div class="container max-w-800">
             <h2 class="section-title">O Caminho da Saída</h2>
-            
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot">1</div>
                     <div class="timeline-content">
                         <h3>Aceitação Radical</h3>
-                        <p>O dinheiro perdido não volta. Aceite isso para parar de cavar o buraco. A "recuperação" financeira vem com o trabalho, não com o jogo.</p>
+                        <p>Aceite que o dinheiro perdido não volta. A recuperação financeira vem do trabalho, não da sorte.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item highlight">
                     <div class="timeline-dot pulse">2</div>
                     <div class="timeline-content">
-                        <h3>Autoexclusão Oficial (Gov.br)</h3>
-                        <p>O Governo lançou o sistema nacional. Bloqueie seu CPF em todas as casas legais de uma vez.</p>
-                        <a href="https://www.gov.br/fazenda/pt-br/composicao/orgaos/secretaria-de-premios-e-apostas/autoexclusao" target="_blank" class="btn-gov">🛡️ Fazer Autoexclusão Agora</a>
+                        <h3>Autoexclusão Oficial</h3>
+                        <p>Bloqueie seu CPF em todas as casas legalizadas pelo sistema do Governo Federal.</p>
+                        <a href="https://www.gov.br/fazenda/pt-br/composicao/orgaos/secretaria-de-premios-a-apostas/autoexclusao" target="_blank" class="btn-gov">🛡️ Bloquear meu CPF</a>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-dot">3</div>
                     <div class="timeline-content">
-                        <h3>Bloqueio Financeiro</h3>
-                        <p>Sua força de vontade vai falhar. Entregue suas senhas e cartões para alguém de confiança por 90 dias.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot">4</div>
-                    <div class="timeline-content">
-                        <h3>Conexão Real</h3>
-                        <p>O vício ama o isolamento. Procure um grupo de apoio, um psicólogo ou abra o jogo com a família.</p>
+                        <h3>Falar é a Cura</h3>
+                        <p>O vício cresce no segredo. Abra o jogo com uma pessoa de confiança ou procure ajuda profissional.</p>
                     </div>
                 </div>
             </div>
@@ -115,28 +94,22 @@
 
     <section id="ferramentas" class="section-pad">
         <div class="container">
-            <h2 class="section-title">Kit de Emergência</h2>
+            <h2 class="section-title">Ferramentas de Controle</h2>
             <div class="tools-grid">
-                
-                <div class="tool-card" id="jogo">
+                <div class="tool-card" onclick="ativarFerramenta('game-area')">
                     <div class="tool-icon">🎈</div>
-                    <h3>Estoura Ansiedade</h3>
-                    <p>Fissura forte? Clique aqui e estoure bolhas até passar.</p>
-                    <button class="btn-secondary small" onclick="startGame(); document.getElementById('game-area').scrollIntoView();">Jogar Agora</button>
+                    <h3>Ansiedade</h3>
+                    <p>Estoure bolhas para aliviar a fissura.</p>
                 </div>
-
-                <div class="tool-card" id="respire">
+                <div class="tool-card" onclick="ativarFerramenta('breath-area')">
                     <div class="tool-icon">🌬️</div>
-                    <h3>Respire Comigo</h3>
-                    <p>Regule seu sistema nervoso em 1 minuto.</p>
-                    <button class="btn-secondary small" onclick="iniciarRespiracao(); document.getElementById('breath-area').scrollIntoView();">Respirar</button>
+                    <h3>Respirar</h3>
+                    <p>Acalme-se em 1 minuto.</p>
                 </div>
-
-                <div class="tool-card" id="biblia">
+                <div class="tool-card" onclick="novoVersiculo(); fecharModal('all'); document.getElementById('verse-modal').style.display='flex'">
                     <div class="tool-icon">📖</div>
-                    <h3>Palavra da Verdade</h3>
-                    <p>Versículos e afirmações para fortalecer o espírito.</p>
-                    <button class="btn-secondary small" onclick="novoVersiculo(); document.getElementById('verse-modal').style.display='flex'">Ler Verdade</button>
+                    <h3>Verdade</h3>
+                    <p>Palavras de força.</p>
                 </div>
             </div>
 
@@ -144,7 +117,7 @@
                 <div id="game-board">
                     <div class="game-hud">
                         <span>Pontos: <b id="score">0</b></span>
-                        <button class="close-game" onclick="document.getElementById('game-area').classList.remove('active')">❌ Sair</button>
+                        <button class="close-game" onclick="this.parentElement.parentElement.parentElement.classList.remove('active')">❌ Fechar</button>
                     </div>
                     <div id="start-screen-game">
                         <button class="btn-primary" onclick="startGame()">Começar</button>
@@ -153,105 +126,74 @@
             </div>
 
             <div id="breath-area" class="hidden-tool-area text-center">
-                 <button class="close-game" onclick="document.getElementById('breath-area').classList.remove('active')" style="position:static; margin-bottom:10px;">Fechar</button>
                  <p id="breath-text">Prepare-se...</p>
                  <div class="breath-container">
                     <img src="assets/redondo.png" id="breath-img" alt="Círculo">
                 </div>
+                <button class="btn-outline" onclick="this.parentElement.classList.remove('active')">Parar</button>
             </div>
-
         </div>
     </section>
 
     <section id="apoie" class="section-pad bg-dark-section">
         <div class="container max-w-600 text-center">
-            <h2>Mantenha a chama acesa 🕯️</h2>
-            <p style="opacity: 0.9; margin-bottom: 20px;">Este projeto é mantido por doações para pagar servidores e anúncios.</p>
-            
+            <h2>Ajude este projeto 🕯️</h2>
+            <p>O LivreBet é mantido por doações voluntárias para alcançar mais pessoas.</p>
             <div class="donate-card">
                 <div class="donate-header" onclick="toggleDonate('main-donate-body')">
-                    <span>💙 Fazer uma contribuição</span>
+                    <span>💙 Contribuir via PIX</span>
                     <span class="arrow-icon">▼</span>
                 </div>
                 <div id="main-donate-body" class="donate-body hidden">
-                    <p class="donate-explainer">Qualquer valor ajuda a manter o site no ar.</p>
-                    <div class="qr-wrapper">
-                        <img src="assets/qr.png" alt="QR Code Pix" class="qr-img">
-                    </div>
+                    <img src="assets/qr.png" alt="QR Code" class="qr-img">
                     <div class="pix-copy-box">
                         <input type="text" value="00020126360014br.gov.bcb.pix0114+55519200072255204000053039865802BR5925Mario Elias Da Silveira S6009Sao Paulo62290525REC6968221E109EB52260362263046F3D" readonly id="pix-main">
                         <button onclick="copiarPix('pix-main')">COPIAR</button>
                     </div>
-                    <p class="bank-info">Banco Recebedor: Mario Elias</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="text-center">
-        <p>© 2025 LivreBet. <br><a href="#ajuda">Precisa de Ajuda Urgente? Disque 188.</a></p>
-    </footer>
-
     <div id="modal-book" class="modal">
         <div class="modal-content card-clean">
             <span class="close-btn" onclick="fecharModal('modal-book')">&times;</span>
-            
             <div class="result-header">
                 <div id="result-icon">⚠️</div>
-                <h3 id="modal-title">Resultado da Análise</h3>
+                <h3 id="modal-title">Análise</h3>
+                <div id="result-content"></div>
             </div>
-
-            <div id="result-content" class="result-body">
-                </div>
-
             <div class="gift-section">
-                <p>🎁 <strong>Seu Presente:</strong> O guia completo que eu vendia, agora é seu de graça.</p>
-                <a href="assets/amostra.pdf" download class="btn-cta full-width">📥 Baixar PDF Completo</a>
+                <p><strong>Seu Presente:</strong> O livro completo agora é seu gratuitamente.</p>
+                <a href="assets/amostra.pdf" download class="btn-cta full-width">📥 Baixar Livro Completo</a>
             </div>
-
             <div class="donate-mini">
-                <p>Gostou da iniciativa? <a href="#apoie" onclick="fecharModal('modal-book')">Considere apoiar o projeto.</a></p>
+                <p>Gostou? <a href="#apoie" onclick="fecharModal('modal-book')">Apoie esta causa.</a></p>
             </div>
         </div>
     </div>
 
     <div id="modal-date" class="modal">
         <div class="modal-content card-clean modal-small">
-            <h3>Sua Data de Liberdade</h3>
-            <input type="date" id="date-input-field">
-            <button class="btn-primary full-width" onclick="salvarDataModal()">Salvar Data</button>
-            <button class="btn-text" onclick="fecharModal('modal-date')">Cancelar</button>
+            <div class="modal-header-simple">
+                <h3>Sua Jornada</h3>
+                <span class="close-modal-icon" onclick="fecharModal('modal-date')">&times;</span>
+            </div>
+            <p class="modal-subtitle">Defina seu último dia de jogo:</p>
+            <input type="date" id="date-input-field" class="date-input-clean">
+            <button class="btn-primary full-width" onclick="salvarDataModal()">Confirmar</button>
         </div>
     </div>
 
-    <div id="verse-modal" class="modal" style="align-items: center; justify-content: center;">
+    <div id="verse-modal" class="modal">
         <div class="modal-content card-clean modal-small text-center">
-            <span class="close-btn" onclick="document.getElementById('verse-modal').style.display='none'">&times;</span>
-            <p id="verse-text" class="verse-quote">"..."</p>
-            <p id="verse-ref" class="verse-ref">...</p>
-            <hr>
-            <p id="affirmation-text" class="verse-aff">...</p>
-            <button class="btn-primary" onclick="novoVersiculo()">Outra</button>
+            <span class="close-btn" onclick="fecharModal('verse-modal')">&times;</span>
+            <p id="verse-text" class="verse-quote">...</p>
+            <p id="verse-ref" class="verse-ref"></p>
+            <button class="btn-primary" onclick="novoVersiculo()">Próximo</button>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Scripts de UI inline para garantir funcionamento imediato
-        function toggleDonate(id) {
-            const el = document.getElementById(id);
-            el.classList.toggle('hidden');
-        }
-        function copiarPix(id) {
-            const input = document.getElementById(id);
-            input.select();
-            input.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(input.value).then(() => {
-                alert("Código Pix copiado! ✅");
-            }).catch(() => {
-                alert("Erro ao copiar. Tente selecionar manualmente.");
-            });
-        }
-    </script>
 </body>
 </html>
