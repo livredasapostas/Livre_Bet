@@ -1,335 +1,256 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta name="google-site-verification" content="PlQDIDBDaJ2KxNAYsCJ1sF9Lt36774D_NjZB3fwiyGs" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Language" content="pt-br">
     
-    <title>LivreBet | Ferramenta Gratuita de Recuperação</title>
-    
-    <meta name="description" content="Saia do vício em apostas. Ferramenta 100% gratuita criada por quem venceu o vício. Quiz, bloqueio e guia de recuperação.">
-    <meta name="keywords" content="vício em apostas, autoexclusão, como parar de apostar, bets, recuperação, livrebet, ajuda gratuita">
-    <meta name="author" content="LivreBet">
-    <meta name="robots" content="index, follow">
-    
-    <link rel="canonical" href="https://livredasapostas.github.io/Livre_Bet/">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://livredasapostas.github.io/Livre_Bet/">
-    <meta property="og:title" content="✋ Pare de perder dinheiro. Ajuda Gratuita.">
-    <meta property="og:description" content="Eu venci o vício e liberei meu método gratuitamente para você. Baixe o guia e use as ferramentas.">
-    <meta property="og:image" content="https://livredasapostas.github.io/Livre_Bet/assets/capa-ebook.jpg">
-
-    <meta property="twitter:card" content="summary_large_image">
-    
-    <link rel="manifest" href="manifest.json">
+    <title>LivreBet | Jornada de Recuperação</title>
+    <meta name="description" content="Ferramenta gratuita de recuperação. Dias limpos, bloqueio de apostas e guia prático.">
     <meta name="theme-color" content="#2D6A4F">
-    <link rel="apple-touch-icon" href="assets/icon-192.png">
-
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        .donate-area { background: #f0fdf4; border: 2px dashed #2D6A4F; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
-        .hidden-content { display: none; margin-top: 15px; animation: fadeIn 0.5s; }
-        .pix-box { background: white; padding: 10px; border-radius: 5px; border: 1px solid #ccc; display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; justify-content: center; }
-        .pix-code { flex: 1; padding: 8px; background: #eee; border: none; border-radius: 4px; font-family: monospace; color: #333; min-width: 200px; }
-        .steps-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
-        .step-card { background: var(--card-bg, #fff); padding: 20px; border-radius: 10px; border-left: 5px solid #2D6A4F; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .step-number { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #2D6A4F; font-weight: bold; }
-        .btn-gov { background-color: #003399; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 10px; font-weight: bold; }
-        .btn-gov:hover { background-color: #002266; transform: translateY(-2px); }
-        .personal-story { background: rgba(45, 106, 79, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; font-style: italic; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header id="main-header">
         <div class="container header-content">
             <div class="logo">LivreBet</div>
-            <nav>
-                <ul>
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#quiz">Quiz</a></li>
-                    <li><a href="#passos">Passos</a></li>
-                    <li><a href="#jogo">SOS</a></li>
-                    <li><a href="#biblia">Verdade</a></li>
-                    <li><a href="#apoie">Apoie</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <button id="btn-install" class="hidden" title="Instalar App">📲 Instalar App</button>
-                
-                <button id="theme-toggle" title="Mudar Tema">🌙</button>
-                <div class="counter-area">
-                    <span id="days-count">0d limpo</span>
-                    <button id="btn-reset-counter" onclick="abrirModalData()">Definir Data</button>
+            <div class="header-right">
+                <div class="counter-badge" onclick="abrirModalData()">
+                    <span id="days-count">0d</span>
+                    <small>limpo</small>
                 </div>
+                <button id="theme-toggle">🌙</button>
             </div>
         </div>
     </header>
 
-    <section id="inicio" class="hero">
-        <div class="container">
-            <h1>Sua liberdade não tem preço.</h1>
+    <section id="inicio" class="hero section-pad">
+        <div class="container text-center">
+            <span class="pill-tag">100% Gratuito e Anônimo</span>
+            <h1>Sua liberdade vale mais que a próxima aposta.</h1>
+            <p class="hero-desc">Eu venci o vício e disponibilizei meu método e ferramentas gratuitamente. Instale o app e comece sua contagem.</p>
             
-            <div class="personal-story">
-                <p>"Eu já estive exatamente onde você está agora. A angústia, as dívidas, a vergonha. Eu criei o LivreBet porque queria que essa ajuda existisse quando eu precisei. <strong>Hoje, disponibilizo tudo gratuitamente.</strong> Instale o App, conte seus dias e use o material."</p>
-                <p style="text-align: right; font-size: 0.9em; font-weight: bold;">— O Autor</p>
-            </div>
-
-            <p>Um ambiente seguro, sem gatilhos e 100% gratuito.</p>
-            <div class="hero-btns">
-                <a href="#quiz" class="btn-cta">Fazer Diagnóstico</a>
-                <a href="#passos" class="btn-secondary">Ver Passos Práticos</a>
+            <div class="action-grid">
+                <a href="#quiz" class="btn-primary big-btn">Começar Diagnóstico</a>
+                <button id="btn-install" class="btn-outline hidden">📲 Instalar App</button>
             </div>
         </div>
     </section>
 
     <section id="quiz" class="section-pad">
-        <div class="container">
-            <h2>Quiz de Identificação</h2>
-            <p>Entenda seu nível de compulsão para saber como agir.</p>
-            
-            <div id="quiz-intro">
-                <input type="text" id="user-name" placeholder="Como quer ser chamado?" required>
-                <button class="btn-primary" onclick="iniciarQuiz()">Iniciar Análise Gratuita</button>
-            </div>
+        <div class="container max-w-600">
+            <div class="card-clean">
+                <div class="card-header">
+                    <h2>🔍 Autoanálise</h2>
+                    <p>Entenda seu nível de risco para receber o guia certo.</p>
+                </div>
+                
+                <div id="quiz-intro">
+                    <div class="input-group">
+                        <label>Seu Nome</label>
+                        <input type="text" id="user-name" placeholder="Como quer ser chamado?" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Seu Melhor E-mail</label>
+                        <input type="email" id="user-email" placeholder="Para enviar seu resultado" required>
+                    </div>
+                    <button class="btn-primary full-width" onclick="iniciarQuiz()">Iniciar Análise</button>
+                    <p class="privacy-note">🔒 Seus dados são confidenciais.</p>
+                </div>
 
-            <div id="quiz-questions" class="hidden">
-                <h3 id="question-text">Pergunta</h3>
-                <div id="options-container"></div>
-                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Pergunta <span id="q-number">1</span> de 10</p>
+                <div id="quiz-questions" class="hidden">
+                    <div class="progress-bar"><div id="progress-fill"></div></div>
+                    <h3 id="question-text">Pergunta</h3>
+                    <div id="options-container" class="options-grid"></div>
+                </div>
             </div>
-            
-            </div>
+        </div>
     </section>
 
     <section id="passos" class="section-pad bg-accent">
-        <div class="container">
-            <h2>O Caminho da Liberdade</h2>
-            <p style="text-align: center; margin-bottom: 30px;">Não pule etapas. A recuperação é uma construção diária.</p>
+        <div class="container max-w-800">
+            <h2 class="section-title">O Caminho da Saída</h2>
             
-            <div class="steps-container">
-                <div class="step-card">
-                    <span class="step-number">Passo 01</span>
-                    <h3>Aceitação Radical</h3>
-                    <p>Pare de cavar. Aceite que o dinheiro foi perdido e que você não tem controle sobre o jogo. Tentar "recuperar" é a armadilha que te mantém preso. O primeiro passo é a rendição.</p>
-                </div>
-
-                <div class="step-card" style="border-left-color: #003399;">
-                    <span class="step-number" style="color: #003399;">Passo 02 (Urgente)</span>
-                    <h3>Autoexclusão Governamental</h3>
-                    <p>O Governo Federal lançou o sistema oficial de autoexclusão. Ao se cadastrar, você fica impedido legalmente de criar contas ou apostar em qualquer casa legalizada.</p>
-                    <a href="https://www.gov.br/fazenda/pt-br/composicao/orgaos/secretaria-de-premios-e-apostas/autoexclusao" target="_blank" class="btn-gov">🛡️ Fazer Autoexclusão (Gov.br)</a>
-                </div>
-
-                <div class="step-card">
-                    <span class="step-number">Passo 03</span>
-                    <h3>Bloqueio Financeiro</h3>
-                    <p>A força de vontade falha. Tire o acesso ao dinheiro. Entregue cartões e senhas para uma pessoa de extrema confiança (cônjuge, pais) por pelo menos 90 dias.</p>
-                </div>
-
-                <div class="step-card">
-                    <span class="step-number">Passo 04</span>
-                    <h3>Conexão Humana</h3>
-                    <p>O vício cresce no isolamento. Procure ajuda especializada (Psicólogo/CAPS AD) e conecte-se com pessoas. Conte sua verdade para alguém hoje.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="jogo" class="section-pad">
-        <div class="container">
-            <h2>SOS: Estoura a Ansiedade</h2>
-            <p>Quando a fissura vier, não entre no app de banco. Entre aqui.</p>
-            
-            <div class="game-ui">
-                <button class="btn-fullscreen" onclick="toggleFullScreen()" title="Tela Cheia">⛶ Tela Cheia</button>
-            </div>
-            
-            <div id="game-board">
-                <div class="game-hud">
-                    <span>Estouradas: <b id="score">0</b></span>
-                    <span>Tempo: <b id="timer">00:00</b></span>
-                </div>
-                <div id="start-screen-game">
-                    <button class="btn-primary" onclick="startGame()">Começar Terapia Visual</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="respire" class="section-pad">
-        <div class="container text-center">
-            <h2>Respire Comigo</h2>
-            <p id="breath-text">Acalme seu sistema nervoso.</p>
-            <div class="breath-container">
-                <img src="assets/redondo.png" id="breath-img" alt="Círculo de respiração">
-            </div>
-            <button class="btn-primary" id="btn-breath" onclick="iniciarRespiracao()">Iniciar Ciclo (5x)</button>
-        </div>
-    </section>
-
-    <section id="biblia" class="section-pad bg-dark-section">
-        <div class="container text-center">
-            <h2>Verdade que Liberta</h2>
-            <div class="verse-card">
-                <p id="verse-text">"Pois que adianta ao homem ganhar o mundo inteiro e perder a sua alma?"</p>
-                <p id="verse-ref">Marcos 8:36</p>
-                <hr>
-                <p id="affirmation-text" class="affirmation">O dinheiro vai e vem. Sua paz e sua família são insubstituíveis.</p>
-            </div>
-            <button class="btn-outline" onclick="novoVersiculo()">Ler outra verdade</button>
-        </div>
-    </section>
-
-    <section id="apoie" class="section-pad">
-        <div class="container text-center">
-            <h2>Mantenha este projeto vivo</h2>
-            <p>Decidi não cobrar pelo livro "Livre das Apostas" para que a ajuda chegue a todos. O projeto é mantido por doações voluntárias que pagam o servidor e anúncios para alcançar outros viciados.</p>
-            
-            <div class="donate-area">
-                <p>Se este site te ajudou, considere apoiar com qualquer valor.</p>
-                <button class="btn-primary" onclick="toggleDonateSection('donate-main')">💙 Quero Apoiar</button>
-                
-                <div id="donate-main" class="hidden-content">
-                    <img src="assets/qr.png" alt="QR Code Pix" style="max-width: 200px; border-radius: 10px;">
-                    <div class="pix-box">
-                        <input type="text" class="pix-code" value="00020126360014br.gov.bcb.pix0114+55519200072255204000053039865802BR5925Mario Elias Da Silveira S6009Sao Paulo62290525REC6968221E109EB52260362263046F3D" readonly id="pix-input-main">
-                        <button class="btn-secondary" onclick="copiarPix('pix-input-main')">Copiar Código</button>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="timeline-content">
+                        <h3>Aceitação Radical</h3>
+                        <p>O dinheiro perdido não volta. Aceite isso para parar de cavar o buraco. A "recuperação" financeira vem com o trabalho, não com o jogo.</p>
                     </div>
-                    <p style="font-size: 0.8rem; margin-top: 10px;">Banco: Recebedor (Mario Elias)</p>
+                </div>
+
+                <div class="timeline-item highlight">
+                    <div class="timeline-dot pulse">2</div>
+                    <div class="timeline-content">
+                        <h3>Autoexclusão Oficial (Gov.br)</h3>
+                        <p>O Governo lançou o sistema nacional. Bloqueie seu CPF em todas as casas legais de uma vez.</p>
+                        <a href="https://www.gov.br/fazenda/pt-br/composicao/orgaos/secretaria-de-premios-e-apostas/autoexclusao" target="_blank" class="btn-gov">🛡️ Fazer Autoexclusão Agora</a>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-content">
+                        <h3>Bloqueio Financeiro</h3>
+                        <p>Sua força de vontade vai falhar. Entregue suas senhas e cartões para alguém de confiança por 90 dias.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="timeline-content">
+                        <h3>Conexão Real</h3>
+                        <p>O vício ama o isolamento. Procure um grupo de apoio, um psicólogo ou abra o jogo com a família.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="ajuda-urgente" class="section-pad">
-        <div class="container help-grid">
-            <div class="help-box">
-                <h3>🆘 Urgência</h3>
-                <p>CVV: <strong>188</strong></p>
-                <p>Procure o CAPS AD da sua cidade.</p>
+    <section id="ferramentas" class="section-pad">
+        <div class="container">
+            <h2 class="section-title">Kit de Emergência</h2>
+            <div class="tools-grid">
+                
+                <div class="tool-card" id="jogo">
+                    <div class="tool-icon">🎈</div>
+                    <h3>Estoura Ansiedade</h3>
+                    <p>Fissura forte? Clique aqui e estoure bolhas até passar.</p>
+                    <button class="btn-secondary small" onclick="startGame(); document.getElementById('game-area').scrollIntoView();">Jogar Agora</button>
+                </div>
+
+                <div class="tool-card" id="respire">
+                    <div class="tool-icon">🌬️</div>
+                    <h3>Respire Comigo</h3>
+                    <p>Regule seu sistema nervoso em 1 minuto.</p>
+                    <button class="btn-secondary small" onclick="iniciarRespiracao(); document.getElementById('breath-area').scrollIntoView();">Respirar</button>
+                </div>
+
+                <div class="tool-card" id="biblia">
+                    <div class="tool-icon">📖</div>
+                    <h3>Palavra da Verdade</h3>
+                    <p>Versículos e afirmações para fortalecer o espírito.</p>
+                    <button class="btn-secondary small" onclick="novoVersiculo(); document.getElementById('verse-modal').style.display='flex'">Ler Verdade</button>
+                </div>
             </div>
-            <div class="help-box">
-                <h3>🛡️ Softwares</h3>
-                <p>Instale bloqueadores como Gamban ou BetBlocker em seu celular.</p>
+
+            <div id="game-area" class="hidden-tool-area">
+                <div id="game-board">
+                    <div class="game-hud">
+                        <span>Pontos: <b id="score">0</b></span>
+                        <button class="close-game" onclick="document.getElementById('game-area').classList.remove('active')">❌ Sair</button>
+                    </div>
+                    <div id="start-screen-game">
+                        <button class="btn-primary" onclick="startGame()">Começar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="breath-area" class="hidden-tool-area text-center">
+                 <button class="close-game" onclick="document.getElementById('breath-area').classList.remove('active')" style="position:static; margin-bottom:10px;">Fechar</button>
+                 <p id="breath-text">Prepare-se...</p>
+                 <div class="breath-container">
+                    <img src="assets/redondo.png" id="breath-img" alt="Círculo">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="apoie" class="section-pad bg-dark-section">
+        <div class="container max-w-600 text-center">
+            <h2>Mantenha a chama acesa 🕯️</h2>
+            <p style="opacity: 0.9; margin-bottom: 20px;">Este projeto é mantido por doações para pagar servidores e anúncios.</p>
+            
+            <div class="donate-card">
+                <div class="donate-header" onclick="toggleDonate('main-donate-body')">
+                    <span>💙 Fazer uma contribuição</span>
+                    <span class="arrow-icon">▼</span>
+                </div>
+                <div id="main-donate-body" class="donate-body hidden">
+                    <p class="donate-explainer">Qualquer valor ajuda a manter o site no ar.</p>
+                    <div class="qr-wrapper">
+                        <img src="assets/qr.png" alt="QR Code Pix" class="qr-img">
+                    </div>
+                    <div class="pix-copy-box">
+                        <input type="text" value="00020126360014br.gov.bcb.pix0114+55519200072255204000053039865802BR5925Mario Elias Da Silveira S6009Sao Paulo62290525REC6968221E109EB52260362263046F3D" readonly id="pix-main">
+                        <button onclick="copiarPix('pix-main')">COPIAR</button>
+                    </div>
+                    <p class="bank-info">Banco Recebedor: Mario Elias</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 LivreBet. Feito com propósito, não por lucro.</p>
-        </div>
+    <footer class="text-center">
+        <p>© 2025 LivreBet. <br><a href="#ajuda">Precisa de Ajuda Urgente? Disque 188.</a></p>
     </footer>
 
     <div id="modal-book" class="modal">
-        <div class="modal-content">
+        <div class="modal-content card-clean">
             <span class="close-btn" onclick="fecharModal('modal-book')">&times;</span>
-            <div class="modal-body">
-                <img src="assets/capa-ebook.jpg" alt="Capa Ebook" class="modal-img">
-                <div class="modal-text">
-                    <h3 id="modal-title">Resultado da Análise</h3>
-                    <p id="modal-desc" class="desc">Carregando análise...</p>
-                    
-                    <div class="gift-box" style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <p style="color: #2D6A4F; font-weight: bold;">🎁 Presente para sua recuperação</p>
-                        <p>Eu escrevi um guia completo de recuperação. Ele é seu, sem custo.</p>
-                    </div>
+            
+            <div class="result-header">
+                <div id="result-icon">⚠️</div>
+                <h3 id="modal-title">Resultado da Análise</h3>
+            </div>
 
-                    <a href="assets/amostra.pdf" download="LivreDasApostas_Guia.pdf" class="btn-cta">📥 Baixar Livro Completo (PDF)</a>
-                    
-                    <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
-                        <p style="font-size: 0.9rem;">Gostou da iniciativa? Ajude a manter o site no ar.</p>
-                        <button class="btn-outline" style="font-size: 0.8rem;" onclick="toggleDonateSection('donate-modal')">Fazer uma doação opcional</button>
-                        
-                        <div id="donate-modal" class="hidden-content">
-                            <img src="assets/qr.png" alt="QR Code Pix" style="width: 120px;">
-                            <div class="pix-box">
-                                <input type="text" class="pix-code" value="00020126360014br.gov.bcb.pix0114+55519200072255204000053039865802BR5925Mario Elias Da Silveira S6009Sao Paulo62290525REC6968221E109EB52260362263046F3D" readonly id="pix-input-modal">
-                                <button class="btn-secondary" style="font-size: 0.8rem;" onclick="copiarPix('pix-input-modal')">Copiar</button>
-                            </div>
-                        </div>
-                    </div>
-
+            <div id="result-content" class="result-body">
                 </div>
+
+            <div class="gift-section">
+                <p>🎁 <strong>Seu Presente:</strong> O guia completo que eu vendia, agora é seu de graça.</p>
+                <a href="assets/amostra.pdf" download class="btn-cta full-width">📥 Baixar PDF Completo</a>
+            </div>
+
+            <div class="donate-mini">
+                <p>Gostou da iniciativa? <a href="#apoie" onclick="fecharModal('modal-book')">Considere apoiar o projeto.</a></p>
             </div>
         </div>
     </div>
 
     <div id="modal-date" class="modal">
-        <div class="modal-content modal-small">
-            <span class="close-btn" onclick="fecharModal('modal-date')">&times;</span>
-            <h3>Definir início da jornada</h3>
-            <p>Selecione o dia que você parou:</p>
+        <div class="modal-content card-clean modal-small">
+            <h3>Sua Data de Liberdade</h3>
             <input type="date" id="date-input-field">
-            <button class="btn-primary" onclick="salvarDataModal()">Salvar Data</button>
+            <button class="btn-primary full-width" onclick="salvarDataModal()">Salvar Data</button>
+            <button class="btn-text" onclick="fecharModal('modal-date')">Cancelar</button>
         </div>
     </div>
 
-    <div id="cookie-banner" class="cookie-banner hidden">
-        <div class="container cookie-content">
-            <p>
-                🍪 <strong>Privacidade:</strong> Utilizamos armazenamento local apenas para salvar seu progresso (dias limpos). Nada é enviado para servidores externos.
-            </p>
-            <button id="btn-accept-cookies" class="btn-primary">Entendi</button>
+    <div id="verse-modal" class="modal" style="align-items: center; justify-content: center;">
+        <div class="modal-content card-clean modal-small text-center">
+            <span class="close-btn" onclick="document.getElementById('verse-modal').style.display='none'">&times;</span>
+            <p id="verse-text" class="verse-quote">"..."</p>
+            <p id="verse-ref" class="verse-ref">...</p>
+            <hr>
+            <p id="affirmation-text" class="verse-aff">...</p>
+            <button class="btn-primary" onclick="novoVersiculo()">Outra</button>
         </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // Funções auxiliares para a nova UI de Doação (podem ficar aqui ou mover para script.js)
-        function toggleDonateSection(id) {
+        // Scripts de UI inline para garantir funcionamento imediato
+        function toggleDonate(id) {
             const el = document.getElementById(id);
-            if (el.style.display === "block") {
-                el.style.display = "none";
-            } else {
-                el.style.display = "block";
-                // Rolar suavemente até o elemento se for o da home
-                if(id === 'donate-main') el.scrollIntoView({behavior: "smooth", block: "center"});
-            }
+            el.classList.toggle('hidden');
         }
-
-        function copiedFeedback(btn) {
-            const originalText = btn.innerText;
-            btn.innerText = "Copiado! ✅";
-            btn.style.background = "#2D6A4F";
-            btn.style.color = "#fff";
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.background = ""; 
-                btn.style.color = "";
-            }, 2000);
-        }
-
-        function copiarPix(inputId) {
-            const copyText = document.getElementById(inputId);
-            
-            // Seleciona o texto (mobile friendly)
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); 
-
-            // Copia
-            try {
-                navigator.clipboard.writeText(copyText.value).then(() => {
-                    // Encontra o botão vizinho para dar feedback
-                    const btn = copyText.nextElementSibling;
-                    copiedFeedback(btn);
-                }).catch(err => {
-                    console.error('Erro ao copiar: ', err);
-                    // Fallback antigo
-                    document.execCommand("copy");
-                    const btn = copyText.nextElementSibling;
-                    copiedFeedback(btn);
-                });
-            } catch (err) {
-                alert("Copie o código manualmente: " + copyText.value);
-            }
+        function copiarPix(id) {
+            const input = document.getElementById(id);
+            input.select();
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value).then(() => {
+                alert("Código Pix copiado! ✅");
+            }).catch(() => {
+                alert("Erro ao copiar. Tente selecionar manualmente.");
+            });
         }
     </script>
 </body>
