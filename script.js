@@ -251,3 +251,15 @@ window.addEventListener('appinstalled', () => {
     console.log('App instalado com sucesso!');
     if(btnInstallFloat) btnInstallFloat.classList.add('hidden');
 });
+
+// Verifica se o usuário veio pelo link de doação e abre o card automaticamente
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#apoie') {
+        const donateBody = document.getElementById('main-donate-body');
+        if (donateBody) {
+            donateBody.classList.remove('hidden');
+            // Opcional: Adiciona um efeito de destaque momentâneo
+            donateBody.parentElement.style.boxShadow = "0 0 20px var(--primary)";
+        }
+    }
+});
