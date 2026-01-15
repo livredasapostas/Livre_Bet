@@ -1,23 +1,28 @@
 /* --- CONFIGURAÇÕES --- */
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxp7-CcQb0tEzo3Ie1A9Pbgry-liQdjAI97_mCDTBHbAa419Ee_tHqq9lO93AlvFcHW/exec';
 
-/* --- TEMA (DARK MODE) --- */
+/* --- GERENCIAMENTO DE TEMA (DARK MODE PADRÃO) --- */
 const toggleBtn = document.getElementById('theme-toggle');
 const root = document.documentElement;
 const userTheme = localStorage.getItem('theme');
-const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+// Se não houver tema salvo, definimos 'dark' como padrão
+const themeToApply = userTheme || 'dark'; 
 
 function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-    toggleBtn.innerText = theme === 'light' ? '🌙' : '☀️';
+    if (toggleBtn) {
+        toggleBtn.innerText = theme === 'light' ? '🌙' : '☀️';
+    }
 }
 
-if (userTheme) { applyTheme(userTheme); }
-else { applyTheme(systemTheme ? 'dark' : 'light'); }
+// Aplica o tema imediatamente ao carregar
+applyTheme(themeToApply);
 
 toggleBtn.addEventListener('click', () => {
-    const newTheme = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    const currentTheme = root.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     applyTheme(newTheme);
 });
 
