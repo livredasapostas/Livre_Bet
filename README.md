@@ -1,8 +1,18 @@
 # 🛡️ LivreBet — Jornada de Recuperação
+### [Acesse o App: livredasapostas.github.io/Livre_Bet](https://livredasapostas.github.io/Livre_Bet/)
+
+![Versão](https://img.shields.io/badge/versão-1.2.0-2D6A4F?style=for-the-badge)
+![PWA](https://img.shields.io/badge/PWA-Pronto-orange?style=for-the-badge)
 
 > **"Sua liberdade vale mais que a próxima aposta."**
 
 O **LivreBet** é uma plataforma humanizada, gratuita e anônima, desenvolvida para apoiar pessoas que desejam superar o vício em apostas e retomar o controle de suas vidas financeiras e emocionais.
+
+---
+
+## 🚀 Acesso Rápido
+Você pode utilizar a ferramenta diretamente pelo navegador ou instalá-la no seu celular como um aplicativo:
+👉 **[CLIQUE AQUI PARA ACESSAR O LIVREBET](https://livredasapostas.github.io/Livre_Bet/)**
 
 ---
 
@@ -22,9 +32,6 @@ Uma ferramenta de motivação visual que registra o progresso contínuo do usuá
 * **Respirar:** Exercício guiado de respiração rítmica para baixar o cortisol e acalmar o sistema nervoso.
 * **Palavra da Verdade:** Pílulas de sabedoria e afirmações para fortalecer a resiliência espiritual e mental.
 
-### 📲 Web App (PWA)
-O LivreBet pode ser instalado diretamente na tela inicial do celular sem ocupar espaço, funcionando de forma rápida e discreta, como um aplicativo nativo.
-
 ---
 
 ## 🛡️ Compromisso com a Privacidade
@@ -33,15 +40,8 @@ Sabemos o quanto a discrição é importante. O projeto:
 - Armazena seu progresso de dias limpos localmente no seu dispositivo.
 - Mantém um ambiente livre de anúncios ou gatilhos.
 
----
-
 ## 🕯️ Mantenha a Chama Acesa
 O LivreBet é um projeto independente e gratuito. Para que possamos alcançar mais pessoas e manter o servidor ativo, aceitamos doações voluntárias. Toda contribuição é revertida em melhorias na plataforma e anúncios para alcançar quem ainda está sofrendo no silêncio do vício.
-
----
-
-## 📖 O Guia Completo
-Além da plataforma, disponibilizamos um material educativo profundo que detalha o método utilizado por quem já venceu o vício, oferecendo um passo a passo para a reconstrução da vida após o jogo.
 
 ---
 *Transformando dor em propósito. LivreBet.*
