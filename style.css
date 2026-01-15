@@ -196,3 +196,12 @@ input, button { font-family: inherit; }
         border-radius: 50%;
     }
 }
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ajuste para a âncora não ficar escondida atrás do Header Fixo */
+#apoie {
+    scroll-margin-top: 80px; /* Isso evita que o topo da seção fique debaixo do menu */
+}
