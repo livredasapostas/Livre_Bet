@@ -103,7 +103,24 @@ input, button { font-family: inherit; }
 [data-theme="dark"] #start-screen-game { background: rgba(0,0,0,0.8); }
 
 .breath-container { height: 250px; display: flex; align-items: center; justify-content: center; }
-#breath-img { width: 100px; transition: transform 0.1s; }
+/* Estilo da bolha de respiração */
+#breath-img {
+    width: 150px; /* Tamanho inicial */
+    height: 150px;
+    border-radius: 50%;
+    transition: all 4s ease-in-out; /* A mágica acontece aqui: 4 segundos para encher/esvaziar */
+    box-shadow: 0 0 20px var(--primary);
+    display: block;
+    margin: 0 auto;
+}
+
+/* Container para evitar que a página "pule" quando a bolha crescer */
+.breath-container {
+    height: 350px; /* Espaço fixo suficiente para a bolha grande */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .breath-grow { transform: scale(1.8); transition: transform 4s ease-in-out; }
 .breath-shrink { transform: scale(1); transition: transform 6s ease-in-out; }
 
