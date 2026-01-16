@@ -167,29 +167,59 @@ function createBubble() {
 }
 
 // Respire
+/* --- FERRAMENTA RESPIRAR (CORRIGIDA) --- */
+let breathInterval;
+
 function iniciarRespiracao() {
-    document.getElementById('breath-area').classList.add('active');
-    const txt = document.getElementById('breath-text');
     const img = document.getElementById('breath-img');
+    const text = document.getElementById('breath-text');
     
-    let cycles = 0;
-    function ciclo() {
-        if(cycles >= 3) { txt.innerText = "Muito bem."; img.className = ''; return; }
-        txt.innerText = "Inspire..."; img.className = 'breath-grow';
-        setTimeout(() => {
-            txt.innerText = "Solte..."; img.className = 'breath-shrink';
-            setTimeout(() => { cycles++; ciclo(); }, 6000);
-        }, 4000);
-    }
-    ciclo();
+    if(!img) return; // Segurança
+
+    let enchendo = true;
+    
+    // Forçar transição inicial
+    img.style.transition = "all 4s ease-in-out"; 
+
+    // Executa a primeira vez imediatamente
+    img.style.transform = "scale(1.5)";
+    text.innerText = "Inhale (Inspire)...";
+
+    breathInterval = setInterval(() => {
+        if (enchendo) {
+            img.style.transform = "scale(1)"; // Encolhe
+            text.innerText = "Exhale (Expire)...";
+        } else {
+            img.style.transform = "scale(1.5)"; // Cresce
+            text.innerText = "Inhale (Inspire)...";
+        }
+        enchendo = !enchendo;
+    }, 4000); // 4 segundos para cada movimento
+}
+
+function pararRespiracao() {
+    clearInterval(breathInterval);
+    const img = document.getElementById('breath-img');
+    if(img) img.style.transform = "scale(1)";
 }
 
 // Versículos
 const verses = [
     { t: "Todas as coisas me são lícitas, mas nem todas me convêm.", r: "1 Coríntios 6:12", a: "Eu escolho ser livre." },
     { t: "Porque não nos deu Deus espírito de temor, mas de fortaleza.", r: "2 Timóteo 1:7", a: "Sou mais forte que o vício." },
-    { t: "Vigiai e orai, para que não entreis em tentação.", r: "Mateus 26:41", a: "Estou atento aos gatilhos." }
+    { t: "Vigiai e orai, para que não entreis em tentação.", r: "Mateus 26:41", a: "Estou atento aos gatilhos." },
+    { t: "Não sobreveio a vocês tentação que não fosse comum aos homens.", r: "1 Coríntios 10:13", a: "Outros venceram, eu também vencerei." },
+    { t: "Tudo posso naquele que me fortalece.", r: "Filipenses 4:13", a: "Minha força vem de algo maior." },
+    { t: "Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará.", r: "Salmos 37:5", a: "Não preciso carregar esse peso sozinho." },
+    { t: "O que encobre as suas transgressões nunca prosperará.", r: "Provérbios 28:13", a: "Vou falar a verdade para me curar." },
+    { t: "O Senhor é o meu pastor, nada me faltará.", r: "Salmos 23:1", a: "Tenho tudo o que preciso sem o jogo." },
+    { t: "Conhecereis a verdade, e a verdade vos libertará.", r: "João 8:32", a: "A verdade é que o jogo é uma ilusão." },
+    { t: "O fim de uma coisa é melhor do que o seu início.", r: "Eclesiastes 7:8", a: "Minha vida será melhor de agora em diante." },
+    { t: "Sejam fortes e corajosos. Não tenham medo.", r: "Deuteronômio 31:6", a: "Enfrento este dia com coragem." },
+    { t: "Lâmpada para os meus pés é tua palavra e luz para o meu caminho.", r: "Salmos 119:105", a: "Sigo o caminho da clareza, não do caos." },
+    { t: "O coração ansioso deprime o homem, mas uma palavra bondosa o anima.", r: "Provérbios 12:25", a: "Falo palavras de vida para mim hoje." }
 ];
+
 function novoVersiculo() {
     const v = verses[Math.floor(Math.random() * verses.length)];
     document.getElementById('verse-text').innerText = `"${v.t}"`;
