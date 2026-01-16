@@ -268,3 +268,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+document.querySelector('.btn-apoie-header').addEventListener('click', () => {
+    const donateBody = document.getElementById('main-donate-body');
+    if (donateBody) {
+        donateBody.classList.remove('hidden');
+        donateBody.style.display = 'block'; // Garante a visibilidade
+    }
+});
