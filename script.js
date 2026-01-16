@@ -173,28 +173,29 @@ let breathInterval;
 function iniciarRespiracao() {
     const img = document.getElementById('breath-img');
     const text = document.getElementById('breath-text');
-    
-    if(!img) return; // Segurança
-
     let enchendo = true;
-    
-    // Forçar transição inicial
-    img.style.transition = "all 4s ease-in-out"; 
 
-    // Executa a primeira vez imediatamente
-    img.style.transform = "scale(1.5)";
-    text.innerText = "Inhale (Inspire)...";
+    // Reset inicial
+    img.style.transform = "scale(1)";
+    text.innerText = "Prepare-se...";
 
     breathInterval = setInterval(() => {
         if (enchendo) {
-            img.style.transform = "scale(1)"; // Encolhe
-            text.innerText = "Exhale (Expire)...";
-        } else {
-            img.style.transform = "scale(1.5)"; // Cresce
+            img.style.transform = "scale(2)"; // Aumenta 2x
             text.innerText = "Inhale (Inspire)...";
+        } else {
+            img.style.transform = "scale(1)"; // Volta ao normal
+            text.innerText = "Exhale (Expire)...";
         }
         enchendo = !enchendo;
-    }, 4000); // 4 segundos para cada movimento
+    }, 4000); // 4 segundos é o tempo ideal para cada fase
+}
+
+function pararRespiracao() {
+    clearInterval(breathInterval);
+    const img = document.getElementById('breath-img');
+    img.style.transform = "scale(1)";
+    document.getElementById('breath-text').innerText = "Exercício parado.";
 }
 
 function pararRespiracao() {
