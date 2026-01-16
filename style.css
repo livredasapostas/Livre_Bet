@@ -205,3 +205,118 @@ html {
 #apoie {
     scroll-margin-top: 80px; /* Isso evita que o topo da seção fique debaixo do menu */
 }
+
+/* --- SEÇÃO DOWNLOAD EBOOK (BIBLIOTECA) --- */
+.book-highlight-card {
+    background: var(--bg-surface);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px; /* Mais espaço entre texto e livro */
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0,0,0,0.05);
+    overflow: visible; /* Importante para a sombra do livro não cortar */
+}
+
+/* Ajuste Dark Mode */
+[data-theme="dark"] .book-highlight-card {
+    background: linear-gradient(145deg, var(--bg-surface) 0%, #1a1a1a 100%);
+    border: 1px solid #333;
+}
+
+.book-content {
+    flex: 1;
+}
+
+.badge-new {
+    background: var(--accent);
+    color: var(--primary);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.book-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.book-content p {
+    color: var(--text-light);
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+.book-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.book-actions small {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- ESTILO DA CAPA REAL --- */
+.book-visual {
+    flex: 0 0 180px; /* Largura fixa para a área da imagem */
+    display: flex;
+    justify-content: center;
+    perspective: 1000px; /* Prepara o 3D */
+}
+
+.book-img-real {
+    width: 100%;
+    max-width: 160px; /* Tamanho máximo da capa */
+    height: auto;
+    border-radius: 5px 8px 8px 5px; /* Cantos arredondados simulando livro */
+    box-shadow: -10px 10px 20px rgba(0,0,0,0.3); /* Sombra realista */
+    transform: rotateY(-10deg); /* Leve inclinação inicial */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+}
+
+/* Efeito ao passar o mouse */
+.book-highlight-card:hover .book-img-real {
+    transform: rotateY(0deg) scale(1.05) translateY(-5px); /* Fica reto e flutua */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+/* --- RESPONSIVO MOBILE --- */
+@media (max-width: 768px) {
+    .book-highlight-card {
+        flex-direction: column-reverse; /* Imagem vai para cima */
+        text-align: center;
+        padding: 30px 20px;
+        gap: 20px;
+    }
+    
+    .book-visual {
+        flex: auto;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .book-img-real {
+        max-width: 140px; /* Um pouco menor no celular */
+        transform: rotateY(0deg); /* Sem rotação no mobile pra ficar nítido */
+    }
+
+    .book-actions {
+        align-items: center;
+    }
+}
