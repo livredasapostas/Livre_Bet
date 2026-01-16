@@ -166,35 +166,57 @@ function createBubble() {
     setTimeout(() => { if(b.parentNode) b.remove(); }, 4100);
 }
 
-// Respire
-/* --- FERRAMENTA RESPIRAR (CORRIGIDA) --- */
+/* --- FERRAMENTA RESPIRAR (VERSÃO FINAL) --- */
 let breathInterval;
 
 function iniciarRespiracao() {
     const img = document.getElementById('breath-img');
     const text = document.getElementById('breath-text');
+    const area = document.getElementById('breath-area'); // A área que contém a ferramenta
+    
+    // 1. Mostrar a seção primeiro
+    if (area) {
+        area.classList.add('active'); // Se você usa a classe .active
+        area.style.display = 'block'; // Garante que ela apareça
+    }
+
+    // Limpar qualquer intervalo que já esteja rodando (evita bug de cliques duplos)
+    clearInterval(breathInterval);
+
     let enchendo = true;
+    
+    // Reset e início imediato
+    img.classList.remove('breath-grow', 'breath-shrink');
+    text.innerText = "Inspire suavemente...";
+    img.classList.add('breath-grow');
 
-    // Reset inicial
-    img.style.transform = "scale(1)";
-    text.innerText = "Prepare-se...";
-
+    // Inicia o ciclo
     breathInterval = setInterval(() => {
         if (enchendo) {
-            img.style.transform = "scale(2)"; // Aumenta 2x
-            text.innerText = "Inhale (Inspire)...";
+            // Fase de encolher (Expire)
+            img.classList.remove('breath-grow');
+            img.classList.add('breath-shrink');
+            text.innerText = "Expire devagar...";
         } else {
-            img.style.transform = "scale(1)"; // Volta ao normal
-            text.innerText = "Exhale (Expire)...";
+            // Fase de crescer (Inspire)
+            img.classList.remove('breath-shrink');
+            img.classList.add('breath-grow');
+            text.innerText = "Inspire suavemente...";
         }
         enchendo = !enchendo;
-    }, 4000); // 4 segundos é o tempo ideal para cada fase
+    }, 4000); // 4 segundos batendo com o CSS
 }
 
 function pararRespiracao() {
     clearInterval(breathInterval);
     const img = document.getElementById('breath-img');
-    img.style.transform = "scale(1)";
+    const area = document.getElementById('breath-area');
+    
+    if(img) img.classList.remove('breath-grow', 'breath-shrink');
+    if(area) {
+        area.style.display = 'none';
+        area.classList.remove('active');
+    }
     document.getElementById('breath-text').innerText = "Exercício parado.";
 }
 
