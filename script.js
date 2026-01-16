@@ -198,12 +198,6 @@ function pararRespiracao() {
     document.getElementById('breath-text').innerText = "Exercício parado.";
 }
 
-function pararRespiracao() {
-    clearInterval(breathInterval);
-    const img = document.getElementById('breath-img');
-    if(img) img.style.transform = "scale(1)";
-}
-
 // Versículos
 const verses = [
     { t: "Todas as coisas me são lícitas, mas nem todas me convêm.", r: "1 Coríntios 6:12", a: "Eu escolho ser livre." },
