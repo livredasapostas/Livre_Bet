@@ -1,0 +1,19 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Página principal -->
+  <url>
+    <loc>https://livredasapostas.github.io/Livre_Bet/</loc>
+    <lastmod>2026-01-24</lastmod>
+  </url>
+
+  <!-- PDFs (indexáveis) -->
+  <url>
+    <loc>https://livredasapostas.github.io/Livre_Bet/assets/Livre_Das_Apostas_Mario_Schenkel.pdf</loc>
+    <lastmod>2026-01-24</lastmod>
+  </url>
+  <url>
+    <loc>https://livredasapostas.github.io/Livre_Bet/assets/amostra.pdf</loc>
+    <lastmod>2026-01-24</lastmod>
+  </url>
+</urlset>
