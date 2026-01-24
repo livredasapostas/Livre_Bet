@@ -1,3 +1,6 @@
 # Permitir o rastreamento do site inteiro
 User-agent: *
-Allow
+Allow: /
+
+# (Opcional, recomendado) Informe o sitemap
+Sitemap: https://livredasapostas.github.io/Livre_Bet/sitemap.xml
