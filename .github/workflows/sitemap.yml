@@ -1,0 +1,28 @@
+name: Generate sitemap
+on:
+  push:
+    branches: [ "main" ]   # ajuste se sua branch publicada for outra
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate sitemap.xml
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url: https://livredasapostas.github.io/Livre_Bet
+          include-pdfs: true
+          sitemap-format: xml
+          additional-extensions: "pdf"
+
+      - name: Commit sitemap.xml
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add sitemap.xml
+          git commit -m "chore: update sitemap.xml" || echo "No changes to commit"
+          git push
