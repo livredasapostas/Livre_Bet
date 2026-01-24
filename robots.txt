@@ -1,0 +1,3 @@
+# Permitir o rastreamento do site inteiro
+User-agent: *
+Allow
