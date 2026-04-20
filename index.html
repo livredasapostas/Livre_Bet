@@ -389,7 +389,7 @@
           <img src="assets/qr.png" alt="QR Code Pix para doação" class="qr-img" loading="lazy" decoding="async">
         </div>
         <div class="pix-copy-box">
-          <input type="text" value=00020126580014br.gov.bcb.pix0136df15a204-0a95-45da-8df5-c63ae7e9022e5204000053039865802BR5916SM202406011255556009Sao Paulo610901227-20062240520daqr18370742917559176304638E" readonly id="pix-main">
+          <input type="text" value=df15a204-0a95-45da-8df5-c63ae7e9022e" readonly id="pix-main">
           <button onclick="copiarPix('pix-main')">COPIAR</button>
         </div>
       </div>
@@ -456,7 +456,7 @@
     input.select();
     input.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(input.value).then(() => {
-      alert("Código Pix copiado! ✅");
+      alert("Chave Pix copiada! ✅");
     }).catch(() => {
       alert("Erro ao copiar. Tente selecionar manualmente.");
     });
